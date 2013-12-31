@@ -200,6 +200,7 @@
                         <div class="control-group">
                             <label class="control-label">기본정보</label>
                             <div class="controls">
+                                <p class="text-error"><b>증감값을 넣어 주세요!</b></p>
                                 <select id="sel-user-info" class="input-small">
                                     <option>선택</option>
                                     <option value="coin">코인</option>
@@ -216,7 +217,8 @@
                                     <option value="UserProfile">프로파일</option>
                                 </select>
                                 <input id="inp-mod-value" type="text">
-                                <button id="btn-modify-user" class="btn btn-success" type="button">기본 정보 변경</button>
+                                <button id="btn-modify-user" class="btn btn-success" type="button">변경</button>
+                                <p>현재 값 <b id="b-current-value"></b></p>
                             </div>
                         </div>
                         <div class="control-group">
@@ -476,7 +478,18 @@
 
     var slotParamData = {
         gmid: gmid,
-        usnid: userId
+        usnid: userId,
+        HeadCode: "",
+        BodyCode: "",
+        ArmCode: "",
+        LegCode: "",
+        BoosterCode: "",
+        WeaponSlot1: "",
+        WeaponSlot2: "",
+        WeaponSlot3: "",
+        WeaponSlot4: "",
+        WeaponSlot5: "",
+        WeaponSlot6: ""
     };
 
     $(function() {
@@ -510,29 +523,29 @@
         // 기본정보 셀렉트 값 변경
         $("#sel-user-info").change(function() {
             if (this.value == 'coin') {
-                $("#inp-mod-value").val(currentCoin);
+                $("#b-current-value").text(currentCoin);
             } else if (this.value == 'bluechip') {
-                $("#inp-mod-value").val(currentBluechip);
+                 $("#b-current-value").text(currentBluechip);
             } else if (this.value == 'capsule') {
-                $("#inp-mod-value").val(currentCapsule);
+                 $("#b-current-value").text(currentCapsule);
             } else if (this.value == 'friendship') {
-                $("#inp-mod-value").val(currentFriendship);
+                 $("#b-current-value").text(currentFriendship);
             } else if (this.value == 'KillPoint') {
-                $("#inp-mod-value").val(currentKillpoint);
+                 $("#b-current-value").text(currentKillpoint);
             } else if (this.value == 'maxCombo') {
-                $("#inp-mod-value").val(currentMaxCombo);
+                 $("#b-current-value").text(currentMaxCombo);
             } else if (this.value == 'maxScore') {
-                $("#inp-mod-value").val(currentScore);
+                 $("#b-current-value").text(currentScore);
             } else if (this.value == 'maxRecord') {
-                $("#inp-mod-value").val(currentRecord);
+                 $("#b-current-value").text(currentRecord);
             } else if (this.value == 'QuestLevel') {
-                $("#inp-mod-value").val(currentQuestLevel);
+                 $("#b-current-value").text(currentQuestLevel);
             } else if (this.value == 'phoneNumber') {
-                $("#inp-mod-value").val(phoneNumber);
+                 $("#b-current-value").text(phoneNumber);
             } else if (this.value == 'Nickname') {
-                $("#inp-mod-value").val(Nickname);
+                 $("#b-current-value").text(Nickname);
             } else if (this.value == 'UserProfile') {
-                $("#inp-mod-value").val(UserProfile);
+                 $("#b-current-value").text(UserProfile);
             } else {
 
             }
@@ -1376,6 +1389,7 @@
 
         if (confirm("슬롯정보를 변경 하시겠습니까?")) {
             $.ajax({
+                type: "POST",
                 url: api.setEquipInfo,
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 data: parameter,
@@ -1383,8 +1397,12 @@
                     alert("슬롯 정보 변경 실패! : " + errorThrown);
                 },
                 success: function(response) {
-                    alert("변경 성공!");
-                    location.reload();
+                    if (response == "True") {
+                        alert("변경 성공!");
+                        location.reload();
+                    } else {
+                        alert("변경 실패!");
+                    }
                 } // end success
             }); //
         }

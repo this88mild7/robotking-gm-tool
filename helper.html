@@ -30,7 +30,10 @@
 
     <style>
     .btn {
-        line-height : 20px
+        line-height : 18px;
+    }
+    .modify-btn {
+        margin-bottom:10px;
     }
     </style>
 
@@ -121,7 +124,7 @@
                     </a>
                 </li>
                 <li id="side-helper">
-                    <a href="javascript:;" class="dropdown-toggle">
+                    <a hrHef="javascript:;" class="dropdown-toggle">
                         <i class="icon-edit"></i>
                         <span class="menu-text">Game Helper
                             <span class="badge badge-primary "></span>
@@ -138,18 +141,38 @@
             <div class="page-content">
                 <div class="page-header position-relative">
                     <h1>Helper 기준 정보</h1>
-
                 </div>
-                <!--/.page-header-->
+                <!--/.page
+                -header-->
 
+                </table>
                 <div class="row-fluid">
                     <div class="control-group">
                         <label for="standard-stage" class="control-label">기준 스테이지</label>
                         <div class="controls">
-                            <input type="text" name="standard-stage" id="inp-standard-stage">
-                            <button type="button" class="btn btn-primary" id="mode-stage">변경</button>
+                            <input type="text" class="input-small" name="standard-stage" id="inp-standard-stage" value="10">
+                            <button type="button" class="btn btn-success modify-btn" id="mode-stage">스테이지 변경</button>
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label for="standard-score" class="control-labe">기준 점수</label>
+                        <div class="controls">
+                            <input type="text" class="input-small" name="standard-score" id="inp-standard-score" value="50000">
+                            <button type="button" class="btn btn-success modify-btn" id="mod-score">점수 변경</button>
+                        </div>
+                    </div>
+                    <h4>
+                        고득점자 Helper 적용 카운트
+                    </h4>
+                    <input type="text" class="input-small" value="5">~
+                    <input type="text" class="input-small" value="6">
+                    <button class="btn btn-danger modify-btn" type="button">변경</button>
+                    <h4>
+                        저득점자 Helper 적용 카운트
+                    </h4>
+                    <input type="text" class="input-small" value="3">~
+                    <input type="text" class="input-small" value="5">
+                    <button class="btn btn-danger modify-btn" type="button">변경</button>
                 </div>
                 <!-- /.row-fluid -->
             </div>
@@ -162,5 +185,11 @@
         });
         </script>
 </body>
+
+</html>
+<tr>
+    <td>5</td>
+    <td>33%</td>
+</tr>
 
 </html>
