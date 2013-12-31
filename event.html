@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<title>로봇킹 GM Tool</title>
+<link rel="shortcut icon" href="/img/favicon.ico" />
+
+<meta charset="utf-8" />
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+<!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+<link rel="stylesheet" href="assets/css/chosen.css" />
+<link rel="stylesheet" href="assets/css/datepicker.css" />
+
+<!-- fonts -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+<!-- ace styles -->
+<link rel="stylesheet" href="assets/css/ace.min.css" />
+<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+<style>
+.btn {
+    line-height : 20px
+}
+table {
+    table-layout: fixed;
+}
+table th, table td {
+    overflow: hidden;
+}
+</style>
+
+<!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+<!--inline styles related to this page-->
+
+<!--basic scripts-->
+<!--[if !IE]>-->
+<script type="text/javascript">
+window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+</script>
+<!--<![endif]-->
+
+<!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+<script type="text/javascript">
+if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+<!--page specific plugin scripts-->
+
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="assets/js/markdown/markdown.min.js"></script>
+<script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+<script src="assets/js/jquery.hotkeys.min.js"></script>
+<script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+<script src="assets/js/bootbox.min.js"></script>
+<script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+
+<!--ace scripts-->
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+
+<!-- ajaxform -->
+<script src="http://malsup.github.com/jquery.form.js"></script>
+
+<!-- common js -->
+<script src="js/jquery-cookie.js"></script>
+<script src="js/common.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/jquery-dataTable.js"></script>
+<script src="js/jquery-dataTable-bootstrap.js"></script>
+
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <ul class="nav ace-nav pull-right">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                ID : <b id="b-id"></b>
+                                <br>Role : <b id="b-role"></b>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                            <li>
+                                <a href="javascript:;" onclick="logOut();">
+                                    <i class="icon-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-user">
+                    <a href="userSearch.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">사용자 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="payment">
+                    <a href="payment.html" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-message">
+                    <a href="message.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-event">
+                    <a href="event.html" class="dropdown-toggle">
+                        <i class="icon-calendar"></i>
+                        <span class="menu-text">이벤트 관리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="work-info">
+                    <a href="work.html" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span class="menu-text">업무처리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        현재 Sale 이벤트 현황 &nbsp;
+                        <button id="btn-sale-evet-add" class="btn btn-info" id="btn-mod" type="button">추가 및 변경</button>
+                    </h1>
+                </div>
+                <!--/.page-header-->
+
+                <div class="row-fluid">
+                    <table class="table table-striped table-bordered table-hover" id="event-his">
+                        <thead>
+                            <tr>
+                                <th>Sale Type</th>
+                                <th>할인률</th>
+                                <th>시작날짜</th>
+                                <th>종료날짜</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-result-body">
+                        </tbody>
+                    </table>
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- 이벤트 등록 모달 -->
+    <div id="modal-sale-event" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">Sale Event 추가</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">Event Code</label>
+                <div class="controls">
+                    <select id="modal-sel-sale-event">
+                    </select>
+                    <input id="modal-sale-rate" type="text" class="input-small">%
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">이벤트 시작일</label>
+
+                <div class="controls">
+                    <div class="input-append">
+                        <input class="date-picker input-medium " name="search_start_date" id="modal-sale-start-date" type="text" placeholder="이벤트 시작일" readonly>
+                        
+                    </div>
+
+                    <select class="input-small" id="event-start-hour">
+                    </select>
+                    <select class="input-small" id="event-start-min">
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">이벤트 종료일</label>
+
+                <div class="controls">
+                    <div class="input-append">
+                        <input class="input-medium date-picker" name="search_start_date" id="modal-sale-end-date" type="text" placeholder="이벤트 종료일" readonly>
+                        
+                    </div>
+                    <select class="input-small" id="event-end-hour">
+                    </select>
+                    <select class="input-small" id="event-end-min">
+                    </select>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="btn-modal-event-add" class="btn btn-primary" type="button">추가</button>
+            </div>
+            <div class="control-group" id="event-add-his" style="display: none;">
+                <table class="table table-striped table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>saleType</th>
+                            <th>saleRate</th>
+                            <th>startDate</th>
+                            <th>endDate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-event-add-table">
+                        <!-- ajax -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-close" class="btn">닫기</button>
+        </div>
+    </div>
+    <script>
+    var gmid = 1;
+    $(function() {
+        $("#side-event").addClass("active");
+
+        // session check
+        if (isEmpty($.cookie("gmid"))) {
+            alert("로그아웃 상태입니다.");
+            window.history.back();
+            return false;
+        } else {
+            gmid = $.cookie('gmid');
+            $("#b-id").text($.cookie("gmid"));
+            $("#b-role").text($.cookie("role"));
+            setCookie(60, gmid);
+        }
+
+        // 이벤트 시작 시간 option setting
+        $("#event-start-hour").append(hourOptionHtml());
+
+        // 이벤트 시작 분 option setting
+        $("#event-start-min").append(minOptionHtml());
+
+        // 이벤트 종료 시간 option setting
+        $("#event-end-hour").append(hourOptionHtml());
+
+        // 이벤트 종료 분 option setting
+        $("#event-end-min").append(minOptionHtml());
+
+        // data table initialize
+        $('#event-his').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+
+
+        // 달력 이벤트
+        $('.date-picker').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+        $("#btn-sale-evet-add").on("click", function() {
+            if (gmid == "view") {
+                alert("등록 권한이 없는 GM ID 입니다.");
+                return false;
+            }
+            // 모달 히스트로 삭제
+            $("#modal-event-add-table").empty();
+            $("#modal-sale-rate").val('')
+            $("#modal-sale-start-date").val('')
+            $("#modal-sale-end-date").val('')
+            $("#modal-sale-event").modal("toggle");
+        });
+
+        // 모달 이벤트 추가 버튼 이벤트
+        $("#btn-modal-event-add").on("click", function() {
+
+            var eventRate = $("#modal-sale-rate").val();
+            var eventStartMergeDate = "";
+            var eventEndMergeDate = "";
+            var eventStartDate = $("#modal-sale-start-date").val();
+            var eventStartHour = $("#event-start-hour").val();
+            var eventStartMin = $("#event-start-min").val();
+            var eventStartSec = "00";
+            var eventEndDate = $("#modal-sale-end-date").val();
+            var eventEndHour = $("#event-end-hour").val();
+            var eventEndMin = $("#event-end-min").val();
+            var eventEndSec = "00";
+            var eventCode = $("#modal-sel-sale-event").val();
+            var eventName = $("#modal-sel-sale-event option:selected").text();
+
+
+            // validation
+            // 이벤트 할인률 체크
+            if (!isNaturalNum(eventRate)) {
+                alert("이벤트 할인률는 소수점이 없는 양의 정수만 가능 합니다.");
+                return false;
+            } else {
+                if (parseInt(eventRate) > 100) {
+                    alert("이벤트 할인률는 100 을 넘을 수는 없습니다.");
+                    return false;
+                }
+            }
+
+            // 이벤트 시작 시간 체크
+            if (isEmpty(eventStartDate)) {
+                alert("이벤트 시작 날짜는 반드시 필요합니다.");
+                return false;
+            }
+
+            // 이벤트 종료 시간 체크
+            if (isEmpty(eventEndDate)) {
+                alert("이벤트 종료 날짜는 반드시 필요합니다.");
+                return false;
+            }
+
+            // 이벤트 시작일 종료일 기간체크(시작일이 종료일 보다 크면 안됨)
+            var tempStartTime = parseInt(eventStartDate.replace(/-/gi, "") + eventStartHour + eventStartMin + eventStartSec)
+            var tempEndTime = parseInt(eventEndDate.replace(/-/gi, "") + eventEndHour + eventEndMin + eventEndSec)
+            if (tempStartTime > tempEndTime) {
+                alert("시작일은 종료일 보다 이전 날짜여야 합니다.");
+                return false;
+            }
+
+            // 이벤트 시작일 조합(HH:mm:ss)
+            eventStartMergeDate = eventStartDate + " " + eventStartHour + ":" + eventStartMin + ":" + eventStartSec;
+
+            // 이벤트 종료일 조합(HH:mm:ss)
+            eventEndMergeDate = eventEndDate + " " + eventEndHour + ":" + eventEndMin + ":" + eventEndSec;
+
+            if (confirm("이벤트를 등록 하겠습니까?")) {
+                $.ajax({
+                    type: "POST",
+                    url: api.setSaleEvent,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        saleCode: eventCode,
+                        saleRate: eventRate,
+                        startDate: eventStartMergeDate,
+                        endDate: eventEndMergeDate,
+                        comment: "이벤트 등록"
+
+                    },
+                    error: function(xhr, textStatus, errorThrown) {},
+                    success: function(response) {
+                        if (response == "True") {
+                            var appendInfo = "<tr>" + AddTag(eventName, "TD") + AddTag(eventRate, "TD") + AddTag(eventStartMergeDate, "TD") + AddTag(eventEndMergeDate, "TD") + "</tr>";
+                            $("#modal-event-add-table").append(appendInfo);
+                        } else {
+                            alert("이벤트 등록에 실패 하였습니다.");
+                        }
+                    }
+                });
+                $("#event-add-his").show();
+            }
+
+        });
+
+        // 이벤트 모달 닫기
+        $("#btn-modal-close").on("click", function() {
+            $("#modal-sale-event").modal("toggle");
+            location.reload();
+        });
+
+        // 이벤트 전체 목록
+        var eventArr;
+        $.ajax({
+            url: api.getSaleCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("이벤트 전체 목록 조회 오류=" + errorThrown);
+            },
+            success: function(response) {
+                eventArr = response;
+                var eventListHtml = "";
+                $.each(response, function() {
+                    eventListHtml += '<option value="' + this.saleCode + '">' + this.saleName + '</option>';
+                });
+                $("#modal-sel-sale-event").append(eventListHtml);
+            }
+
+        });
+
+        // 진행중인 이벤트 목록 조회
+        $.ajax({
+            type: "GET",
+            url: api.getSaleEvent,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("진행 목록 조회 오류=" + errorThrown);
+            },
+            success: function(response) {
+                $('#event-his').dataTable().fnClearTable();
+                $.each(response, function(ingIdx, ingValue) {
+                    $.each(eventArr, function(idx, value) {
+                        if (ingValue.saleType == value.saleCode) {
+                            eventName = value.saleName
+                        }
+                    })
+                    $('#event-his').dataTable().fnAddData([
+                        eventName,
+                        ingValue.saleRate,
+                        ingValue.startDate,
+                        ingValue.endDate,
+                        ingValue.regDate
+                    ]);
+
+                });
+            }
+        });
+    });
+
+    function hourOptionHtml() {
+        var hourHtml = "";
+        for (x = 0; x < 24; x++) {
+            if (x < 10) {
+                hourHtml += '<option value="0' + x + '">0' + x + '</option>'
+            } else {
+                hourHtml += '<option value="' + x + '">' + x + '</option>'
+            }
+        }
+        return hourHtml;
+    }
+
+    function minOptionHtml() {
+        var hourHtml = "";
+        for (x = 0; x < 60; x++) {
+            if (x < 10) {
+                hourHtml += '<option value="0' + x + '">0' + x + '</option>'
+            } else {
+                hourHtml += '<option value="' + x + '">' + x + '</option>'
+            }
+        }
+        return hourHtml;
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+    <style>
+    .btn {
+        line-height : 18px
+    }
+    </style>
+    <!--inline styles related to this page-->
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+    <!--[if IE]> 
+    <script type="text/javascript"> window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+    </script> 
+    <![endif]-->
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--page specific plugin scripts-->
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/jquery-dataTable.js"></script>
+    <script src="js/jquery-dataTable-bootstrap.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <ul class="nav ace-nav pull-right">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                ID : <b id="b-id"></b>
+                                <br>Role : <b id="b-role"></b>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                            <li>
+                                <a href="javascript:;" onclick="logOut();">
+                                    <i class="icon-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-user">
+                    <a href="userSearch.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">사용자 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="payment">
+                    <a href="payment.html" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-message">
+                    <a href="message.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-event">
+                    <a href="event.html" class="dropdown-toggle">
+                        <i class="icon-calendar"></i>
+                        <span class="menu-text">이벤트 관리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="work-info">
+                    <a href="work.html" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span class="menu-text">업무처리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        <span id="user-nickname"></span>님의 정보
+                        <button class="btn btn-info" id="btn-mod" type="button">변경</button>
+                    </h1>
+                </div>
+                <!--/.page-header-->
+
+                <div class="row-fluid">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                            <li class="active">
+                                <a data-toggle="tab" href="#current-info">현재 정보</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#own-list">보유 리스트</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#friend">소셜 정보</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- 현재정보 -->
+                            <div id="current-info" class="tab-pane active">
+                                <h5>사용자 정보
+                                    <button class="btn btn-danger" id="btn-ban-user" type="button">로그인 제한</button>
+                                    <button class="btn btn-danger" id="btn-out-user" type="button">탈퇴</button>
+                                </h5>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>닉네임</th>
+                                            <th>파일럿</th>
+                                            <th>코인</th>
+                                            <th>블루칩</th>
+                                            <th>캡슐</th>
+                                            <th>우정점수</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="status-body">
+                                    </tbody>
+                                </table>
+                                <h5>계정 정보</h5>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>계정 생성일</th>
+                                            <th>SecurityLevel</th>
+                                            <th>최고 점수</th>
+                                            <th>최고 순위</th>
+                                            <th>플레이 횟수</th>
+                                            <th>총 플레이시간</th>
+                                            <th>퀘스트 레벨</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="account-body">
+                                    </tbody>
+                                </table>
+                                <h5>파츠</h5>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>머리</th>
+                                            <th>몸</th>
+                                            <th>팔</th>
+                                            <th>다리</th>
+                                            <th>부스터</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="parts-body">
+                                    </tbody>
+                                </table>
+                                <h5>무기</h5>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>주무기</th>
+                                            <th>보조무기1</th>
+                                            <th>보조무기2</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weapon-body">
+                                    </tbody>
+                                </table>
+                                <h5>필살기</h5>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>필살기1</th>
+                                            <th>필살기2</th>
+                                            <th>필살기3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="skill-body">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="own-list" class="tab-pane">
+                                <h4>보유 파일럿</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>파일럿 이름</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-pilot-body">
+                                    </tbody>
+                                </table>
+                                <h4>보유 슬롯</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th class="span2">슬롯 종류</th>
+                                            <th>상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-slot-body">
+                                    </tbody>
+                                </table>
+                                <h4>보유 무기</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter" id="own-weapon">
+                                    <thead>
+                                        <tr>
+                                            <th>무기타입</th>
+                                            <th>무기이름</th>
+                                            <th>무기레벨</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-weapon-body">
+                                    </tbody>
+                                </table>
+                                <h4>보유 파츠</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter" id="own-parts">
+                                    <thead>
+                                        <tr>
+                                            <th>무기타입</th>
+                                            <th>무기종류</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-parts-body">
+                                    </tbody>
+                                </table>
+
+                                <h4>생포 로봇</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter" id="own-robot">
+                                    <thead>
+                                        <tr>
+                                            <th>로봇</th>
+                                            <th>생포 수</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-enemy-body">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="friend" class="tab-pane">
+                                <h4>친구 리스트</h4>
+                                <table class="table table-bordered table-hover table-striped tablesorter" id="own-friend">
+                                    <thead>
+                                        <tr>
+                                            <th>친구 ID</th>
+                                            <th>친구 이름</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="friend-body">
+                                    </tbody>
+                                </table>
+                                <h4>우편/편지함 기록</h4>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="input-append">
+                                            <input class=" date-picker input-medium" id="start-date" type="text" readonly>
+
+                                        </div>~
+                                        <div class="input-append">
+                                            <input class="date-picker input-medium" id="end-date" type="text" readonly>
+
+                                            <button id="btn-search" class="btn btn-primary" type="button">조회</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table table-bordered table-hover table-striped tablesorter" id="message-his">
+                                    <thead>
+                                        <tr>
+                                            <th>보낸사람 ID</th>
+                                            <th>발송일</th>
+                                            <th>수령일</th>
+                                            <th>수령여부</th>
+                                            <th>만료일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="msg-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.table-->
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+        <hr/>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+
+    <!-- 사용자 제한 모달 -->
+    <div id="modal-ban-user" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">사용자 제한</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="form-ban-user">
+                <!-- GM ID 는 임시적으로 1로 고정 -->
+                <input type="hidden" name="gmid" value="1">
+                <div class="control-group">
+                    <label class="control-label">사용자 ID</label>
+                    <div class="controls">
+                        <input type="text" id="inp-ban-user-id" name="usnid" placeholder="ID">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">제한등급</label>
+                    <div class="controls">
+                        <select name="level">
+                            <option value="1">루팅 사용자</option>
+                            <option value="2">미지정</option>
+                            <option value="3">미지정</option>
+                            <option value="4">미지정</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">제한일수</label>
+                    <div class="controls">
+                        <input type="text" name="expireDay" id="expire-day">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">사유</label>
+                    <div class="controls">
+                        <textarea name="comment"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">취소</button>
+            <button class="btn btn-success" id="btn-modal-ban" type="button">제한</button>
+        </div>
+    </div>
+    <!-- 메세지 상세 정보 모달 -->
+    <div id="modal-message-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">메세지 상세</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">아이템 IDX</label>
+                <div class="controls">
+                    <input id="modal-item-idx" type="text" readonly>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">아이템 종류</label>
+                <div class="controls">
+                    <input id="modal-item-name" type="text" readonly>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">아이템 Count</label>
+                <div class="controls">
+                    <input id="modal-item-count" type="text" readonly>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">내용</label>
+                <div class="controls">
+                    <textarea id="modal-message" type="text" readonly class="field span6" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+        </div>
+    </div>
+    <script>
+    var gmid = $.cookie("gmid");
+    var usnid = getParameterByName("id");
+
+    var eventArr;
+    var itemDescArr;
+    $(function() {
+        // 사이드바 선택 표시
+        $("#side-user").addClass("active");
+
+        // session check
+        if (isEmpty($.cookie('gmid'))) {
+            alert("로그아웃 상태입니다.");
+            location.href = "login.html";
+            return false;
+        } else {
+            $("#b-id").text($.cookie("gmid"));
+            $("#b-role").text($.cookie("role"));
+            setCookie(60, gmid);
+        };
+
+        // data table initialize
+        $('#message-his').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+        $('#own-weapon').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+        $('#own-parts').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+        $('#own-robot').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+        $('#own-friend').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+
+        // 사용자 정보 변경 버튼 클릭 이벤트
+        $("#btn-mod").on("click", function() {
+            location.href = "modify.html?id=" + usnid;
+        });
+
+        // 사용자 탈퇴 버튼 클릭 이벤트
+        $("#btn-out-user").on("click", function() {
+            if (confirm("사용자를 탈퇴 시키겠습니까?")) {
+                $.ajax({
+                    type: "POST",
+                    url: api.delUserInfo,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        comment: "사용자 탈퇴",
+                        usnid: usnid
+                    },
+                    success: function(response) {
+                        alert("사용자가 탈퇴 되었습니다.");
+                        location.href = "userSearch.html";
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("사용자 탈퇴 실패 하였습니다.");
+                    }
+                });
+            }
+        });
+
+        // 로그인 제한 버튼 클릭 이벤트(모달 open)
+        $("#btn-ban-user").on("click", function() {
+            if (gmid == "view") {
+                alert("등록 권한이 없는 GM ID 입니다.");
+                location.href = "login.html";
+                return false;
+            }
+            $("#inp-ban-user-id").val(usnid);
+            $("#modal-ban-user").modal("toggle");
+        }); // end 로그인 제한 open modal
+
+
+        // 로그인 제한 버튼 클릭 이벤트 in modal
+        $("#btn-modal-ban").on("click", function() {
+            if (isEmpty($("#expire-day").val())) {
+                alert("제한 일수는 필수 값입니다.");
+                return false;
+            }
+
+            if (confirm("로그인 제한 하시겠습니까?")) {
+                $.ajax({
+                    type: "POST",
+                    url: api.setBanUser,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: $("#form-ban-user").serialize(),
+                    success: function(response) {
+                        alert("로그인이 제한 되었습니다.");
+                        $("#modal-ban-user").modal("toggle");
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("로그인이 제한 설정이 실패 하였습니다.");
+                        $("#modal-ban-user").modal("toggle");
+                    }
+                });
+            }
+        }); // end 로그인 제한 버튼 이벤트 in modal
+
+        // 달력 이벤트
+        $('.date-picker').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+        // 사용자 기본 정보 조회 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getUserInfo,
+            data: {
+                id: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("사용자 정보 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var userInfoString = "";
+                var partsInfoString = "";
+                var weaponInfoString = "";
+                var skillInfoString = "";
+                var userNickName = "";
+                var accountInfo = "";
+                var subWeaponSlot1 = "";
+                var subWeaponSlot2 = "";
+                var superSkillSlot1="";
+                var superSkillSlot2="";
+                var superSkillSlot3="";
+                $.each(response, function() {
+                    userNickName = this.Nickname;
+                    // 기본정보
+                    userInfoString += "<tr>" + AddTag(this.id, "TD") + AddTag(this.Nickname, "TD") + AddTag(this.EquipPilotName, "TD") + AddTag(this.Coin, "TD") + AddTag(this.BlueChip, "TD") + AddTag(this.Capsule, "TD") + AddTag(this.friendship, "TD") + "</tr>";
+                    accountInfo += "<tr>" + AddTag(this.REGDATE, "TD") + AddTag(this.securityLevel, "TD") + AddTag(this.maxScore, "TD") + AddTag(this.maxRecord, "TD") + AddTag(this.playCount, "TD") + AddTag(this.totalPlayTime, "TD") + AddTag(this.QuestLevel, "TD") + "</tr>";
+                    // 장착 파츠 정보
+                    partsInfoString += "<tr>" + AddTag(this.HeadName, "TD") + AddTag(this.BodyName, "TD") + AddTag(this.ArmName, "TD") + AddTag(this.LegName, "TD") + AddTag(this.BoosterName, "TD") + "</tr>";
+                    // 장착 무기 정보
+                    weaponInfoString += "<tr>" + AddTag(this.MainWeaponName + "(" + this.MainWeaponLevel + ")", "TD") + AddTag(this.SubWeapon1Name + "(" + this.SubWeapon1Level + ")", "TD") + AddTag(this.SubWeapon2Name + "(" + this.SubWeapon2Level + ")", "TD") + "</tr>";
+                    // 장착 필살기 정보
+                    skillInfoString += "<tr>" + AddTag(this.SuperPower1Name + "(" + this.SuperPower1Level + ")", "TD") + AddTag(this.SuperPower2Name + "(" + this.SuperPower2Level + ")", "TD") + AddTag(this.SuperPower3Name + "(" + this.SuperPower3Level + ")", "TD") + "</tr>";
+
+                    subWeaponSlot1 += "<tr>"
+                                + AddTag("보조무기-1", "TD")
+                                + AddTag((this.SubWeapon1 == -2 ? "닫힘" : "열림") , "TD")
+                                + "</tr>";
+                    subWeaponSlot2 += "<tr>"
+                                + AddTag("보조무기-2", "TD")
+                                + AddTag((this.SubWeapon2 == -2 ? "닫힘" : "열림") , "TD")
+                                + "</tr>";
+                    superSkillSlot1 += "<tr>"
+                                + AddTag("필살기-1", "TD")
+                                + AddTag((this.SuperPower1 == -2 ? "닫힘" : "열림") , "TD")
+                                + "</tr>";
+                    superSkillSlot2 += "<tr>"
+                                + AddTag("필살기-2", "TD")
+                                + AddTag((this.SuperPower2 == -2 ? "닫힘" : "열림") , "TD")
+                                + "</tr>";
+                    superSkillSlot3 += "<tr>"
+                                + AddTag("필살기-3", "TD")
+                                + AddTag((this.SuperPower3 == -2 ? "닫힘" : "열림") , "TD")
+                                + "</tr>";
+                });
+                $("#user-nickname").text(userNickName);
+                $("#status-body").append(userInfoString);
+                $("#account-body").append(accountInfo);
+                $("#parts-body").append(partsInfoString);
+                $("#weapon-body").append(weaponInfoString);
+                $("#skill-body").append(skillInfoString);
+                $("#own-slot-body").append(subWeaponSlot1);
+                $("#own-slot-body").append(subWeaponSlot2);
+                $("#own-slot-body").append(superSkillSlot1);
+                $("#own-slot-body").append(superSkillSlot2);
+                $("#own-slot-body").append(superSkillSlot3);
+            } // end sueccess
+        }); // end 사용자 기본 정보 조회 ajax
+
+        // 보유 파일럿 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getPilotInfo,
+            data: {
+                id: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 파일럿 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var pilotsInfoString = "";
+                $.each(response, function() {
+                    pilotsInfoString += "<tr>" + AddTag(this.PilotName, "TD") + "</tr>";
+                });
+                $("#own-pilot-body").append(pilotsInfoString);
+            } // end success
+        }); // end 보유 파일럿 리스트 ajax
+
+        // 보유 무기 리스트
+        $.ajax({
+            type: "POST",
+            url: api.getOwnWeapon,
+            data: {
+                id: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 무기 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var weaponInfoString = "";
+                $.each(response, function() {
+                    var wpTypeHangleName = ""
+                    if (parseInt(this.wpType) == 0) {
+                        wpTypeHangleName = "주무기";
+                    }
+                    if (parseInt(this.wpType) == 1) {
+                        wpTypeHangleName = "보조무기";
+                    }
+                    if (parseInt(this.wpType) == 2) {
+                        wpTypeHangleName = "필살기";
+                    }
+                    $('#own-weapon').dataTable().fnAddData([
+                        wpTypeHangleName,
+                        this.wpName,
+                        this.wpLevel
+                    ]);
+                });
+            } // end success
+        }); // end 보유 무기 리스트 ajax
+
+        // 보유 파츠 리스트
+        $.ajax({
+            type: "POST",
+            url: api.getOwnParts,
+            data: {
+                id: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 파츠 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var partsInfoString = "";
+                $.each(response, function() {
+                    $('#own-parts').dataTable().fnAddData([
+                        this.PartsTypeName,
+                        this.PartsName
+                    ]);
+                });
+            } // end success
+        }); // end 보유 파츠 리스트 ajax
+
+        // 생포 로봇 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getEnemyInfo,
+            data: {
+                usnid: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("생포 로봇 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var partsInfoString = "";
+                $.each(response, function() {
+                    $('#own-robot').dataTable().fnAddData([
+                        this.enemyName,
+                        this.enemyCount
+                    ]);
+                }); // end each
+            } // end success
+        }); // end 생포 로봇 리스트 ajax
+
+        // 친구 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getFriendInfo,
+            data: {
+                id: usnid
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("친구 목록 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                $.each(response, function() {
+                    $('#own-robot').dataTable().fnAddData([
+                        this.friendID,
+                        this.NickName
+                    ]);
+                });
+            } // success
+        }) // end 친구 리스트 ajax;
+
+        // 우편함 아이템 IDX Description 설정
+        $.ajax({
+            type: "POST",
+            url: api.postCodeTable,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("Post Item Idx descript search error! : " + errorThrown);
+            },
+            success: function(response) {
+                itemDescArr = response
+
+            } // success
+        }) // end 우편함 Description ajax;
+
+        // 메세지/우편함 기록
+        makeMessageInfo();
+
+        // 우편 기록 조회 클릭 이벤트
+        $("#btn-search").on("click", function() {
+            // table tbody 초기화
+            $("#msg-body").empty();
+            makeMessageInfo();
+        }) // end 우폄함 조회 버튼 이벤트 ;
+    }); // end $() end
+
+    function makeMessageInfo() {
+        // 우편함 조회 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getMessageInfo,
+            data: {
+                rcvid: usnid,
+                withExpireMessage: 'Y',
+                startDate: $("#start-date").val(),
+                endDate: $("#end-date").val()
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("메세지 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var messageHtml = "";
+                $('#message-his').dataTable().fnClearTable();
+                $.each(response, function(inx, value) {
+                    var receiveYn = "N";
+                    var messageButton = "";
+                    if (parseInt(value.receive) == 0) {
+                        messageButton = '<input type="hidden" name="msg-seq" value="' + value.seq + '">' + '<button type="button" class="btn btn-danger btn-message-del">삭제</button>';
+                    } else {
+                        if (value.receiveDate.indexOf('9999') == 0) {
+                            messageButton = '<input type="hidden" name="msg-seq" value="' + value.seq + '">' + ' GM 삭제';
+                        } else {
+                            receiveYn = "Y";
+                            messageButton = '<input type="hidden" name="msg-seq" value="' + value.seq + '">' + '수령 확인';
+                        }
+                    }
+
+                    var itemName = "";
+                    $.each(itemDescArr, function(itemListIdx, itemValue) {
+                        if (value.itemIdx == itemValue.Idx) {
+                            itemName = itemValue.Define;
+                            return false;
+                        }
+                    });
+
+                    $('#message-his').dataTable().fnAddData([
+                        value.sndID,
+                        '<a href="javascript:;" onclick="detailMessageHistory(this);">' + value.issueDate + '</a>' + '<input type="hidden" name="item-idx" value="' + value.itemIdx + '">' + '<input type="hidden" name="item-name" value="' + itemName + '">' + '<input type="hidden" name="item-count" value="' + value.itemCount + '">' + '<input type="hidden" name="optional-str" value="' + value.optionalStr + '">',
+                        value.receiveDate,
+                        receiveYn,
+                        value.expireDateTime + '&nbsp;' + messageButton
+                    ]);
+
+                }); // end each
+                $("#msg-body").append(messageHtml);
+                // 메세지 삭제 버튼 이벤트
+                $(".btn-message-del").on("click", function() {
+                    if (confirm("해당 메세지를 삭제 하시겠습니까?")) {
+                        var msgSeq = $(this).siblings("input[name='msg-seq']").val()
+                        // 메세지 삭제 ajax
+                        $.ajax({
+                            type: "POST",
+                            url: api.delMessageInfo,
+                            data: {
+                                gmid: gmid,
+                                usnid: usnid,
+                                msgSeq: msgSeq,
+                                comment: "메세지 삭제"
+                            },
+                            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                            error: function(xhr, textStatus, errorThrown) {
+                                alert("메세지 삭제 실패! : " + errorThrown);
+                            },
+                            success: function(response) {
+                                alert("삭제 완료!");
+                            } // success
+                        }); // end 메세지 삭제 ajax
+                    } // end confirm
+                }); // end 메세지 삭제 버튼 이벤트
+            } // end success
+        }); // end 우편함 조회 ajax
+    } // end makeMessageInfo
+
+    function detailMessageHistory(e) {
+        var itemCount = $(e).siblings("input[name='item-count']").val();
+        var itemIdx = $(e).siblings("input[name='item-idx']").val();
+        var itemName = $(e).siblings("input[name='item-name']").val();
+        var optionalStr = $(e).siblings("input[name='optional-str']").val();
+        $("#modal-item-idx").val(itemIdx);
+        $("#modal-item-name").val(itemName);
+        $("#modal-item-count").val(itemCount);
+        $("#modal-message").val(optionalStr);
+        $("#modal-message-detail").modal('toggle');
+    } //
+    </script>
+</body>
+
+</html>

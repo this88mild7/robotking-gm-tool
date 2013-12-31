@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <style>
+    .btn {
+        line-height : 20px
+    }
+    table {
+        table-layout: fixed;
+    }
+    table th, table td {
+        overflow: hidden;
+    }
+    </style>
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+    <!--inline styles related to this page-->
+
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/jquery-dataTable.js"></script>
+    <script src="js/jquery-dataTable-bootstrap.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <ul class="nav ace-nav pull-right">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                ID : <b id="b-id"></b>
+                                <br>Role : <b id="b-role"></b>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                            <li>
+                                <a href="javascript:;" onclick="logOut();">
+                                    <i class="icon-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-user">
+                    <a href="userSearch.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">사용자 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="payment">
+                    <a href="payment.html" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-message">
+                    <a href="message.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-event">
+                    <a href="event.html" class="dropdown-toggle">
+                        <i class="icon-calendar"></i>
+                        <span class="menu-text">이벤트 관리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="work-info">
+                    <a href="work.html" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span class="menu-text">업무처리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        업무처리 현황
+                    </h1>
+                </div>
+                <!--/.page-header-->
+
+                <div class="row-fluid">
+                    <div class="control-group">
+                        <label class="control-label">GM ID</label>
+                        <div class="controls">
+                            <input id="gmid" type="text" class="input-small">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">변경타입</label>
+                        <div class="controls">
+                            <select id="work-method">
+                                <option value="">전체</option>
+                                <option value="SetUserInfo">기본정보</option>
+                                <option value="SetBanUser">로그인 제한</option>
+                                <option value="SetPilot">파일럿 정보</option>
+                                <option value="SetWeapon">무기정보</option>
+                                <option value="SetParts">파트정보</option>
+                                <option value="SetEnemyInfo">생포정보</option>
+                                <option value="SendMessage ">메세지 발송</option>
+                                <option value="SendMessageToAllUser ">전체 메세지 발송</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">조회 날짜</label>
+
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="input-medium date-picker" name="search_start_date" id="start-date" type="text" readonly>
+
+                            </div>~
+                            <div class="input-append">
+                                <input class="input-medium date-picker" name="search_start_date" id="end-date" type="text" readonly>
+
+                                <button id="btn-search" class="btn btn-primary" type="button">조회</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="work-his">
+                        <thead>
+                            <tr>
+                                <th style="width:145px">처리일시</th>
+                                <th style="width:145px">ID</th>
+                                <th style="width:145px">GM ID</th>
+                                <th style="width:200px">변경 값</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-result-body">
+                        </tbody>
+                    </table>
+                    <div id="pager"></div>
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+        <!-- 업무처리 상세  정보 모달 -->
+        <div id="modal-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="text-center">업무 처리 상세</h3>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label">이전 값</label>
+                    <div class="controls">
+                        <input id="modal-before-value" type="text" readonly>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">최종 값</label>
+                    <div class="controls">
+                        <input id="modal-change-value" type="text" readonly>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">변경 사유 및 메세지 정보</label>
+                    <div class="controls">
+                        <textarea id="modal-reason" type="text" readonly class="field span6" rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <script>
+    $(function() {
+        $("#work-info").addClass("active");
+
+        // session check
+        if (isEmpty($.cookie('gmid'))) {
+            alert("로그아웃 상태입니다.");
+            location.href = "login.html";
+            return false;
+        }else{
+            $("#b-id").text($.cookie("gmid"));
+            $("#b-role").text($.cookie("role"));
+            setCookie(60, $.cookie("gmid"));
+        };
+
+        // initialize data table
+        $('#work-his').dataTable({
+            "iDisplayStart": 10,
+            "bFilter": false,
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sEmptyTable": "결과 값이 없습니다."
+            }
+        });
+
+        // 달력 이벤트
+        $('.date-picker').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true
+        });
+
+    });
+
+    $("#btn-search").on("click", function() {
+        $("#search-result-body").empty();
+
+
+        var searchStartDate = $("#start-date").val();
+        var searchEndDate = $("#end-date").val();
+
+        // input 최소값 체크
+        if (isEmpty($("#gmid").val()) && (isEmpty(searchStartDate) || isEmpty(searchEndDate)) && isEmpty($("#work-method").val())) {
+            alert("최소 한가지 검색 조건을 입력해 주세요!");
+            return false;
+        }
+
+        // 이벤트 시작일 종료일 기간체크(시작일이 종료일 보다 크면 안됨)
+        var tempStartTime = parseInt(searchStartDate.replace(/-/gi, ""));
+        var tempEndTime = parseInt(searchEndDate.replace(/-/gi, ""));
+        if (tempStartTime > tempEndTime) {
+            alert("시작일은 종료일 보다 이전 날짜여야 합니다.");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: api.getAdminWork,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            data: {
+                gmid: $("#gmid").val(),
+                startdate: searchStartDate,
+                enddate: searchEndDate,
+                workMethod: $("#work-method").val()
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                alert(errorThrown);
+            },
+            success: function(response) {
+                if (response.length == 0) {
+                    alert("조회 결과가 없습니다.");
+                } else {
+                    $('#work-his').dataTable().fnClearTable();
+                    $.each(response, function(index, value) {
+
+                        $('#work-his').dataTable().fnAddData([
+                            '<a href="javascript:;" onclick="detailHistory(this);" class="a-create-dt">' + value.CREATED_DT + '</a>' + '<input type="hidden" name="befor-value" value="' + value.BEFORE_VALUE + '">' + '<input type="hidden" name="work-type" value="' + value.WORK_TYPE + '">' + '<input type="hidden" name="change-value" value="' + value.CHANGE_VALUE + '">' + '<textarea name="reason" style="display:none;">' + value.REASON + '</textarea>',
+                            value.U_ID,
+                            value.GM_ID,
+                            convertWorkType(value.WORK_TYPE)
+                        ]);
+                    })
+                }
+            }
+        });
+    });
+
+    function detailHistory(e) {
+        var beforeValue = $(e).siblings("input[name='befor-value']").val();
+        var changeValue = $(e).siblings("input[name='change-value']").val();
+        var workType = $(e).siblings("input[name='work-type']").val();
+        var reason = $(e).siblings("textarea[name='reason']").val();
+        $("#modal-before-value").val(beforeValue);
+        if (workType.indexOf('Message') > -1) {
+            $("#modal-change-value").val('');
+            $("#modal-reason").val(changeValue);
+        } else {
+            $("#modal-change-value").val(changeValue);
+            $("#modal-reason").val(reason);
+        }
+        $("#modal-detail").modal('toggle');
+    }
+
+    function convertWorkType(workType) {
+        if (workType == 'SendMessage') {
+            return "메세지 발송";
+        } else if (workType == 'SendMessageToAllUser') {
+            return "전체 메세지 발송";
+        } else if (workType == 'SetBanUser') {
+            return "로그인 제한";
+        } else if (workType == 'SetEnemyInfo') {
+            return "생포 정보 변경";
+        } else if (workType == 'SetParts') {
+            return "파츠 정보 변경";
+        } else if (workType == 'SetParts') {
+            return "";
+        } else if (workType == 'SetPilot') {
+            return "파일럿 정보 변경";
+        } else if (workType == 'SetSaleEvent') {
+            return "판매 이벤트 등록";
+        } else if (workType == 'SetUserInfo') {
+            return '기본 정보(코인, 캡슐 등등) 변경';
+        } else if (workType == 'SetWeapon') {
+            return "무기 및 필살기 정보 변경";
+        } else if (workType == 'DelMessageInfo') {
+            return "메세지 삭제";
+        } else if (workType == 'DelParts') {
+            return "보유 파츠 삭제";
+        } else if (workType == 'DelPilot') {
+            return "보유 파일럿 삭제";
+        } else if (workType == 'DelUserInfo') {
+            return "유저 삭제";
+        } else if (workType == 'DelWeapon') {
+            return "무기 및 스킬 초기화";
+        } else if (workType == 'DelMessageInfo') {
+            return "우편함 삭제";
+        } else {
+            return workType;
+        }
+    }
+    </script>
+</body>
+
+</html>

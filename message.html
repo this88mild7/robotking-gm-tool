@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+    <!--inline styles related to this page-->
+
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+
+    <style>
+    .btn {
+        line-height : 18px
+    }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <ul class="nav ace-nav pull-right">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                ID : <b id="b-id"></b>
+                                <br>Role : <b id="b-role"></b>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                            <li>
+                                <a href="javascript:;" onclick="logOut();">
+                                    <i class="icon-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">b
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-user">
+                    <a href="userSearch.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">사용자 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="payment">
+                    <a href="payment.html" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-message">
+                    <a href="message.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-event">
+                    <a href="event.html" class="dropdown-toggle">
+                        <i class="icon-calendar"></i>
+                        <span class="menu-text">이벤트 관리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="work-info">
+                    <a href="work.html" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span class="menu-text">업무처리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>메세지 발송</h1>
+                </div>
+                <!--/.page-header-->
+                <form class="form-horizontal" action="/service/Management.asmx/SendMessage" id="form-send-message" method="post">
+                    <!-- 발신자 아이디 임시적으로 GM ID = 1 로 세팅 -->
+                    <input type="hidden" name="sndid" value="1" />
+                    <div class="control-group">
+                        <label class="control-label">수신인 ID</label>
+                        <div class="controls">
+                            <div class="col-sm-9">
+                                <input type="text" id="rcvid" name="rcvid" class="col-xs-10 col-sm-5" id="form-input-readonly" value="">
+                                <span class="help-inline col-xs-12 col-sm-7">
+                                    <label class="middle">
+                                        <input class="ace" type="checkbox" id="btn-all-to-user">
+                                        <span class="lbl">전체발송</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">아이템</label>
+                        <div class="controls">
+                            <select id="sel-item-idx" name="itemIdx">
+                                <option value="0">chip</option>
+                                <option value="1">coin</option>
+                                <option value="2">capsule</option>
+                                <option value="3">Golden Robot head</option>
+                                <option value="4">golden Robot body</option>
+                                <option value="5">golden Robot arm</option>
+                                <option value="6">golden Robot leg</option>
+                                <option value="7">golden Robot boost</option>
+                                <option value="8">rakisys Robot head</option>
+                                <option value="9">rakisys Robot body</option>
+                                <option value="10">rakisys Robot arm</option>
+                                <option value="11">rakisys Robot leg</option>
+                                <option value="12">rakisys Robot boost</option>
+                                <option value="13">golden FullSet</option>
+                                <option value="14">rakisys FullSet</option>
+                                <option value="15">Friend with Dispatch</option>
+                                <option value="16">Friend send to Presnt</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">아이템 개수</label>
+                        <div class="controls">
+                            <input type="text" id="itemCnt" name="itemCnt">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">내용</label>
+                        <div class="controls">
+                            <p class="text-error">한 문장에 최대 17자로 작성해 주세요!</p>
+                            <input type="text" id="msg1" name="message">
+                            <input type="text" id="msg2" name="message">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">만료일</label>
+                        <div class="controls">
+                            <input id="expireDay" type="text" name="expireDay">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <button class="btn btn-success" id="btn-send" type="button">보내기</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+        <hr/>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <script>
+    $(function() {
+        //임시적으로 gmid는 1로 한다.
+        var gmid = 1;
+
+        $("#side-message").addClass("active");
+
+        // session check
+        if(isEmpty($.cookie("gmid"))){
+            alert("로그아웃 상태입니다.");
+            window.history.back();
+            return false;
+        }else{
+            gmid = $.cookie('gmid');
+            $("#b-id").text($.cookie("gmid"));
+            $("#b-role").text($.cookie("role"));
+            setCookie(60, gmid);
+        }
+        if(gmid == "view"){
+            alert("발송 권한이 없는 GM ID 입니다.");
+            window.history.back();
+            return false;
+        }
+
+        // 전체발송 체크박스 이벤트
+        $("#btn-all-to-user").on("click", function() {
+            $("#rcvid").attr("readonly", true);
+        })
+
+        $("#btn-send").on("click", function() {
+
+            // 아이템 카운트 체크
+            if (!isNaturalNum($("#itemCnt").val())) {
+                alert("아이템 카운트는 소수점이 없는 양의 정수만 가능 합니다.");
+                return false;
+            }
+
+            //빌신 내용1 문자 길이 체크
+            if (isEmpty($("#msg1").val())) {
+                alert("첫번째 문장은 반드시 입력해야 합니다.");
+                return false;
+            }
+            if (!isPossiblelength($("#msg1").val(), 17)) {
+                alert("한 문장에 17자 까지만 가능합니다.");
+                return false;
+            }
+            //빌신 내용2 문자 길이 체크
+            if (!isEmpty($("#msg2").val())) {
+                if (!isPossiblelength($("#msg2").val(), 17)) {
+                    alert("한 문장에 17자 까지만 가능합니다.");
+                    return false;
+                }
+            }
+            // 만료일 체크
+            if (isEmpty($("#expireDay").val())) {
+                alert("만료일자를 입력해 주세요");
+                return false;
+            }
+
+
+            var sendUrl = "";
+            if ($("#btn-all-to-user").is(":checked")) {
+                // 전체 발송
+                sendUrl = api.sendMessageToAllUser;
+
+            } else {
+                // 일부발송
+                if (isEmpty($("#rcvid").val())) {
+                    alert("특정 사용자에게 발송시에는 ID를 입력해야 합니다.");
+                    $("#rcvid").focus();
+                    return false;
+                }
+                sendUrl = api.sendMessage;
+
+            }
+
+
+            if (confirm("메세지 내용에 이상이 없습니까?")) {
+                $.ajax({
+                    type: "POST",
+                    url: sendUrl,
+                    data: {
+                        sndid: gmid,
+                        rcvid: $("#rcvid").val(),
+                        itemIdx: $("#sel-item-idx").val(),
+                        itemCnt: $("#itemCnt").val(),
+                        message: $("#msg1").val() + "\n" + $("#msg2").val(),
+                        expireDay: $("#expireDay").val(),
+                        comment: "메세지 발송"
+                    },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

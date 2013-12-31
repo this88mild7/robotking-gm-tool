@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+          <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+    <style>
+    .btn {
+        line-height : 18px
+    }
+    </style>
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+          <![endif]-->
+
+    <!--inline styles related to this page-->
+
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+
+
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <ul class="nav ace-nav pull-right">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <span class="user-info">
+                                ID : <b id="b-id"></b>
+                                <br>Role : <b id="b-role"></b>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                            <li>
+                                <a href="javascript:;" onclick="logOut();">
+                                    <i class="icon-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-user">
+                    <a href="userSearch.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">사용자 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="payment">
+                    <a href="payment.html" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-message">
+                    <a href="message.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="side-event">
+                    <a href="event.html" class="dropdown-toggle">
+                        <i class="icon-calendar"></i>
+                        <span class="menu-text">이벤트 관리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="work-info">
+                    <a href="work.html" class="dropdown-toggle">
+                        <i class="icon-list"></i>
+                        <span class="menu-text">업무처리
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        <span id="user-nickname"></span>님의 정보 변경
+                        <button class="btn btn-info" id="btn-current" type="button">현재정보</button>
+                    </h1>
+                </div>
+                <!--/.page-header-->
+
+                <div class="row-fluid">
+                    <form class="form-horizontal" id="modify">
+                        <div class="control-group">
+                            <label class="control-label">변경사유</label>
+                            <div class="controls">
+                                <p class="text-error"><b>필수 입력 값입니다. 250자 이내로 작성해 주세요!</b>
+                                </p>
+                                <textarea id="comment" class="field span10" rows="6"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">기본정보</label>
+                            <div class="controls">
+                                <select id="sel-user-info" class="input-small">
+                                    <option>선택</option>
+                                    <option value="coin">코인</option>
+                                    <option value="bluechip">블루칩</option>
+                                    <option value="capsule">캡슐</option>
+                                    <option value="friendship">우정점수</option>
+                                    <option value="KillPoint">킬포인트</option>
+                                    <option value="maxCombo">최고콤보</option>
+                                    <option value="maxScore">최고점수</option>
+                                    <option value="maxRecord">최고순위</option>
+                                    <option value="QuestLevel">퀘스트레벨</option>
+                                    <option value="phoneNumber">전화번호</option>
+                                    <option value="Nickname">닉네임</option>
+                                    <option value="UserProfile">프로파일</option>
+                                </select>
+                                <input id="inp-mod-value" type="text">
+                                <button id="btn-modify-user" class="btn btn-success" type="button">기본 정보 변경</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">파일럿</label>
+                            <div class="controls">
+                                <button id="btn-pilot-add" class="btn btn-info" id="btn-mod" type="button">추가</button>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th class="span2">파일럿 이름</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-pilot-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">슬롯</label>
+                            <div class="controls">
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th class="span2">슬롯 종류</th>
+                                            <th>상태 변경</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="slot-body">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">보유무기/기술</label>
+
+                            <div class="controls">
+                                <p class="text-error"><b>0</b> 레벨 무기는 미보유 무기 입니다.</p>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>무기타입</th>
+                                            <th>무기이름</th>
+                                            <th>무기레벨</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-weapon-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">보유파츠</label>
+                            <div class="controls">
+                                <button id="btn-parts-add" class="btn btn-info" type="button">추가</button>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>파츠타입</th>
+                                            <th>파츠명</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-parts-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">생포로봇</label>
+                            <div class="controls">
+                                <button id="btn-robot-add" class="btn btn-info" type="button">추가</button>
+                                <table class="table table-bordered table-hover table-striped tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>로봇</th>
+                                            <th>생포 수</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="own-enemy-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+        <hr/>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- 파일럿 모달 -->
+    <div id="modal-pilot" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">파일럿 추가</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="modal-mod-pilot-form">
+                <div class="control-group">
+                    <label class="control-label">파일럿</label>
+                    <div class="controls">
+                        <select name="PilotCode" id="modal-pilots-code">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button id="btn-modal-pilots-add" class="btn btn-primary" type="button">추가</button>
+                    </div>
+                </div>
+                <div class="control-group" id="div-pilot-add" style="display: none;">
+                    추가목록
+                    <table class="table table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                <th>파일럿</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-pilot-add-table">
+                            <!-- ajax -->
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-pilot" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+        </div>
+    </div>
+    <!-- 파츠 모달 -->
+    <div id="modal-parts" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">파츠 추가</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="modal-mod-parts-form">
+                <div class="control-group">
+                    <label class="control-label">파츠타입</label>
+                    <div class="controls">
+                        <select id="modal-parts-type" name="partsType">
+                            <option value="0">머리</option>
+                            <option value="1">몸</option>
+                            <option value="2">팔</option>
+                            <option value="3">다리</option>
+                            <option value="4">부스터</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">파츠명</label>
+                    <div class="controls">
+                        <select id="modal-parts-code" name="partsCode">
+                        </select>
+                        <button id="btn-modal-parts-add" class="btn btn-primary" type="button">추가</button>
+                    </div>
+                </div>
+                <div class="control-group" id="div-parts-add" style="display:none;">
+                    추가목록
+                    <table class="table table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                <th>파츠타입</th>
+                                <th>파츠명</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-parts-add-table">
+                            <!-- ajax -->
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-parts" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+        </div>
+    </div>
+    <!-- 생포 로봇 모달 -->
+    <div id="modal-robot" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">생포 로봇 추가</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">적 로봇</label>
+                <div class="controls">
+                    <select id="modal-sel-robot">
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">생포 수</label>
+                <div class="controls">
+                    <input id="modal-robot-count" type="text">
+                </div>
+            </div>
+            <div class="controls">
+                <button id="btn-modal-robot-add" class="btn btn-primary" type="button">추가</button>
+            </div>
+            <div class="control-group" id="div-robot-add" style="display: none;">
+                추가목록
+                <table class="table table-striped table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th>로봇</th>
+                            <th>생포 수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-robot-add-table">
+                        <!-- ajax -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+        </div>
+    </div>
+    <script>
+    // GM ID는 임시적으로 1로 고정
+    var gmid = 1;
+
+    //파라미터 파싱
+    var userId = getParameterByName("id");
+
+    var currentCoin = "";
+    var currentBluechip = "";
+    var currentCapsule = "";
+    var currentKillpoint = "";
+    var currentMaxCombo = "";
+    var currentScore = "";
+    var currentRecord = "";
+    var currentQuestLevel = "";
+    var phoneNumber = "";
+    var Nickname = "";
+    var UserProfile = "";
+
+    var partsHeadListHtml = "";
+    var partsBodyListHtml = "";
+    var partsArmListHtml = "";
+    var partsLegListHtml = "";
+    var partsBoosterListHtml = "";
+
+    var weaponMainListHtml = "";
+    var weaponSub1ListHtml = "";
+    var weaponSub2ListHtml = "";
+
+    var $comment = $("#comment");
+
+    var slotParamData = {
+        gmid: gmid,
+        usnid: userId
+    };
+
+    $(function() {
+        $("#side-user").addClass("active");
+
+        // session check
+        if (isEmpty($.cookie("gmid"))) {
+            alert("로그아웃 상태입니다.");
+            window.history.back();
+            return false;
+        } else {
+            gmid = $.cookie('gmid');
+            $("#b-id").text($.cookie("gmid"));
+            $("#b-role").text($.cookie("role"));
+            setCookie(60, gmid);
+        }
+        if (gmid == "view") {
+            alert("수정 권한이 없는 GM ID 입니다.");
+            location.href = "login.html";
+            return false;
+        }
+
+        // 최초 경고 문구 
+        alert("변경시 변경 사유는 필수 값입니다. 먼저 작성해 주세요!");
+
+        // user.html 이동
+        $("#btn-current").on("click", function() {
+            location.href = "user.html?id=" + userId
+        });
+
+        // 기본정보 셀렉트 값 변경
+        $("#sel-user-info").change(function() {
+            if (this.value == 'coin') {
+                $("#inp-mod-value").val(currentCoin);
+            } else if (this.value == 'bluechip') {
+                $("#inp-mod-value").val(currentBluechip);
+            } else if (this.value == 'capsule') {
+                $("#inp-mod-value").val(currentCapsule);
+            } else if (this.value == 'friendship') {
+                $("#inp-mod-value").val(currentFriendship);
+            } else if (this.value == 'KillPoint') {
+                $("#inp-mod-value").val(currentKillpoint);
+            } else if (this.value == 'maxCombo') {
+                $("#inp-mod-value").val(currentMaxCombo);
+            } else if (this.value == 'maxScore') {
+                $("#inp-mod-value").val(currentScore);
+            } else if (this.value == 'maxRecord') {
+                $("#inp-mod-value").val(currentRecord);
+            } else if (this.value == 'QuestLevel') {
+                $("#inp-mod-value").val(currentQuestLevel);
+            } else if (this.value == 'phoneNumber') {
+                $("#inp-mod-value").val(phoneNumber);
+            } else if (this.value == 'Nickname') {
+                $("#inp-mod-value").val(Nickname);
+            } else if (this.value == 'UserProfile') {
+                $("#inp-mod-value").val(UserProfile);
+            } else {
+
+            }
+        }); // end 기본정보 셀렉트 값 변경
+
+        // 기본정보 변경 버튼 이벤트
+        $("#btn-modify-user").on("click", function() {
+
+            var syntax = $("#sel-user-info").val();
+            var modValue = $("#inp-mod-value").val();
+
+
+            // 기본정보 Code 체크
+            if (syntax == '선택') {
+                alert("변경할 기본정보를 선택해 주세요");
+                return false;
+            }
+
+            // 기본정보 변경 값 체크
+            if (isEmpty(modValue)) {
+                alert("변경 할 값을 입력해 주세요");
+                return false;
+            }
+
+            // 전화번호, 닉네임, 프로파일을 제외한 나머지 정보의 자연수 체크
+            if (syntax != "phoneNumber" && syntax != "Nickname" && syntax != "UserProfile") {
+                if (!isNaturalNum(modValue)) {
+                    alert("소수점을 제외한 양의 정수를 입력하세요");
+                    return false;
+                } else {
+                    if (modValue.length > 9) {
+                        alert("9자리 이하의 값을 입력해 주세요!");
+                        return false;
+                    }
+                }
+            }
+
+            // 변경사유 체크
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+
+            if (confirm("기본정보를 변경 하시겠습니까?")) {
+                // 기본정보 변경 ajax
+                $.ajax({
+                    type: "POST",
+                    url: api.setUserInfo,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        usnid: userId,
+                        syntax: syntax,
+                        value: modValue,
+                        comment: $comment.val()
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("사용자 기본 정보 변경 실패!")
+                    },
+                    success: function(response) {
+                        if (response == 'True') {
+                            alert("변경 완료!");
+                            location.reload();
+                        } else {
+                            alert("변경 실패!");
+                        }
+                    } // end success
+                }); // end ajax
+            } // end 기본정보 변경 confirm
+        }) // end 기본정보 이벤트
+
+        // 파일럿 추가 버튼 이벤트(open modal)
+        $("#btn-pilot-add").on("click", function() {
+            // 변경사유 체크
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 먼저 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+            $("#modal-pilot").modal('toggle');
+        }); // end 파일럿 추가 버튼 이벤트(open modal)
+
+        // 파츠 추가 버튼 이벤트(open modal)
+        $("#btn-parts-add").on("click", function() {
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 먼저 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+            $("#modal-parts").modal('toggle');
+            $("#modal-weapon-add-table").empty();
+        }); // 파츠 모달 이벤트(open modal)
+
+        // 생포로봇 추가 버튼 이벤트(open modal)
+        $("#btn-robot-add").on("click", function() {
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 먼저 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+            $("#modal-robot").modal('toggle');
+        }); // 생포로봇 추가 버튼 이벤트(open modal)
+
+        // 파이럿 모달 닫기 버튼 이벤트
+        $("#btn-modal-pilot").on("click", function(event) {
+            $("#modal-pilot").modal('toggle');
+            location.reload();
+        }); // end 파이럿 모달 닫기 버튼 이벤트
+
+
+        // 파츠 모달 닫기 버튼 이벤트
+        $("#btn-modal-parts").on("click", function(event) {
+            $("#modal-parts").modal('toggle');
+            location.reload();
+        }); // end 파츠 모달 닫기 버튼 이벤트
+
+        // 생포로봇 모달 닫기 버튼 이벤트
+        $("#btn-modal-robot").on("click", function(event) {
+            $("#modal-robot").modal('toggle');
+            location.reload();
+        }); // end 생포로봇 모달 닫기 버튼 이벤트
+
+        // 모달 파일럿 추가 이벤트
+        $("#btn-modal-pilots-add").on("click", function() {
+            // 변경사유 체크
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+
+            if (confirm("해당 파일럿을 추가 하시겠습니까?")) {
+                // 파이럿 변경 ajax
+                $.ajax({
+                    type: "POST",
+                    url: api.setPilot,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        usnid: userId,
+                        pilotcode: $("#modal-pilots-code").val(),
+                        comment: $comment.val()
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("추가 실패! : " + errorThrown);
+                    },
+                    success: function(response) {
+                        if (response == "True") {
+                            var appendInfo = "<tr>" + "<td>" + $("#modal-pilots-code option:selected").text() + "</td>" + "</tr>"
+                            $("#modal-pilot-add-table").append(appendInfo);
+                            $("#modal-robot-add-table").show();
+                            $('#div-pilot-add').css("display", "block");
+                            alert("추가 완료!");
+                        } else {
+                            alert("이미 추가된 파일럿 입니다.");
+                        }
+
+                    } // success
+                }); // end 파이럿 변경 ajax
+            } // end confirm
+        }); // end 모달 파일럿 추가 이벤트
+
+        // 모달 파츠 추가 이벤트
+        $("#btn-modal-parts-add").on("click", function() {
+
+            // 변경사유 체크
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+
+            if (confirm("해당 파츠를 추가 하시겠습니까?")) {
+                // 파츠 변경 ajax
+                $.ajax({
+                    type: "POST",
+                    url: api.setParts,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        usnid: userId,
+                        partsType: $("#modal-parts-type").val(),
+                        partsCode: $("#modal-parts-code").val(),
+                        comment: $comment.val()
+                    },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("추가 실패! : " + errorThrown);
+                    },
+                    success: function(response) {
+                        if (response == "True") {
+                            var appendInfo = "<tr>" + "<td>" + $("#modal-parts-type option:selected").text() + "</td>" + "<td>" + $("#modal-parts-code option:selected").text() + "</td>" + "</tr>";
+                            $("#modal-parts-add-table").append(appendInfo);
+                            $('#div-parts-add').css("display", "block");
+                            alert("추가 완료!");
+                        } else {
+                            alert("이미 추가된 파츠 입니다.");
+                        }
+                    } // success
+                }); //end 파츠 변경 ajax
+            } // end 파츠 변경 confirm
+        }); // end 모달 파츠 추가 이벤트
+
+        // 모달 생포 로봇 추가 이벤트
+        $("#btn-modal-robot-add").on("click", function() {
+
+            // 변경사유 체크
+            if (isEmpty($comment.val())) {
+                alert("변경 사유를 입력해 주세요");
+                return false;
+            } else {
+                if (!isPossiblelength($comment.val(), 250)) {
+                    alert("변경 사유는 250자 이내로 작성해 주세요!");
+                    return false;
+                }
+            }
+
+            // 추가 생포 로봇 정보 서버에 전송
+            if (confirm("해당 생포 로봇을 추가 하시겠습니까?")) {
+                // 생포 로봇 ajax
+                $.ajax({
+                    type: "POST",
+                    url: api.setEnemyInfo,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    data: {
+                        gmid: gmid,
+                        usnid: userId,
+                        enemycode: $("#modal-sel-robot").val(),
+                        enemyCount: $("#modal-robot-count").val(),
+                        comment: $comment.val()
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert("추가 실패! : " + errorThrown);
+                    },
+                    success: function(response) {
+                        if (response == "True") {
+                            var appendInfo = "<tr>" + "<td>" + $("#modal-sel-robot option:selected").text() + "</td>" + "<td>" + $("#modal-robot-count").val() + "</td>" + "</tr>";
+                            $("#modal-robot-add-table").append(appendInfo);
+                            $('#div-robot-add').css("display", "block");
+                            alert("추가 완료!");
+                        } else {
+                            alert("이미 생포된 로봇 입니다.");
+                        }
+                    }
+                }); // end 생포로봇 ajax
+            } // end confirm
+        }); // end 모달 생포 로봇 추가 이벤트
+
+
+        // 사용자 기본 정보 조회 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getUserInfo,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("사용자 정보 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var userNickName = "";
+                var subWeaponSlot1 = "";
+                var subWeaponSlot2 = "";
+                var superSkillSlot1 = "";
+                var superSkillSlot2 = "";
+                var superSkillSlot3 = "";
+                $.each(response, function(index, value) {
+                    userNickName = value.Nickname;
+                    currentCoin = value.Coin;
+                    currentBluechip = value.BlueChip;
+                    currentCapsule = value.Capsule;
+                    currentKillpoint = value.KillPoint;
+                    currentMaxCombo = value.maxCombo;
+                    currentScore = value.maxScore;
+                    currentRecord = value.maxRecord;
+                    currentQuestLevel = value.QuestLevel;
+                    phoneNumber = value.phoneNumber;
+                    Nickname = value.Nickname;
+                    UserProfile = value.UserProfile;
+                    subWeaponSlot1 += "<tr>" + AddTag("보조무기-1", "TD") + AddTag((this.SubWeapon1 == -2 ? '<button class="btn btn-success" id="btn-mod-subwe1-op" type="button">열기</button>' : '<button class="btn btn-danger" id="btn-mod-subwe1-cl" type="button">닫기</button>'), "TD") + "</tr>";
+                    subWeaponSlot2 += "<tr>" + AddTag("보조무기-2", "TD") + AddTag((this.SubWeapon2 == -2 ? '<button class="btn btn-success" id="btn-mod-subwe2-op" type="button">열기</button>' : '<button class="btn btn-danger" id="btn-mod-subwe2-cl" type="button">닫기</button>'), "TD") + "</tr>";
+                    superSkillSlot1 += "<tr>" + AddTag("필살기-1", "TD") + AddTag((this.SuperPower1 == -2 ? '<button  class="btn btn-success" id="btn-mod-skill1-op" type="button">열기</button>' : '<button class="btn btn-danger" id="btn-mod-skill1-cl" type="button">닫기</button>'), "TD") + "</tr>";
+                    superSkillSlot2 += "<tr>" + AddTag("필살기-2", "TD") + AddTag((this.SuperPower2 == -2 ? '<button class="btn btn-success" id="btn-mod-skill2-op" type="button">열기</button>' : '<button class="btn btn-danger" id="btn-mod-skill2-cl" type="button">닫기</button>'), "TD") + "</tr>";
+                    superSkillSlot3 += "<tr>" + AddTag("필살기-3", "TD") + AddTag((this.SuperPower3 == -2 ? '<button class="btn btn-success" id="btn-mod-skill3-op" type="button">열기</button>' : '<button class="btn btn-danger" id="btn-mod-skill3-cl" type="button">닫기</button>'), "TD") + "</tr>";
+                });
+                $("#user-nickname").text(userNickName);
+                $("#slot-body").append(subWeaponSlot1);
+                $("#slot-body").append(subWeaponSlot2);
+                $("#slot-body").append(superSkillSlot1);
+                $("#slot-body").append(superSkillSlot2);
+                $("#slot-body").append(superSkillSlot3);
+                // 보조무기1 슬롯 변경 이벤트        
+                $("#btn-mod-subwe1-op").on("click", function() {
+                    slotParamData.WeaponSlot2 = 0;
+                    modSlotInfo(slotParamData);
+                });
+                // 보조무기2 슬롯 변경 이벤트
+                $("#btn-mod-subwe2-op").on("click", function() {
+                    slotParamData.WeaponSlot3 = 0;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기1 슬롯 변경 이벤트
+                $("#btn-mod-skill1-op").on("click", function() {
+                    slotParamData.WeaponSlot4 = 0;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기2 슬롯 변경 이벤트
+                $("#btn-mod-skill2-op").on("click", function() {
+                    slotParamData.WeaponSlot5 = 0;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기3 슬롯 변경 이벤트
+                $("#btn-mod-skill3-op").on("click", function() {
+                    slotParamData.WeaponSlot6 = 0;
+                    modSlotInfo(slotParamData);
+                });
+
+                // 보조무기1 슬롯 닫기 이벤트
+                $("#btn-mod-subwe1-cl").on("click", function() {
+                    slotParamData.WeaponSlot2 = -2;
+                    modSlotInfo(slotParamData);
+
+                });
+                // 보조무기2 슬롯 닫기 이벤트
+                $("#btn-mod-subwe2-cl").on("click", function() {
+                    slotParamData.WeaponSlot3 = -2;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기1 슬롯 닫기 이벤트
+                $("#btn-mod-skill1-cl").on("click", function() {
+                    slotParamData.WeaponSlot4 = -2;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기2 슬롯 닫기 이벤트
+                $("#btn-mod-skill2-cl").on("click", function() {
+                    slotParamData.WeaponSlot5 = -2;
+                    modSlotInfo(slotParamData);
+                });
+                // 필살기3 슬롯 닫 이벤트
+                $("#btn-mod-skill3-cl").on("click", function() {
+                    slotParamData.WeaponSlot6 = -2;
+                    modSlotInfo(slotParamData);
+                });
+            } // end success
+        }); // end 사용자 기본 정보 조회 ajax
+
+        // 보유 파일럿 리스트 조회 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getPilotInfo,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 파일럿 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var pilotsInfoString = "";
+                $.each(response, function(index, value) {
+                    pilotsInfoString += "<tr>" + AddTag(value.PilotName, "TD") + "<td>" + '<input type="hidden" name="pilot-code" value="' + value.PilotCode + '">' + '<button class="btn btn-danger btn-delete-pilot" type="button">삭제</button>' + "</td>" + "</tr>";
+                });
+                $("#own-pilot-body").append(pilotsInfoString);
+
+                // 보유 파일럿 삭제 이벤트
+                $(".btn-delete-pilot").on("click", function() {
+                    // 변경사유 체크
+                    if (isEmpty($comment.val())) {
+                        alert("변경 사유를 입력해 주세요");
+                        return false;
+                    } else {
+                        if (!isPossiblelength($comment.val(), 250)) {
+                            alert("변경 사유는 250자 이내로 작성해 주세요!");
+                            return false;
+                        }
+                    }
+
+                    var pilotCode = parseInt($(this).siblings("input[name='pilot-code']").val());
+                    // 파일럿 삭제 정보 서버 전송
+                    if (confirm("해당 파일럿 정보를 삭제 하시겠습니까?")) {
+                        // 파일럿 삭제 ajax
+                        $.ajax({
+                            type: "POST",
+                            url: api.delPilot,
+                            data: {
+                                gmid: gmid,
+                                usnid: userId,
+                                pilotcode: pilotCode,
+                                comment: $comment.val()
+                            },
+                            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                            error: function(xhr, textStatus, errorThrown) {
+                                alert("파일럿 삭제 조회 실패! : " + errorThrown);
+                            },
+                            success: function(response) {
+                                alert("삭제 완료!");
+                                location.reload();
+                            }
+                        });
+                    } // end confirm
+                }); // 보유 파일럿 삭제 이벤트
+            } // end success
+        }); // end 보유 파일럿 리스트 조회 ajax
+
+        // 보유 무기 리스트 조회 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getOwnWeapon,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 무기 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var weaponInfoString = "";
+                $.each(response, function(index, value) {
+                    var wpTypeHangleName = ""
+                    if (parseInt(value.wpType) == 0) {
+                        wpTypeHangleName = "주무기";
+                    }
+                    if (parseInt(value.wpType) == 1) {
+                        wpTypeHangleName = "보조무기";
+                    }
+                    if (parseInt(value.wpType) == 2) {
+                        wpTypeHangleName = "필살기";
+                    }
+
+                    weaponInfoString += "<tr>" + AddTag(wpTypeHangleName, "TD") + AddTag(value.wpName, "TD") + '<td>' + '<input class="input-small weapon-level" type="text" readonly name="wpLevel" value="' + value.wpLevel + '"/>&nbsp;' + '<input type="hidden" name="wpType" value="' + value.wpType + '"/>' + '<input type="hidden" name="wpCode" value="' + value.wpCode + '"/>' + '<a href="javascript:;" class="val-up"><i class="icon-plus"></i></a> <a href="javascript:;" class="val-down">&nbsp;<i class="icon-minus"></i></a>' + '&nbsp;&nbsp;<button class="btn btn-info btn-mod-weapon" type="button">변경</button> <button class="btn btn-danger btn-weapon-delete" type="button">초기화</button>' + '</td>' + "</tr>";
+                });
+                $("#own-weapon-body").append(weaponInfoString);
+                $(".val-up").on("click", function() {
+                    var defaultData = parseInt($(this).siblings("input[name='wpLevel']").val());
+                    defaultData += 1;
+                    if (defaultData > 10) {
+                        defaultData = 10;
+                    }
+                    $(this).siblings("input[name='wpLevel']").val(defaultData);
+                });
+
+                $(".val-down").on("click", function() {
+                    var defaultData = parseInt($(this).siblings("input[name='wpLevel']").val());
+                    defaultData -= 1;
+                    if (defaultData < 0) {
+                        defaultData = 0;
+                    }
+                    $(this).siblings("input[name='wpLevel']").val(defaultData);
+                });
+
+                // 무기 변경 버튼 클릭 이벤트 설정
+                $(".btn-mod-weapon").on("click", function() {
+
+                    // 변경사유 체크
+                    if (isEmpty($comment.val())) {
+                        alert("변경 사유를 입력해 주세요");
+                        return false;
+                    } else {
+                        if (!isPossiblelength($comment.val(), 250)) {
+                            alert("변경 사유는 250자 이내로 작성해 주세요!");
+                            return false;
+                        }
+                    }
+
+                    var wpType = parseInt($(this).siblings("input[name='wpType']").val());
+                    var wpCode = parseInt($(this).siblings("input[name='wpCode']").val());
+                    var wpLevel = parseInt($(this).siblings("input[name='wpLevel']").val());
+
+                    if (confirm("해당 무기 정보를 변경 하시겠습니까?")) {
+                        // 보유 무기 변경 ajax
+                        $.ajax({
+                            type: "POST",
+                            url: api.setWeapon,
+                            data: {
+                                gmid: gmid,
+                                usnid: userId,
+                                weaponType: wpType,
+                                weaponCode: wpCode,
+                                weaponLevel: wpLevel,
+                                comment: $comment.val()
+                            },
+                            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                            error: function(xhr, textStatus, errorThrown) {
+                                alert("무기 변경 실패! : " + errorThrown);
+                            },
+                            success: function(response) {
+                                alert("변경 완료!");
+                            } // end success
+                        }); // end 보유 무기 변경 ajax
+                    } // end confirm
+                }); // end 변경사유 체크
+
+                // 무기 초기화 버튼 이벤트 설정
+                $(".btn-weapon-delete").on("click", function() {
+
+                    var $wpTypeEl = $(this).siblings("input[name='wpType']");
+                    var $wpCodeEl = $(this).siblings("input[name='wpCode']");
+                    var $wpLevelEl = $(this).siblings("input[name='wpLevel']");
+
+                    // 변경사유 체크
+                    if (isEmpty($comment.val())) {
+                        alert("변경 사유를 입력해 주세요");
+                        return false;
+                    } else {
+                        if (!isPossiblelength($comment.val(), 250)) {
+                            alert("변경 사유는 250자 이내로 작성해 주세요!");
+                            return false;
+                        }
+                    }
+
+                    var wpType = parseInt($wpTypeEl.val());
+                    var wpCode = parseInt($wpCodeEl.val());
+                    var wpLevel = parseInt($wpLevelEl.val());
+
+                    if (confirm('해당 무기를 초기화 하시겠습니까?')) {
+                        // 무기 초기화 ajax
+                        $.ajax({
+                            type: "POST",
+                            url: api.delWeapon,
+                            data: {
+                                gmid: gmid,
+                                usnid: userId,
+                                weaponType: wpType,
+                                weaponCode: wpCode,
+                                comment: $comment.val()
+                            },
+                            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                            error: function(xhr, textStatus, errorThrown) {
+                                alert("보유 무기 초기화 실패! : " + errorThrown);
+                            },
+                            success: function(response) {
+                                alert("초기화 완료!");
+                                $wpLevelEl.val("0");
+                            } // end success
+                        }); // end 무기 초기화 ajax
+                    } // end confirm
+                }); // 무기 초기화 버튼 이벤트 설정
+            } // end success
+        }); // end 보유 무기 리스트 조회 ajax
+
+        // 보유 파츠 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getOwnParts,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("보유 파츠 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var partsInfoString = "";
+                $.each(response, function(index, value) {
+                    partsInfoString += "<tr>" + AddTag(value.PartsTypeName, "TD") + AddTag(value.PartsName, "TD") + "<td>" + '<input type="hidden" name="partsType" value="' + value.PartsType + '">' + '<input type="hidden" name="partsCode" value="' + value.PartsCode + '">' + '<button class="btn btn-danger btn-parts-delete" type="button">삭제</button>' + "</td>" + "</tr>";
+                });
+                $("#own-parts-body").append(partsInfoString);
+
+                // 보유 파츠 삭제 이벤트
+                $(".btn-parts-delete").on("click", function() {
+
+                    // 변경사유 체크
+                    if (isEmpty($comment.val())) {
+                        alert("변경 사유를 입력해 주세요");
+                        return false;
+                    } else {
+                        if (!isPossiblelength($comment.val(), 250)) {
+                            alert("변경 사유는 250자 이내로 작성해 주세요!");
+                            return false;
+                        }
+                    }
+
+                    var partsType = parseInt($(this).siblings("input[name='partsType']").val());
+                    var partsCode = parseInt($(this).siblings("input[name='partsCode']").val());
+                    if (partsCode == 0) {
+                        alert("기본 파츠는 삭제 할 수 없습니다.");
+                    } else {
+                        if (confirm("해당 파츠를 삭제 하시 겠습니까?")) {
+                            // 파츠 삭제 ajax
+                            $.ajax({
+                                type: "POST",
+                                url: api.delParts,
+                                data: {
+                                    gmid: gmid,
+                                    usnid: userId,
+                                    partsType: partsType,
+                                    partsCode: partsCode,
+                                    comment: $comment.val()
+                                },
+                                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                                error: function(xhr, textStatus, errorThrown) {
+                                    alert("파츠 삭제 실패! : " + errorThrown);
+                                },
+                                success: function(response) {
+                                    alert("삭제 완료!");
+                                    location.reload();
+                                }
+                            }); // end 파츠 삭제 ajax
+                        } // end confirm
+                    } // end else 변경 사유 체크 
+                }); // end 보유 파츠 삭제 이벤트
+            } // end success
+        }); // end 보유 파츠 리스트 ajax
+
+        // 생포한 로봇 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getEnemyInfo,
+            data: {
+                usnid: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("생포 로봇 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var partsInfoString = "";
+                $.each(response, function() {
+                    partsInfoString += "<tr>" + AddTag(this.enemyName, "TD") + AddTag(this.enemyCount, "TD") + "</tr>";
+                });
+                $("#own-enemy-body").append(partsInfoString);
+            } // end success
+        }); // end 생포한 로봇 리스트 ajax
+
+        // 친구 리스트 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getFriendInfo,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("친구 목록 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var friendInfoString = "";
+                $.each(response, function(index, value) {
+                    friendInfoString += "<tr>" + AddTag(value.friendID, "TD") + AddTag(value.NickName, "TD") + "</tr>";
+                });
+                $("#friend-body").append(friendInfoString);
+            } // end success
+        }); // end 친구 리스트 ajax
+
+        // 현재 슬롯 정보 ajax
+        $.ajax({
+            type: "POST",
+            url: api.getFriendInfo,
+            data: {
+                id: userId
+            },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("슬롯 정보 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var slotInfoHtml = "";
+
+                $.each(response, function(index, value) {
+                    var btnStatus = "";
+                    if (isSlotOpen(response.slot)) {
+                        btnStatus = '<button class="btn btn-success btn-slot-close" id="btn-mod" type="button">닫기</button>';
+                    } else {
+                        btnStatus = '<button class="btn btn-success btn-slot-open" id="btn-mod" type="button">열기</button>';
+                    }
+                    slotInfoHtml += "<tr>" + AddTag(value.name, "TD") + AddTag(btnStatus, "TD") + "</tr>";
+                });
+                $("#slot-body").append(slotInfoHtml);
+            } // end success
+        }); // end 현재 슬롯 ajax
+
+        // 전체 파츠 목록 ajax
+        $.ajax({
+            url: api.getPartsCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("전체 파츠 목록 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                $.each(response, function(index, value) {
+                    if (value.partsType == 0) {
+                        partsHeadListHtml += '<option value="' + value.partsCode + '">' + value.partsName + '</option>';
+                    }
+                    if (value.partsType == 1) {
+                        partsBodyListHtml += '<option value="' + value.partsCode + '">' + value.partsName + '</option>';
+                    }
+                    if (value.partsType == 2) {
+                        partsArmListHtml += '<option value="' + value.partsCode + '">' + value.partsName + '</option>';
+                    }
+                    if (value.partsType == 3) {
+                        partsLegListHtml += '<option value="' + value.partsCode + '">' + value.partsName + '</option>';
+                    }
+                    if (value.partsType == 4) {
+                        partsBoosterListHtml += '<option value="' + value.partsCode + '">' + value.partsName + '</option>';
+                    }
+                });
+                $("#modal-parts-code").append(partsHeadListHtml);
+            }
+        }); // end 전체 파츠 목록 ajax
+
+        // 전체 무기 목록 ajax
+        $.ajax({
+            url: api.getWeaponCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("전체 무기 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                $.each(response, function(index, value) {
+                    if (value.wpType == 0 && value.wpLevel == 1) {
+                        weaponMainListHtml += '<option value="' + value.wpCode + '">' + value.wpName + '</option>';
+                    }
+                    if (value.wpType == 1 && value.wpLevel == 1) {
+                        weaponSub1ListHtml += '<option value="' + value.wpCode + '">' + value.wpName + '</option>';
+                    }
+                    if (value.wpType == 2 && value.wpLevel == 1) {
+                        weaponSub2ListHtml += '<option value="' + value.wpCode + '">' + value.wpName + '</option>';
+                    }
+                });
+                $("#modal-weapon-code").append(weaponMainListHtml);
+
+            } // end success
+        }); // end 전체 무기 목록 ajax
+
+        // 전체 파일럿 목록 ajax
+        $.ajax({
+            url: api.getPilotCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("전체 파일럿 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var pilotsListHtml = "";
+                $.each(response, function(index, value) {
+                    pilotsListHtml += '<option value="' + value.PilotCode + '">' + value.PilotName + '</option>';
+                });
+                $("#modal-pilots-code").append(pilotsListHtml);
+            } // end success
+        }); // end 전체 파일럿 목록 ajax
+
+        // 전체 적 로봇 리스트 ajax
+        $.ajax({
+            url: api.getEnemyCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            error: function(xhr, textStatus, errorThrown) {
+                alert("전체 적 로봇 조회 실패! : " + errorThrown);
+            },
+            success: function(response) {
+                var pilotsListHtml = "";
+                $.each(response, function(index, value) {
+                    pilotsListHtml += '<option value="' + value.enemyCode + '">' + value.enemyName + '</option>';
+                });
+                $("#modal-sel-robot").append(pilotsListHtml);
+            } // end success
+        }); // end 전체 적 로봇 리스트 ajax
+
+        // 무기 셀렉트 변경 이벤트
+        $("#modal-weapon-type").change(function() {
+            $('#modal-weapon-code option').remove()
+            if ($(this).val() == 0) {
+                $("#modal-weapon-code").append(weaponMainListHtml);
+            }
+            if ($(this).val() == 1) {
+                $("#modal-weapon-code").append(weaponSub1ListHtml);
+            }
+            if ($(this).val() == 2) {
+                $("#modal-weapon-code").append(weaponSub1ListHtml);
+            }
+        }); // end 무기 셀렉트 변경 이벤트
+
+        // 
+        $("#modal-parts-type").change(function() {
+            $('#modal-parts-code option').remove()
+            if ($(this).val() == 0) {
+                $("#modal-parts-code").append(partsHeadListHtml);
+            }
+            if ($(this).val() == 1) {
+                $("#modal-parts-code").append(partsBodyListHtml);
+            }
+            if ($(this).val() == 2) {
+                $("#modal-parts-code").append(partsArmListHtml);
+            }
+            if ($(this).val() == 3) {
+                $("#modal-parts-code").append(partsLegListHtml);
+            }
+            if ($(this).val() == 4) {
+                $("#modal-parts-code").append(partsBoosterListHtml);
+            }
+        }); // end 파츠 셀렉트 변경 이벤트
+    }); // end $()
+
+    function modSlotInfo(parameter) {
+        // 변경사유 체크
+        if (isEmpty($comment.val())) {
+            alert("변경 사유를 입력해 주세요");
+            return false;
+        } else {
+            if (!isPossiblelength($comment.val(), 250)) {
+                alert("변경 사유는 250자 이내로 작성해 주세요!");
+                return false;
+            }
+        }
+        parameter.comment = $comment.val();
+
+        if (confirm("슬롯정보를 변경 하시겠습니까?")) {
+            $.ajax({
+                url: api.setEquipInfo,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: parameter,
+                error: function(xhr, textStatus, errorThrown) {
+                    alert("슬롯 정보 변경 실패! : " + errorThrown);
+                },
+                success: function(response) {
+                    alert("변경 성공!");
+                    location.reload();
+                } // end success
+            }); //
+        }
+    }
+    </script>
+</body>
+
+</html>
