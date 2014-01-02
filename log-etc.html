@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 Log and Helper</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <style>
+    .btn {
+        line-height : 20px
+    }
+    </style>
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+    <!--inline styles related to this page-->
+
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/jquery-dataTable.js"></script>
+    <script src="js/jquery-dataTable-bootstrap.js"></script>
+    <script src="js/jquery-blockui.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="log-auth.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 Log and Helper
+                    </small>
+                </a>
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+
+            <ul class="nav nav-list">
+                <li id="side-log">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <i class="icon-desktop"></i>
+                        <span class="menu-text">로그 검색
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                    <ul class="submenu">
+                        <li id="side-log-charge">
+                            <a href="log-charge.html">
+                                <i class="icon-double-angle-right"></i>
+                                결제 로그
+                            </a>
+                        </li>
+                        <li id="side-log-etc">
+                            <a href="log-etc.html">
+                                <i class="icon-double-angle-right"></i>
+                                기타 로그
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="side-helper">
+                    <a href="helper.html" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">Game Helper
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        기타 로그
+                        <small>최대 200개 까지만 조회 가능</small>
+                    </h1>
+                </div>
+                <!--/.page-header-->
+
+                <div class="row-fluid">
+                    <div class="controls">
+                        <label class="control-label">검색조건</label>
+                        <select id="method-name">
+                        </select>
+                        <select id="top-limit" class="input-small">
+                            <option value="100">100개</option>
+                            <option value="200">200개</option>
+                        </select>
+
+                        <div class="input-append">
+                            <input class="input-medium date-picker" name="search_start_date" id="search-date" placeholder="검색 날짜" type="text" readonly>
+
+                            <button id="btn-search" class="btn btn-primary" type="button">조회</button>
+                        </div>
+                    </div>
+                    <!-- Debug -->
+                    <h4>Log List</h4>
+                    <table class="table table-striped table-bordered table-hover" id="log-table">
+                        <thead>
+                            <tr>
+                                <th class="span2">Log Lavel</th>
+                                <th class="span3">Date</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="debug-table-body">
+                        </tbody>
+                    </table>
+                    <div id="pager"></div>
+                    <!--/.table-->
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+            <hr/>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>
+        <!--/.main-content-->
+        <!-- 로그 상세 정보 모달 -->
+        <div id="modal-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="text-center">상세정보</h3>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <div class="controls">
+                        <textarea id="modal-log-msg" type="text" readonly class="field span6" rows="17"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">닫기</button>
+            </div>
+        </div>
+        <script>
+        $(function() {
+            
+            if (isEmpty($.cookie("helper-auth"))) {
+                alert("미인증 상태입니다.");
+                location.href = "log-auth.html";
+                return false;
+            }
+
+            $("#side-log-etc").addClass("active");
+            $("#side-log").addClass("open active");
+
+            // 달력 이벤트
+            $('.date-picker').datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true
+            });
+
+            $('#log-table').dataTable({
+                "iDisplayStart": 10,
+                "bFilter": false,
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sEmptyTable": "결과 값이 없습니다."
+                }
+            });
+
+            // 조회 버튼 이벤트
+            $("#btn-search").on("click", function() {
+                var searchStartDate = $("#search-date").val();
+                // 날짜 null check
+                if (isEmpty(searchStartDate)) {
+                    alert("조회 날짜를 선택해 주세요");
+                    return false;
+                }
+                // table clear
+                $('#log-table').dataTable().fnClearTable();
+                searchMethodLog({
+                    methodName: $("#method-name").val(),
+                    topLimit: $("#top-limit").val(),
+                    startdate: searchStartDate,
+                    enddate: searchStartDate
+                });
+            });
+            // end 조회 버튼 이벤트
+
+            //  method-name 조회
+            $.ajax({
+                type: "POST",
+                url: api.getLogCodeTable,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                error: function(xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }, // end error
+                success: function(response) {
+                    $.each(response, function() {
+                        if (this.Define != "setChargeChip") {
+                            $("#method-name").append('<option value=' + this.Define + '>' + this.Define + '</option>');
+                        }
+                    });
+                } // end success
+            });
+
+            // end method-name ajax
+
+        });
+
+
+
+        function detailChageHistory(e) {
+            var receipt = $(e).siblings("input[name='receipt']").val();
+            $("#modal-receipt").val(decodeURIComponent(receipt));
+            $("#modal-detail").modal('toggle');
+        }
+
+        function searchMethodLog(parameter) {
+            $.blockUI({
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+            // 완료 후 블럭이 사라지는 시간 ms
+            setTimeout($.unblockUI, 1000);
+            // 로그 ajax
+            $.ajax({
+                type: "POST",
+                url: api.getLogInfo,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                data: parameter,
+                error: function(xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }, // end error
+                success: function(response) {
+                    $.each(response, function() {
+                        $('#log-table').dataTable().fnAddData([
+                            this.LOGLEVEL,
+                            this.DATE,
+                            '<a href="javascript:;" onclick="detailChageHistory(this);" >' + this.MESSAGE.substring(0, 80) + '... </a>' + '<input type="hidden" name="log-msg" value="' + this.MESSAGE + '">'
+                        ]);
+                    });
+
+                } // end success
+            }); // end 로그 ajax
+        }
+
+        function parseResultCode(resultCode) {
+            if (resultCode == "3000") {
+                return '파라메터 값에 NULL 포함됨';
+            }
+            if (resultCode == "3003") {
+                return 'SSL 통신접근 아님';
+            }
+            if (resultCode == "3004") {
+                return '애플 결제처리 실패';
+            }
+            if (resultCode == "3005") {
+                return '구글 결제접근 실패';
+            }
+            if (resultCode == "3006") {
+                return '구글 결제처리 실패 (필수값 signature 누락)';
+            }
+            if (resultCode == "3007") {
+                return '결제처리 정보오류 (잘못된 클라이언트 정보)';
+            }
+
+        }
+
+        function detailChageHistory(e) {
+            var logMessage = $(e).siblings("input[name='log-msg']").val();
+            $("#modal-log-msg").val(logMessage);
+            $("#modal-detail").modal('toggle');
+        }
+
+        
+        </script>
+</body>
+
+</html>

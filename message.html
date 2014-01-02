@@ -268,7 +268,7 @@
         // session check
         if(isEmpty($.cookie("gmid"))){
             alert("로그아웃 상태입니다.");
-            window.history.back();
+            location.href="login.html";
             return false;
         }else{
             gmid = $.cookie('gmid');
@@ -341,7 +341,7 @@
                     type: "POST",
                     url: sendUrl,
                     data: {
-                        sndid: 1,
+                        sndid: $.cookie("usnid"),
                         rcvid: $("#rcvid").val(),
                         itemIdx: $("#sel-item-idx").val(),
                         itemCnt: $("#itemCnt").val(),

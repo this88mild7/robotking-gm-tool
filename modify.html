@@ -200,7 +200,7 @@
                         <div class="control-group">
                             <label class="control-label">기본정보</label>
                             <div class="controls">
-                                <p class="text-error"><b>증감값을 넣어 주세요!</b></p>
+                                <p class="text-error"><b>전화번호, 닉네임, 프로필을 제외한 값은 증감값을 넣어 주세요!</b></p>
                                 <select id="sel-user-info" class="input-small">
                                     <option>선택</option>
                                     <option value="coin">코인</option>
@@ -456,6 +456,7 @@
     var currentBluechip = "";
     var currentCapsule = "";
     var currentKillpoint = "";
+    var currentFriendship = "";
     var currentMaxCombo = "";
     var currentScore = "";
     var currentRecord = "";
@@ -498,7 +499,7 @@
         // session check
         if (isEmpty($.cookie("gmid"))) {
             alert("로그아웃 상태입니다.");
-            window.history.back();
+            location.href="login.html";
             return false;
         } else {
             gmid = $.cookie('gmid');
@@ -508,7 +509,7 @@
         }
         if (gmid == "view") {
             alert("수정 권한이 없는 GM ID 입니다.");
-            location.href = "login.html";
+            window.history.back();
             return false;
         }
 
@@ -573,7 +574,7 @@
             // 전화번호, 닉네임, 프로파일을 제외한 나머지 정보의 자연수 체크
             if (syntax != "phoneNumber" && syntax != "Nickname" && syntax != "UserProfile") {
                 if (!isNaturalNum(modValue)) {
-                    alert("소수점을 제외한 양의 정수를 입력하세요");
+                    alert("소수점을 제외한 정수를 입력하세요");
                     return false;
                 } else {
                     if (modValue.length > 9) {
@@ -844,6 +845,7 @@
                     currentCoin = value.Coin;
                     currentBluechip = value.BlueChip;
                     currentCapsule = value.Capsule;
+                    currentFriendship = value.friendship;
                     currentKillpoint = value.KillPoint;
                     currentMaxCombo = value.maxCombo;
                     currentScore = value.maxScore;

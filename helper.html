@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 Game Helper</title>
+    <title>로봇킹 Log and Helper</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -81,9 +81,9 @@
     <script src="http://malsup.github.com/jquery.form.js"></script>
 
     <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
     <script src="js/common.js"></script>
     <script src="js/validate.js"></script>
-    <script src="js/tempData.js"></script>
     <script src="js/jquery-dataTable.js"></script>
     <script src="js/jquery-dataTable-bootstrap.js"></script>
     <script src="js/jquery-blockui.js"></script>
@@ -93,10 +93,10 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a href="javascript:;" class="brand">
+                <a href="log-auth.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 Game Helper
+                        로봇킹 Log and Helper
                     </small>
                 </a>
 
@@ -116,15 +116,29 @@
 
             <ul class="nav nav-list">
                 <li id="side-charge">
-                    <a href="log.html" class="dropdown-toggle">
+                    <a href="javascript:;" class="dropdown-toggle">
                         <i class="icon-desktop"></i>
-                        <span class="menu-text">결제 로그
+                        <span class="menu-text">로그검색
                             <span class="badge badge-primary "></span>
                         </span>
                     </a>
+                    <ul class="submenu">
+                        <li id="side-log-charge">
+                            <a href="log-charge.html">
+                                <i class="icon-double-angle-right"></i>
+                                결제 로그
+                            </a>
+                        </li>
+                        <li id="side-log-etc">
+                            <a href="log-etc.html">
+                                <i class="icon-double-angle-right"></i>
+                                기타 로그
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li id="side-helper">
-                    <a hrHef="javascript:;" class="dropdown-toggle">
+                    <a href="javascript:;" class="dropdown-toggle">
                         <i class="icon-edit"></i>
                         <span class="menu-text">Game Helper
                             <span class="badge badge-primary "></span>
@@ -150,29 +164,36 @@
                     <div class="control-group">
                         <label for="standard-stage" class="control-label">기준 스테이지</label>
                         <div class="controls">
-                            <input type="text" class="input-small" name="standard-stage" id="inp-standard-stage" value="10">
-                            <button type="button" class="btn btn-success modify-btn" id="mode-stage">스테이지 변경</button>
+                            <input type="text" class="input-small" name="standard-stage" id="inp-standard-stage">
+
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="standard-score" class="control-labe">기준 점수</label>
                         <div class="controls">
-                            <input type="text" class="input-small" name="standard-score" id="inp-standard-score" value="50000">
-                            <button type="button" class="btn btn-success modify-btn" id="mod-score">점수 변경</button>
+                            <input type="text" class="input-small" name="standard-score" id="inp-standard-score">
                         </div>
                     </div>
-                    <h4>
-                        고득점자 Helper 적용 카운트
-                    </h4>
-                    <input type="text" class="input-small" value="5">~
-                    <input type="text" class="input-small" value="6">
-                    <button class="btn btn-danger modify-btn" type="button">변경</button>
-                    <h4>
-                        저득점자 Helper 적용 카운트
-                    </h4>
-                    <input type="text" class="input-small" value="3">~
-                    <input type="text" class="input-small" value="5">
-                    <button class="btn btn-danger modify-btn" type="button">변경</button>
+                    <div class="control-group">
+                        <label for="standard-score" class="control-labe">고득점자 Helper 적용 카운트</label>
+                        <div class="controls">
+                            <input type="text" class="input-small" id="high-min">~
+                            <input type="text" class="input-small" id="high-max">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="standard-score" class="control-labe">저득점자 Helper 적용 카운트</label>
+                        <div class="controls">
+                            <input type="text" class="input-small" id="low-min">~
+                            <input type="text" class="input-small" id="low-max">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-info modify-btn" type="button" id="mod-cancel">취소</button>
+                            <button class="btn btn-success modify-btn" type="button" id="mod-helper">변경</button>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.row-fluid -->
             </div>
@@ -180,16 +201,70 @@
         </div>
         <!--/.main-content-->
         <script>
+        var paramData = {};
+
         $(function() {
             $("#side-helper").addClass("active");
+            if (isEmpty($.cookie("helper-auth"))) {
+                alert("미인증 상태입니다.");
+                location.href = "log-auth.html";
+                return false;
+            }
+
+            // 최초 Helper 정보 setting            
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: api.getHelperSystemStandardInfo,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                error: function(xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }, // end error
+                success: function(response) {
+                    $.each(response, function() {
+                        $("#inp-standard-stage").val(this.HelperSystem_LimitStage);
+                        $("#inp-standard-score").val(this.HelperSystem_StandardScore);
+                        $("#high-min").val(this.HelperSystem_StandardScore_Better_Min);
+                        $("#high-max").val(this.HelperSystem_StandardScore_Better_Max);
+                        $("#low-min").val(this.HelperSystem_StandardScore_Lower_Min);
+                        $("#low-max").val(this.HelperSystem_StandardScore_Lower_Max);
+
+
+                    }) // end each
+                } // end success
+            }); // end ajax
+
+            // 스테이지 변경 버튼 이벤트
+            $("#mod-helper").on("click", function() {
+                if (confirm("Helper 정보를 변경 하시겠습니까?")) {
+                    paramData.HelperSystem_LimitStage = $("#inp-standard-stage").val();
+                    paramData.HelperSystem_StandardScore = $("#inp-standard-score").val();
+                    paramData.HelperSystem_StandardScore_Better_Min = $("#high-min").val();
+                    paramData.HelperSystem_StandardScore_Better_Max = $("#high-max").val();
+                    paramData.HelperSystem_StandardScore_Lower_Min = $("#low-min").val();
+                    paramData.HelperSystem_StandardScore_Lower_Max = $("#low-max").val();
+                    console.log(paramData);
+
+                    $.ajax({
+                        type: "POST",
+                        data: paramData,
+                        url: api.setHelperSystemStandardInfo,
+                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                        error: function(xhr, textStatus, errorThrown) {
+                            alert(errorThrown);
+                        }, // end error
+                        success: function(response) {
+
+                        } // end success
+                    }); // end ajax
+                } // end confirm
+            }); // end 스테이지 변경 버튼 이벤트
+
+            $("#mod-cancel").on("click", function() {
+                location.reload();
+            });
         });
         </script>
 </body>
-
-</html>
-<tr>
-    <td>5</td>
-    <td>33%</td>
-</tr>
 
 </html>

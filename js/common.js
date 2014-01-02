@@ -17,6 +17,8 @@ var api = {
     getSaleCode: domain + "/service/Management.asmx/GetSaleCode",
     getAdminWork: domain + "/service/Management.asmx/GetAdminWork",
     getLogInfo: domain + "/service/Management.asmx/GETLogInfo",
+    getLogCodeTable: domain + "/service/Management.asmx/GetLogCodeTable",
+    getHelperSystemStandardInfo: domain + "/service/Management.asmx/GetHelperSystemStandardInfo",
     setParts: domain + "/service/Management.asmx/SetParts",
     setWeapon: domain + "/service/Management.asmx/SetWeapon",
     sendMessage: domain + "/service/Management.asmx/SendMessage",
@@ -28,6 +30,7 @@ var api = {
     setSaleEvent: domain + "/service/Management.asmx/SetSaleEvent",
     setCreateAccount: domain + "/service/Management.asmx/SetCreateAccount",
     setEquipInfo: domain + "/service/Management.asmx/SetEquipInfo",
+    setHelperSystemStandardInfo: domain + "/service/Management.asmx/SetHelperSystemStandardInfo",
     delWeapon: domain + "/service/Management.asmx/DelWeapon",
     delParts: domain + "/service/Management.asmx/DelParts",
     delPilot: domain + "/service/Management.asmx/DelPilot",
@@ -37,20 +40,16 @@ var api = {
     postCodeTable: domain + "/service/Management.asmx/PostCodeTable"
 }
 
-var methodList = [
-    {
-        name: "캡슐 충전",
-        value: "setChargeCapsule"
-    }
-    , {
-        name: "블루칩 충전",
-        value: "setChargeChip"
-    }
-    , {
-        name: "코인 충전",
-        value: "setChargeCoin"
-    }
-]
+var methodList = [{
+    name: "캡슐 충전",
+    value: "setChargeCapsule"
+}, {
+    name: "블루칩 충전",
+    value: "setChargeChip"
+}, {
+    name: "코인 충전",
+    value: "setChargeCoin"
+}]
 
 var ajaxDatatype = "jsonp";
 
@@ -66,26 +65,36 @@ function AddTag(value, tag) {
 }
 
 function setCookie(minutes, value) {
-        var date = new Date();
-        var m = minutes;
-        var role = ""
-        date.setTime(date.getTime() + (m * 60 * 1000));
-        $.cookie("gmid", value, {
-            expires: date
-        });
-        if (value == "view") {
-            role = "View";
-        }else{
-            role = "Admin";
-        }
-
-        $.cookie("role", role, {
-            expires: date
-        });
+    var date = new Date();
+    var m = minutes;
+    var role = ""
+    date.setTime(date.getTime() + (m * 60 * 1000));
+    $.cookie("gmid", value, {
+        expires: date
+    });
+    if (value == "view") {
+        role = "View";
+    } else {
+        role = "Admin";
     }
 
-function logOut(){
+    $.cookie("role", role, {
+        expires: date
+    });
+}
+
+function logOut() {
     $.cookie("gmid", '');
     $.cookie("role", '');
     location.href = "login.html";
+}
+
+function helperAuth() {
+    var auth = $.cookie("helper-auth");
+    if (isEmpty(auth)) {
+        alert("접근 권한이 없습니다.")
+        return false;
+    } else {
+        return true;
+    }
 }

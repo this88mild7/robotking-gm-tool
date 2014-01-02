@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8" />
@@ -107,95 +107,10 @@
                                         </div>
                                         <!--/widget-main-->
 
-                                        <div class="toolbar clearfix">
-                                            <!-- <div>
-                                                    <a href="#" onclick="show_box('forgot-box'); return false;" class="forgot-password-link">
-                                                        <i class="icon-arrow-left"></i>
-                                                        I forgot my password
-                                                    </a>
-                                                </div> -->
-
-                                            <div>
-                                                <a href="#" onclick="show_box('signup-box'); return false;" class="user-signup-link">
-                                                        GM 등록
-                                                        <i class="icon-arrow-right"></i>
-                                                    </a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <!--/widget-body-->
                                 </div>
                                 <!--/login-box-->
-
-
-                                <div id="signup-box" class="signup-box widget-box no-border">
-                                    <div class="widget-body">
-                                        <div class="widget-main">
-                                            <h4 class="header green lighter bigger">
-                                                <i class="icon-group blue"></i>
-                                                GM 등록
-                                            </h4>
-
-                                            <div class="space-6"></div>
-
-                                            <form id="form-reg">
-                                                <fieldset>
-
-                                                    <label>
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="text" id="reg-id" name="gmid" class="span12" placeholder="GM ID" />
-                                                            <i class="icon-user"></i>
-                                                        </span>
-                                                    </label>
-
-                                                    <label>
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="text" name="usnid" class="span12" placeholder="USN ID" />
-                                                            <i class="icon-user"></i>
-                                                        </span>
-                                                    </label>
-
-                                                    <label>
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="password" id="reg-password" name="password" class="span12" placeholder="Password" />
-                                                            <i class="icon-lock"></i>
-                                                        </span>
-                                                    </label>
-
-                                                    <label>
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="password" id="re-password" class="span12" placeholder="Repeat password" />
-                                                            <i class="icon-retweet"></i>
-                                                        </span>
-                                                    </label>
-
-                                                    <div class="space-24"></div>
-
-                                                    <div class="clearfix">
-                                                        <button type="reset" class="width-30 pull-left btn btn-small">
-                                                            <i class="icon-refresh"></i>
-                                                            재작성
-                                                        </button>
-
-                                                        <button id="btn-reg" type="button" class="width-65 pull-right btn btn-small btn-success">
-                                                            등록
-                                                            <i class="icon-arrow-right icon-on-right"></i>
-                                                        </button>
-                                                    </div>
-                                                </fieldset>
-                                            </form>
-                                        </div>
-
-                                        <div class="toolbar center">
-                                            <a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">
-                                                <i class="icon-arrow-left"></i>
-                                                뒤로
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--/widget-body-->
-                                </div>
-                                <!--/signup-box-->
                             </div>
                             <!--/position-relative-->
                         </div>
@@ -236,8 +151,8 @@
     <script src="assets/js/ace-elements.min.js"></script>
     <script src="assets/js/ace.min.js"></script>
 
-    <script src="js/common.js"></script>
     <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/validate.js"></script>
     <!--inline scripts related to this page-->
 
@@ -253,43 +168,10 @@
                 return false;
             }
             $("#btn-login").click();
-            return true;
+            return false;
         }
     });
 
-    $("#btn-reg").on("click", function() {
-        if ($("#reg-password").val() != $("#re-password").val()) {
-            alert("비밀번호가 일치 하지 않습니다.");
-            return false;
-        }
-
-        if ($("#reg-password").val().length < 5) {
-            alert("비밀번호는 5자 이상으로 해주세요!");
-            return false;
-        }
-
-        // GM 등록 ajax
-        $.ajax({
-            type: "POST",
-            url: api.setCreateAccount,
-            data: $("#form-reg").serialize(),
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            error: function(xhr, textStatus, errorThrown) {
-                alert("GM 등록 실패! : " + errorThrown);
-            },
-            success: function(response) {
-                if (response == "True") {
-                    alert("GM 등록이 완료 되었습니다.");
-                    setCookie(60, $("#reg-id").val());
-                    location.href = "userSearch.html";
-                } else {
-                    alert("GM 등록 실패");
-
-                }
-            } // end success
-        }); // end GM 등록 ajax
-
-    });
 
     $("#btn-login").on("click", function() {
         if (isEmpty($("#login-gmid").val()) || isEmpty($("#login-usnid").val()) || isEmpty($("#login-pwd").val())) {
@@ -307,9 +189,7 @@
             },
             success: function(response) {
                 if (response == "True") {
-                    setCookie(60, $("#login-gmid").val());
-                    setCookie(60, $("#login-gmid").val());
-                    // go index.html
+                    setCookie(60, $("#login-gmid").val(), $("#login-usnid").val());
                     location.href = "userSearch.html";
                 } else {
                     alert("로그인 실패");
@@ -320,22 +200,20 @@
 
     });
 
-    function show_box(id) {
-        $('.widget-box.visible').removeClass('visible');
-        $('#' + id).addClass('visible');
-    }
-
-    function setCookie(minutes, value) {
+    function setCookie(minutes, gmid, usnid) {
         var date = new Date();
         var m = minutes;
         var role = ""
         date.setTime(date.getTime() + (m * 60 * 1000));
-        $.cookie("gmid", value, {
+        $.cookie("gmid", gmid, {
             expires: date
         });
-        if (value == "view") {
+        $.cookie("usnid", usnid, {
+            expires: date
+        });
+        if (gmid == "view") {
             role = "View";
-        }else{
+        } else {
             role = "Admin";
         }
 

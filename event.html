@@ -292,7 +292,7 @@ if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobi
         // session check
         if (isEmpty($.cookie("gmid"))) {
             alert("로그아웃 상태입니다.");
-            window.history.back();
+            location.href="login.html";
             return false;
         } else {
             gmid = $.cookie('gmid');
