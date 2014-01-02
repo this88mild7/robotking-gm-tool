@@ -254,7 +254,12 @@
                             alert(errorThrown);
                         }, // end error
                         success: function(response) {
-
+                            if(response == "True"){
+                                alert("변경 완료!");
+                                location.reload();
+                            }else{
+                                alert("변경 실패");
+                            }
                         } // end success
                     }); // end ajax
                 } // end confirm
