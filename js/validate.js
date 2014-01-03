@@ -1,38 +1,31 @@
-function isPossiblelength(message, limitLength){
-    if($.trim(message).length == 0){
+function isPossiblelength(message, limitLength) {
+    if ($.trim(message).length == 0) {
         return false;
     }
-    if(message.length > limitLength){
+    if (message.length > limitLength) {
         return false;
     }
     return true;
 }
 
-function isNaturalNum(message){
-    var num_regx=/^[0-9]*$/;
-    if($.trim(message).length ==0){ return false}
-    
-    if (message.indexOf(".") >= 0){
+function isNaturalNum(message) {
+    if ($.trim(message).length == 0) {
+        return false
+    }
+    if (message.indexOf(".") >= 0) {
         return false;
     }
-    // if(num_regx.test(message)){
-        
-    //     // 음수 체크
-    //     // if(message.indexOf("-1") >= 0){
-    //     //     return false;
-    //     // }
-
-    //     return true;
-    // }else{
-    //    return false;
-    // }
-    return true;
+    if($.isNumeric(message)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
-function isEmpty(message){
+function isEmpty(message) {
     if ($.trim(message).length > 0) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }

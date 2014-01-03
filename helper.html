@@ -236,14 +236,50 @@
 
             // 스테이지 변경 버튼 이벤트
             $("#mod-helper").on("click", function() {
+
+                var betterMin, betterMax, lowerMin, lowerMax, limitStage, standardScore;
+
+                betterMin = $("#high-min").val();
+                betterMax = $("#high-max").val();
+                lowerMin = $("#low-min").val();
+                lowerMax = $("#low-max").val();
+                limitStage = $("#inp-standard-stage").val();
+                standardScore = $("#inp-standard-score").val();
+
+                /*
+                    validate 전부 숫자이여야 함
+                    1 이하의 값은 입력 불가함
+                    min 값은 max 값보다 작아야함
+                */
+                if (isNaturalNum(betterMax) && isNaturalNum(betterMin) && isNaturalNum(lowerMin) && isNaturalNum(lowerMax) && isNaturalNum(limitStage) && isNaturalNum(standardScore)) {
+                    if (parseInt($("#high-min").val()) < 1 || parseInt($("#high-max").val()) < 1 || parseInt($("#low-max").val()) < 1 || parseInt($("#low-min").val()) < 1 || parseInt($("#inp-standard-stage").val()) < 1 || parseInt($("#inp-standard-score").val()) < 1) {
+                        alert("변경 값들은 1 이상 이여야 합니다.");
+                        return false;
+                    }
+
+                    if (betterMin >= betterMax) {
+                        alert("고득점자 Min 값은 Max 값보다 작아야 합니다.");
+                        return false;
+                    }
+
+                    if (lowerMin >= lowerMax) {
+                        alert("저득점자 Min 값은 Max 값보다 작아야 합니다.");
+                        return false;
+                    }
+                } else {
+                    alert("입력값은 숫자만 가능 합니다.")
+                    return false;
+                }
+
                 if (confirm("Helper 정보를 변경 하시겠습니까?")) {
-                    paramData.HelperSystem_LimitStage = $("#inp-standard-stage").val();
-                    paramData.HelperSystem_StandardScore = $("#inp-standard-score").val();
-                    paramData.HelperSystem_StandardScore_Better_Min = $("#high-min").val();
-                    paramData.HelperSystem_StandardScore_Better_Max = $("#high-max").val();
-                    paramData.HelperSystem_StandardScore_Lower_Min = $("#low-min").val();
-                    paramData.HelperSystem_StandardScore_Lower_Max = $("#low-max").val();
-                    console.log(paramData);
+                    paramData.gmid = "1";
+                    paramData.comment = "helper 변경";
+                    paramData.limitStage = limitStage;
+                    paramData.standardScore = standardScore;
+                    paramData.hs_ss_better_min =betterMin;
+                    paramData.hs_ss_better_max = betterMax;
+                    paramData.hs_ss_lower_min = lowerMin;
+                    paramData.hs_ss_lower_max = lowerMax;
 
                     $.ajax({
                         type: "POST",
@@ -254,10 +290,10 @@
                             alert(errorThrown);
                         }, // end error
                         success: function(response) {
-                            if(response == "True"){
+                            if (response == "True") {
                                 alert("변경 완료!");
                                 location.reload();
-                            }else{
+                            } else {
                                 alert("변경 실패");
                             }
                         } // end success

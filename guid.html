@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool 가이드</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <style>
+    .btn {
+        line-height : 18px;
+    }
+    .modify-btn {
+        margin-bottom:10px;
+    }
+    </style>
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+    <!--inline styles related to this page-->
+
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--page specific plugin scripts-->
+
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/jquery-dataTable.js"></script>
+    <script src="js/jquery-dataTable-bootstrap.js"></script>
+    <script src="js/jquery-blockui.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="log-auth.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool 가이드
+                    </small>
+                </a>
+
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+
+            <ul class="nav nav-list">
+                <li id="guid-side-user">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">사용자 정보 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                    <ul class="submenu">
+                        <li id="guid-side-ban-user">
+                            <a href="#user-search">
+                                <i class="icon-double-angle-right"></i>
+                                사용자 검색
+                            </a>
+                        </li>
+                        <li id="guid-side-ban-user">
+                            <a href="#ban-user">
+                                <i class="icon-double-angle-right"></i>
+                                로그인 제한
+                            </a>
+                        </li>
+                        <li id="guid-side-user-out">
+                            <a href="#user-out">
+                                <i class="icon-double-angle-right"></i>
+                                탈퇴
+                            </a>
+                        </li>
+                        <li id="guid-side-mod-user">
+                            <a href="#modify-user">
+                                <i class="icon-double-angle-right"></i>
+                                정보변경
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="guid-side-payment">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">결제 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="guid-side-msg">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">메세지 발송
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                    <ul class="submenu">
+                        <li id="guid-side-msg-one">
+                            <a href="#msg-one">
+                                <i class="icon-double-angle-right"></i>
+                                개인 발송
+                            </a>
+                        </li>
+                        <li id="guid-side-msg-all">
+                            <a href="#msg-all">
+                                <i class="icon-double-angle-right"></i>
+                                전체 발송
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="guid-side-event">
+                    <a href="#event" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">이벤트 관리 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+                <li id="guid-side-work">
+                    <a href="#work" class="dropdown-toggle">
+                        <i class="icon-edit"></i>
+                        <span class="menu-text">업무 처리 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>GM Tool 가이드 문서</h1>
+                </div>
+                <!--/.page-header-->
+
+                <!-- 사용자 정보 가이드 > 사용자 검색-->
+                <div id="guid-user-search">
+                    <h4>회원 검색</h4>
+                    <ul>
+                        <li>회원 검색은 ID 와 닉네임 그리고 전화번호거 검색이 가능 합니다.</li>
+                        <li>ID 검색 인 경우 해당 아이디가 존재 한다면 바로 사용자 정보 화면으로 이동 합니다.</li>
+                        <li>닉네임과 전화번호 검색인 경우 중복 값이 존재 할 수 있으므로 ID List 가 검색됩니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 사용자 정보 가이드 > 로그인 제한-->
+                <p id="ban-user">&nbsp;</p>
+                <div>
+                    <h4>로그인 제한</h4>
+                    <ul>
+                        <li>부정한 행위를 한 사용자의 경우 로그인을 제한 할 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 사용자 정보 가이드 > 탈퇴-->
+                <p id="user-out">&nbsp;</p>
+                <div>
+                    <h4>탈퇴</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 사용자 정보 가이드 > 정보변경-->
+                <p id="user-modify">&nbsp;</p>
+                <div>
+                    <h4>정보 변경</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 결제 정보-->
+                <p id="payment">&nbsp;</p>
+                <div>
+                    <h4>결제 정보 가이</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 메세지 개인 발송-->
+                <p id="msg-one">&nbsp;</p>
+                <div>
+                    <h4>메세지 개인 발송</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 메세지 전체 발송 -->
+                <p id="msg-all">&nbsp;</p>
+                <div>
+                    <h4>메세지 전체 발송</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 이벤트 관리 -->
+                <p id="event">&nbsp;</p>
+                <div>
+                    <h4>이벤트 관리</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+                <!-- 업무처리 가이드-->
+                <p id="work">&nbsp;</p>
+                <div>
+                    <h4>업무처리</h4>
+                    <ul>
+                        <li>사용자가 탈퇴를 원하는 경우 GM Tool 에서 탈퇴를 시킬 수 있습니다.</li>
+                    </ul>
+                    <img src="img/user-search.png" alt="회원 검색">
+                </div>
+
+                <hr/>
+                <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+                    <i class="icon-double-angle-up icon-only bigger-110"></i>
+                </a>
+
+                <!-- /.row-fluid -->
+            </div>
+            <!-- /.page-content -->
+
+        </div>
+        <!--/.main-content-->
+
+</body>
+
+</html>

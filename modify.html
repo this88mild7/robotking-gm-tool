@@ -573,14 +573,14 @@
 
             // 전화번호, 닉네임, 프로파일을 제외한 나머지 정보의 자연수 체크
             if (syntax != "phoneNumber" && syntax != "Nickname" && syntax != "UserProfile") {
-                if (!isNaturalNum(modValue)) {
-                    alert("소수점을 제외한 정수를 입력하세요");
-                    return false;
-                } else {
+                if (isNaturalNum(modValue)) {
                     if (modValue.length > 9) {
                         alert("9자리 이하의 값을 입력해 주세요!");
                         return false;
                     }
+                } else {
+                    alert("소수점을 제외한 정수를 입력하세요");
+                    return false;
                 }
             }
 
