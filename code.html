@@ -273,7 +273,7 @@
                     $('#parts-code-table').dataTable().fnAddData([
                         this.partsType,
                         this.partsCode,
-                        this.partsName,
+                        '<a href="javascript:;" onclick="partsDetailModal(this)" > '+this.partsName+'</a>',
                         this.devTime,
                         this.priceGold,
                         this.priceInstantly,
@@ -301,7 +301,7 @@
                 $.each(response, function() {
                     $('#pilot-code-table').dataTable().fnAddData([
                         this.PilotCode,
-                        this.PilotName,
+                        '<a href="javascript:;" onclick="pilotDetailModal(this)" > '+this.PilotName+'</a>',
                         this.PriceCash,
                         this.Power,
                         this.Skill,
