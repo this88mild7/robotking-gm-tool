@@ -169,6 +169,14 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="guid.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">GM Tool 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
             <!--/.nav-list-->
 
@@ -200,7 +208,8 @@
                         <div class="control-group">
                             <label class="control-label">기본정보</label>
                             <div class="controls">
-                                <p class="text-error"><b>전화번호, 닉네임, 프로필을 제외한 값은 증감값을 넣어 주세요!</b></p>
+                                <p class="text-error"><b>전화번호, 닉네임, 프로필을 제외한 값은 증감값을 넣어 주세요!</b>
+                                </p>
                                 <select id="sel-user-info" class="input-small">
                                     <option>선택</option>
                                     <option value="coin">코인</option>
@@ -218,13 +227,14 @@
                                 </select>
                                 <input id="inp-mod-value" type="text">
                                 <button id="btn-modify-user" class="btn btn-success" type="button">변경</button>
-                                <p>현재 값 <b id="b-current-value"></b></p>
+                                <p>현재 값 <b id="b-current-value"></b>
+                                </p>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">파일럿</label>
                             <div class="controls">
-                                <button id="btn-pilot-add" class="btn btn-info" id="btn-mod" type="button">추가</button>
+                                <button id="btn-pilot-add" class="btn btn-info" type="button">추가</button>
                                 <table class="table table-bordered table-hover table-striped tablesorter">
                                     <thead>
                                         <tr>
@@ -499,7 +509,7 @@
         // session check
         if (isEmpty($.cookie("gmid"))) {
             alert("로그아웃 상태입니다.");
-            location.href="login.html";
+            location.href = "login.html";
             return false;
         } else {
             gmid = $.cookie('gmid');
@@ -526,27 +536,27 @@
             if (this.value == 'coin') {
                 $("#b-current-value").text(currentCoin);
             } else if (this.value == 'bluechip') {
-                 $("#b-current-value").text(currentBluechip);
+                $("#b-current-value").text(currentBluechip);
             } else if (this.value == 'capsule') {
-                 $("#b-current-value").text(currentCapsule);
+                $("#b-current-value").text(currentCapsule);
             } else if (this.value == 'friendship') {
-                 $("#b-current-value").text(currentFriendship);
+                $("#b-current-value").text(currentFriendship);
             } else if (this.value == 'KillPoint') {
-                 $("#b-current-value").text(currentKillpoint);
+                $("#b-current-value").text(currentKillpoint);
             } else if (this.value == 'maxCombo') {
-                 $("#b-current-value").text(currentMaxCombo);
+                $("#b-current-value").text(currentMaxCombo);
             } else if (this.value == 'maxScore') {
-                 $("#b-current-value").text(currentScore);
+                $("#b-current-value").text(currentScore);
             } else if (this.value == 'maxRecord') {
-                 $("#b-current-value").text(currentRecord);
+                $("#b-current-value").text(currentRecord);
             } else if (this.value == 'QuestLevel') {
-                 $("#b-current-value").text(currentQuestLevel);
+                $("#b-current-value").text(currentQuestLevel);
             } else if (this.value == 'phoneNumber') {
-                 $("#b-current-value").text(phoneNumber);
+                $("#b-current-value").text(phoneNumber);
             } else if (this.value == 'Nickname') {
-                 $("#b-current-value").text(Nickname);
+                $("#b-current-value").text(Nickname);
             } else if (this.value == 'UserProfile') {
-                 $("#b-current-value").text(UserProfile);
+                $("#b-current-value").text(UserProfile);
             } else {
 
             }

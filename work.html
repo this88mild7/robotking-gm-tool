@@ -176,6 +176,14 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="guid.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">GM Tool 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
             <!--/.nav-list-->
 
@@ -196,7 +204,7 @@
                     <div class="control-group">
                         <label class="control-label">GM ID</label>
                         <div class="controls">
-                            <input id="gmid" type="text" >
+                            <input id="gmid" type="text">
                         </div>
                     </div>
                     <div class="control-group">
@@ -292,7 +300,7 @@
             alert("로그아웃 상태입니다.");
             location.href = "login.html";
             return false;
-        }else{
+        } else {
             $("#b-id").text($.cookie("gmid"));
             $("#b-role").text($.cookie("role"));
             setCookie(60, $.cookie("gmid"));

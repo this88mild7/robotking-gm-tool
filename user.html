@@ -159,6 +159,14 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="guid.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">GM Tool 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
             <!--/.nav-list-->
             <div class="sidebar-collapse" id="sidebar-collapse">
@@ -395,7 +403,7 @@
                 <div class="control-group">
                     <label class="control-label">사용자 ID</label>
                     <div class="controls">
-                        <input type="text" id="inp-ban-user-id" name="usnid" placeholder="ID">
+                        <input type="text" id="inp-ban-user-id" name="usnid" readonly="true">
                     </div>
                 </div>
                 <div class="control-group">
@@ -624,9 +632,9 @@
                 var accountInfo = "";
                 var subWeaponSlot1 = "";
                 var subWeaponSlot2 = "";
-                var superSkillSlot1="";
-                var superSkillSlot2="";
-                var superSkillSlot3="";
+                var superSkillSlot1 = "";
+                var superSkillSlot2 = "";
+                var superSkillSlot3 = "";
                 $.each(response, function() {
                     userNickName = this.Nickname;
                     // 기본정보
@@ -639,26 +647,11 @@
                     // 장착 필살기 정보
                     skillInfoString += "<tr>" + AddTag(this.SuperPower1Name + "(" + this.SuperPower1Level + ")", "TD") + AddTag(this.SuperPower2Name + "(" + this.SuperPower2Level + ")", "TD") + AddTag(this.SuperPower3Name + "(" + this.SuperPower3Level + ")", "TD") + "</tr>";
 
-                    subWeaponSlot1 += "<tr>"
-                                + AddTag("보조무기-1", "TD")
-                                + AddTag((this.SubWeapon1 == -2 ? "닫힘" : "열림") , "TD")
-                                + "</tr>";
-                    subWeaponSlot2 += "<tr>"
-                                + AddTag("보조무기-2", "TD")
-                                + AddTag((this.SubWeapon2 == -2 ? "닫힘" : "열림") , "TD")
-                                + "</tr>";
-                    superSkillSlot1 += "<tr>"
-                                + AddTag("필살기-1", "TD")
-                                + AddTag((this.SuperPower1 == -2 ? "닫힘" : "열림") , "TD")
-                                + "</tr>";
-                    superSkillSlot2 += "<tr>"
-                                + AddTag("필살기-2", "TD")
-                                + AddTag((this.SuperPower2 == -2 ? "닫힘" : "열림") , "TD")
-                                + "</tr>";
-                    superSkillSlot3 += "<tr>"
-                                + AddTag("필살기-3", "TD")
-                                + AddTag((this.SuperPower3 == -2 ? "닫힘" : "열림") , "TD")
-                                + "</tr>";
+                    subWeaponSlot1 += "<tr>" + AddTag("보조무기-1", "TD") + AddTag((this.SubWeapon1 == -2 ? "닫힘" : "열림"), "TD") + "</tr>";
+                    subWeaponSlot2 += "<tr>" + AddTag("보조무기-2", "TD") + AddTag((this.SubWeapon2 == -2 ? "닫힘" : "열림"), "TD") + "</tr>";
+                    superSkillSlot1 += "<tr>" + AddTag("필살기-1", "TD") + AddTag((this.SuperPower1 == -2 ? "닫힘" : "열림"), "TD") + "</tr>";
+                    superSkillSlot2 += "<tr>" + AddTag("필살기-2", "TD") + AddTag((this.SuperPower2 == -2 ? "닫힘" : "열림"), "TD") + "</tr>";
+                    superSkillSlot3 += "<tr>" + AddTag("필살기-3", "TD") + AddTag((this.SuperPower3 == -2 ? "닫힘" : "열림"), "TD") + "</tr>";
                 });
                 $("#user-nickname").text(userNickName);
                 $("#status-body").append(userInfoString);

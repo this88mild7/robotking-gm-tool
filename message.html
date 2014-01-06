@@ -168,6 +168,14 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="guid.html" class="dropdown-toggle">
+                        <i class="icon-file-alt"></i>
+                        <span class="menu-text">GM Tool 가이드
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
             <!--/.nav-list-->
 
@@ -261,22 +269,22 @@
     <script>
     $(function() {
         //임시적으로 gmid는 1로 한다.
-        var gmid = 1;
+        var gmid;
 
         $("#side-message").addClass("active");
 
         // session check
-        if(isEmpty($.cookie("gmid"))){
+        if (isEmpty($.cookie("gmid"))) {
             alert("로그아웃 상태입니다.");
-            location.href="login.html";
+            location.href = "login.html";
             return false;
-        }else{
+        } else {
             gmid = $.cookie('gmid');
             $("#b-id").text($.cookie("gmid"));
             $("#b-role").text($.cookie("role"));
             setCookie(60, gmid);
         }
-        if(gmid == "view"){
+        if (gmid == "view") {
             alert("발송 권한이 없는 GM ID 입니다.");
             window.history.back();
             return false;
@@ -284,8 +292,12 @@
 
         // 전체발송 체크박스 이벤트
         $("#btn-all-to-user").on("click", function() {
-            $("#rcvid").attr("readonly", true);
-        })
+            if ($("#btn-all-to-user").is(":checked")) {
+                $("#rcvid").attr("readonly", true);
+            } else {
+                $("#rcvid").attr("readonly", false);
+            }
+        });
 
         $("#btn-send").on("click", function() {
 
@@ -319,10 +331,11 @@
 
 
             var sendUrl = "";
+            var comment = "";
             if ($("#btn-all-to-user").is(":checked")) {
                 // 전체 발송
                 sendUrl = api.sendMessageToAllUser;
-
+                comment = "전체 메세지 발송";
             } else {
                 // 일부발송
                 if (isEmpty($("#rcvid").val())) {
@@ -331,7 +344,7 @@
                     return false;
                 }
                 sendUrl = api.sendMessage;
-
+                comment = $("#rcvid").val()+" 사용자에게 메세지 발송";
             }
 
 
@@ -342,19 +355,20 @@
                     url: sendUrl,
                     data: {
                         sndid: $.cookie("usnid"),
+                        gmid: gmid,
                         rcvid: $("#rcvid").val(),
                         itemIdx: $("#sel-item-idx").val(),
                         itemCnt: $("#itemCnt").val(),
                         message: $("#msg1").val() + "\n" + $("#msg2").val(),
                         expireDay: $("#expireDay").val(),
-                        comment: "메세지 발송"
+                        comment: comment
                     },
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     success: function(response) {
-                        if(response == "True" ){
+                        if (response == "True") {
                             alert("발송 되었습니다.");
                             location.reload();
-                        }else{
+                        } else {
                             alert("발송 실패!")
                         }
                     },
