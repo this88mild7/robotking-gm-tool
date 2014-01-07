@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>로봇킹 GM Tool</title>
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.css" />
+    <link rel="stylesheet" href="assets/css/datepicker.css" />
+
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+    <style>
+    .btn {
+        line-height : 18px
+    }
+    </style>
+    <!--inline styles related to this page-->
+    <!--basic scripts-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+    <!--[if IE]> 
+    <script type="text/javascript"> window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+    </script> 
+    <![endif]-->
+    <script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--page specific plugin scripts-->
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="assets/js/markdown/markdown.min.js"></script>
+    <script src="assets/js/markdown/bootstrap-markdown.min.js"></script>
+    <script src="assets/js/jquery.hotkeys.min.js"></script>
+    <script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <!--ace scripts-->
+    <script src="assets/js/ace-elements.min.js"></script>
+    <script src="assets/js/ace.min.js"></script>
+    <!-- ajaxform -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <!-- common js -->
+    <script src="js/jquery-cookie.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/jquery-dataTable.js"></script>
+    <script src="js/jquery-dataTable-bootstrap.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a href="login.html" class="brand">
+                    <small>
+                        <i class="icon-leaf"></i>
+                        로봇킹 GM Tool
+                    </small>
+                </a>
+                <!--/.brand-->
+
+                <!--/.ace-nav-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.navbar-inner-->
+    </div>
+    <div class="main-container container-fluid">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <ul class="nav nav-list">
+                <li id="side-code">
+                    <a href="code.html" class="dropdown-toggle">
+                        <i class="icon-desktop"></i>
+                        <span class="menu-text">코드 정보
+                            <span class="badge badge-primary "></span>
+                        </span>
+                    </a>
+                    <ul class="submenu">
+                        <li id="side-weapon">
+                            <a href="code-weapon.html">
+                                <i class="icon-double-angle-right"></i>
+                                무기 코드
+                            </a>
+                        </li>
+                        <li id="side-parts">
+                            <a href="code-parts.html">
+                                <i class="icon-double-angle-right"></i>
+                                파츠 코드
+                            </a>
+                        </li>
+                        <li id="sid-pilot">
+                            <a href="code-pilot.html">
+                                <i class="icon-double-angle-right"></i>
+                                파일럿 코드
+                            </a>
+                        </li>
+                        <li id="side-quest">
+                            <a href="code-quest.html">
+                                <i class="icon-double-angle-right"></i>
+                                퀘스트 코드
+                            </a>
+                        </li>
+                        <li id="side-enemy">
+                            <a href="code-enemy.html">
+                                <i class="icon-double-angle-right"></i>
+                                생포 로봇 코드
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--/.nav-list-->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-header position-relative">
+                    <h1>
+                        코드 정보
+                    </h1>
+                </div>
+                <!--/.page-header-->
+                <div class="row-fluid">
+                    <div id="parts-code">
+                        <h5>파츠 코드
+                            <button id="btn-parts-add" class="btn btn-info" type="button">추가</button>
+                        </h5>
+                        <table id="parts-code-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>DevTime</th>
+                                    <th>PriceGold</th>
+                                    <th>PriceInstantly</th>
+                                    <th>PriceCash</th>
+                                    <th>PriceCapsule</th>
+                                    <th>IsOpen</th>
+                                    <th>IsGotcha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="parts-code-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--/.row-fluid-->
+            </div>
+            <!--/.page-content-->
+        </div>
+        <!--/.main-content-->
+        <hr/>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+
+    <!-- 파츠 code 모달 -->
+    <div id="modal-parts" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">파츠 코드</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="modal-parts-form">
+                <input type="hidden"  name="gmid" value="1">
+                <input type="hidden"  name="comment" id="parts-comment">
+                <div class="control-group">
+                    <label class="control-label">Type</label>
+                    <div class="controls">
+                        <input type="text" name="partsType" id="modal-parts-type">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Code</label>
+                    <div class="controls">
+                        <input type="text" name="partsCode" id="modal-parts-code">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                        <input type="text" name="partsName" id="modal-parts-name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">DevTime</label>
+                    <div class="controls">
+                        <input type="text" name="devTime" id="modal-parts-devtime">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceGold</label>
+                    <div class="controls">
+                        <input type="text" name="priceGold" id="modal-parts-pricegold">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceInstantly</label>
+                    <div class="controls">
+                        <input type="text" name="priceInstantly" id="modal-parts-priceinstantly">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceCash</label>
+                    <div class="controls">
+                        <input type="text" name="priceCash" id="modal-parts-pricecash">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceCapsule</label>
+                    <div class="controls">
+                        <input type="text" name="priceCapsule" id="modal-parts-pricecapsule">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">IsOpen(0:true, 1:false)</label>
+                    <div class="controls">
+                        <select name="isOpen">
+                            <option id="modal-parts-isopen-true" value="0">true</option>
+                            <option id="modal-parts-isopen-false" value="1">false</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">IsGotcha(0:true, 1:false)</label>
+                    <div class="controls">
+                        <select name="isGotcha">
+                            <option id="modal-parts-isgotcha-true" value="0">true</option>
+                            <option id="modal-parts-isgotcha-false" value="1">false</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+            <button id="btn-modal-add-parts" class="btn btn-primary">추가</button>
+            <button id="btn-modal-mod-parts" class="btn btn-primary">저장</button>
+            <button id="btn-modal-del-parts" class="btn btn-danger">삭제</button>
+        </div>
+    </div> <!-- end parts modal -->
+
+    <script>
+    $(function() {
+        $("#side-parts").addClass("active");
+        $("#side-code").addClass("open active");
+
+        // parts add button event
+        $("#btn-parts-add").on("click", function(){
+            $("#btn-modal-del-parts").hide();
+            $("#btn-modal-mod-parts").hide();
+            $("#btn-modal-add-parts").show();
+            $("#modal-parts-type").removeAttr("readonly");
+            $("#modal-parts-code").removeAttr("readonly");
+            $("#modal-parts-type").val('');
+            $("#modal-parts-code").val('');
+            $("#modal-parts-name").val('');
+            $("#modal-parts-devtime").val('');
+            $("#modal-parts-pricegold").val('');
+            $("#modal-parts-priceinstantly").val('');
+            $("#modal-parts-pricecash").val('');
+            $("#modal-parts-pricecapsule").val('');
+            $("#modal-parts-isopen").val('');
+            $("#modal-parts-isgotcha").val('');
+            $("#modal-parts").modal('toggle')
+        });
+
+        // parts modal add button event
+        $("#btn-modal-add-parts").on("click", function(){
+            if(confirm("해당 파일럿 코드를 추가 하시겠습니까?")){
+                $("#parts-comment").val("파일럿 코드 추가");
+                $.ajax({
+                    type:"POST",
+                    url: api.addPartsCode,
+                    data: $("#modal-parts-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("추가 완료!");
+                        }else{
+                            alert("추가 실패!");
+                        }
+                        $("#modal-parts").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end parts add button event
+
+        // parts modal modify button event
+        $("#btn-modal-mod-parts").on("click", function(){
+            if(confirm("해당 파일럿 코드를 수정 하시겠습니까?")){
+                $("#parts-comment").val("파일럿 코드 수정");
+                $.ajax({
+                    type:"POST",
+                    url: api.setPartsCode,
+                    data: $("#modal-parts-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("수정 완료!");
+                        }else{
+                            alert("수정 실패!");
+                        }
+                        $("#modal-parts").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end parts modify button event
+
+        // parts modal delete button event
+        $("#btn-modal-del-parts").on("click", function(){
+            if(confirm("해당 파일럿 코드를 삭제 하시겠습니까?")){
+                $("#parts-comment").val("파일럿 코드 삭제");
+                $.ajax({
+                    type:"POST",
+                    url: api.delPartsCode,
+                    data: $("#modal-parts-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("수정 완료!");
+                        }else{
+                            alert("수정 실패!");
+                        }
+                        $("#modal-parts").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end parts delete button event
+
+
+        
+
+        // parts code info
+        var partsTd;
+        $.ajax({
+            url: api.getPartsCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            async: false,
+            error: function(xhr, textStatus, errorThrown) {
+                alert("code 조회 실패!");
+                return "";
+            },
+            success: function(response) {
+                var isOpen="";
+                var isGotcha="";
+                $.each(response, function() {
+                    partsTd += '<tr>' 
+                    + '<td>' + this.partsType + '</td>' 
+                    + '<td>' + this.partsCode + '</td>' 
+                    + '<td>' 
+                        + '<input type="hidden" name="partsType" value="' + this.partsType + '">' 
+                        + '<input type="hidden" name="partsCode" value="' + this.partsCode + '">' 
+                        + '<input type="hidden" name="devTime" value="' + this.devTime + '">' 
+                        + '<input type="hidden" name="priceGold" value="' + this.priceGold + '">' 
+                        + '<input type="hidden" name="priceInstantly" value="' + this.priceInstantly + '">' 
+                        + '<input type="hidden" name="priceCash" value="' + this.priceCash + '">' 
+                        + '<input type="hidden" name="priceCapsule" value="' + this.priceCapsule + '">' 
+                        + '<input type="hidden" name="isOpen" value="' + this.isOpen + '">' 
+                        + '<input type="hidden" name="isGotcha" value="' + this.isGotcha+ '">' 
+                        + '<input type="hidden" name="partsName" value="' + this.partsName + '">' 
+                        + '<a href="javascript:;" onclick="partsDetailModal(this)" > ' + this.partsName + '</a>' 
+                    + '</td>' 
+                    + '<td>' + this.devTime + '</td>' 
+                    + '<td>' + this.priceGold + '</td>' 
+                    + '<td>' + this.priceInstantly + '</td>' 
+                    + '<td>' + this.priceCash + '</td>' 
+                    + '<td>' + this.priceCapsule + '</td>' 
+                    + '<td>' + this.isOpen + '</td>' 
+                    + '<td>' + this.isGotcha + '</td>' + '</tr>'
+                }); // end each
+                $("#parts-code-tbody").append(partsTd);
+            } // end success
+        }); // end ajax
+        // end parts code info
+    });
+
+
+    function partsDetailModal(obj) {
+        $("#btn-modal-add-parts").hide();
+        $("#modal-parts-type").attr("readonly", "true");
+        $("#modal-parts-code").attr("readonly", "true");
+        $("#modal-parts-type").val($(obj).siblings("input[name='partsType']").val());
+        $("#modal-parts-code").val($(obj).siblings("input[name='partsCode']").val());
+        $("#modal-parts-name").val($(obj).siblings("input[name='partsName']").val());
+        $("#modal-parts-devtime").val($(obj).siblings("input[name='devTime']").val());
+        $("#modal-parts-pricegold").val($(obj).siblings("input[name='priceGold']").val());
+        $("#modal-parts-priceinstantly").val($(obj).siblings("input[name='priceInstantly']").val());
+        $("#modal-parts-pricecash").val($(obj).siblings("input[name='priceCash']").val());
+        $("#modal-parts-pricecapsule").val($(obj).siblings("input[name='priceCapsule']").val());
+        if($(obj).siblings("input[name='isOpen']").val() == "true"){
+            $("#modal-parts-isopen-true").attr("selected", "selected")
+        }else{
+            $("#modal-parts-isopen-false").attr("selected", "selected")
+        }
+        if($(obj).siblings("input[name='isGotcha']").val() == "true"){
+            $("#modal-parts-isgotcha-true").attr("selected", "selected")
+        }else{
+            $("#modal-parts-isgotcha-false").attr("selected", "selected")
+        }
+
+        // $("#modal-parts-isopen").val($(obj).siblings("input[name='isOpen']").val());
+        // $("#modal-parts-isgotcha").val($(obj).siblings("input[name='isGotcha']").val());
+        $("#modal-parts").modal('toggle')
+    };
+
+    </script>
+</body>
+
+</html>

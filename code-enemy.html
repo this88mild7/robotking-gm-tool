@@ -154,16 +154,20 @@
                 </div>
                 <!--/.page-header-->
                 <div class="row-fluid">
-                    <div class="alert alert-block alert-success">
-                        <p>
-                            <strong>
-                                <i class="icon-ok"></i>
-                                코드정보!
-                            </strong>
-                            코드 정보를 보거나 수정, 추가, 삭제 할 수 있는 페이지 입니다.
-                        </p>
-                        <p>왼쪽 메뉴에서 원하는 코드를 선택해 주세요</p>
-
+                    <div id="enemy-code">
+                        <h5>생포 로봇 코드
+                            <button id="btn-enemy-add" class="btn btn-info" type="button">추가</button>
+                        </h5>
+                        <table id="enemy-code-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enemy-code-tbody">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!--/.row-fluid-->
@@ -176,10 +180,140 @@
             <i class="icon-double-angle-up icon-only bigger-110"></i>
         </a>
     </div>
+    <!-- enemy code 모달 -->
+    <div id="modal-enemy" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">생포 로봇  코드 </h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="modal-enemy-form">
+                <input type="hidden" name="gmid" value="1">
+                <input type="hidden" id="enemy-comment" name="comment" >
+                <div class="control-group">
+                    <label class="control-label">Code</label>
+                    <div class="controls">
+                        <input type="text" name="enemyCode" id="modal-enemy-code" readonly="true">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                        <input type="text" name="enemyName" id="modal-enemy-name">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+            <button id="btn-modal-add-enemy" class="btn btn-primary">추가</button>
+            <button id="btn-modal-mod-enemy" class="btn btn-primary">저장</button>
+            <button id="btn-modal-del-enemy" class="btn btn-danger">삭제</button>
+        </div>
+    </div> <!-- end enemy modal -->
     <script>
     $(function() {
+
+        $("#side-enemy").addClass("active");
         $("#side-code").addClass("open active");
-    });
+
+        // enemy add button event
+        $("#btn-enemy-add").on("click", function(){
+            $("#modal-enemy-code").val('');
+            $("#modal-enemy-name").val('');
+            $("#modal-enemy").modal('toggle')
+        });
+
+        // pilot modal add button event
+        $("#btn-modal-mod-pilot").on("click", function(){
+            if(confirm("해당 생포 로봇 코드를 변경 하시겠습니까?")){
+                $("#enemy-comment").val("생포 로봇 코드 추가");
+                $.ajax({
+                    type:"POST",
+                    url: api.setPilotCode,
+                    data: $("#modal-pilot-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("수정 완료!");
+                        }else{
+                            alert("수정 실패!");
+                        }
+                        $("#modal-pilot").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end pilot add button event
+
+        // enemy code info
+        var enemyTd;
+        $.ajax({
+            url: api.getEnemyCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            async: false,
+            error: function(xhr, textStatus, errorThrown) {
+                alert("code 조회 실패!");
+                return "";
+            },
+            success: function(response) {
+                $.each(response, function() {
+
+                    enemyTd += '<tr>' 
+                    + '<td>' + this.enemyCode + '</td>' 
+                    + '<td>' 
+                        + '<input type="hidden" name="enemyCode" value="' + this.enemyCode + '">' 
+                        + '<input type="hidden" name="enemyName" value="' + this.enemyName + '">' 
+                        + '<a href="javascript:;" onclick="enemyDetailModal(this)"> ' +this.enemyName + '</a>'
+                    + '</td>' 
+                    + '</tr>'
+
+                }); // end each
+                $("#enemy-code-tbody").append(enemyTd);
+            } // end success
+        }); // end ajax
+        // end enemy code info
+
+        // enemy modal delete button event
+        $("#btn-modal-del-enemy").on("click", function(){
+            if(confirm("해당 파일럿 코드를 삭제 하시겠습니까?")){
+                $("#enemy-comment").val("생포로봇 코드 삭제");
+                $.ajax({
+                    type:"POST",
+                    url: api.delEnemyCode,
+                    data: $("#modal-enemy-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("삭제 완료");
+                        }else{
+                            alert("삭제 실패!");
+                        }
+                        $("#modal-enemy").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        })
+        // enemy modal delete button event
+    })
+
+
+    function enemyDetailModal(obj) {
+        $("#btn-modal-add-enemy").hide();
+        $("#modal-enemy-code").val($(obj).siblings("input[name='enemyCode']").val());
+        $("#modal-enemy-name").val($(obj).siblings("input[name='enemyName']").val());
+        $("#modal-enemy-pricecash").val($(obj).siblings("input[name='PriceCash']").val());
+        $("#modal-enemy").modal('toggle')
+    };
+
     </script>
 </body>
 

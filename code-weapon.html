@@ -149,21 +149,29 @@
             <div class="page-content">
                 <div class="page-header position-relative">
                     <h1>
-                        코드 정보
+                        무기 및 스킬 코드
                     </h1>
                 </div>
                 <!--/.page-header-->
                 <div class="row-fluid">
-                    <div class="alert alert-block alert-success">
-                        <p>
-                            <strong>
-                                <i class="icon-ok"></i>
-                                코드정보!
-                            </strong>
-                            코드 정보를 보거나 수정, 추가, 삭제 할 수 있는 페이지 입니다.
-                        </p>
-                        <p>왼쪽 메뉴에서 원하는 코드를 선택해 주세요</p>
-
+                    <div id="weapon-code">
+                        <h5>무기 코드
+                            <button id="btn-weapon-add" class="btn btn-info" type="button">추가</button>
+                        </h5>
+                        <table id="weapon-code-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Code</th>
+                                    <th>Level</th>
+                                    <th>Name</th>
+                                    <th>PriceGold</th>
+                                    <th>PriceCash</th>
+                                </tr>
+                            </thead>
+                            <tbody id="weapon-code-tbody">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!--/.row-fluid-->
@@ -176,10 +184,115 @@
             <i class="icon-double-angle-up icon-only bigger-110"></i>
         </a>
     </div>
+
+    <!-- weapon code 모달 -->
+    <div id="modal-weapon" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="text-center">무기  코드</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="modal-weapon-form">
+                <div class="control-group">
+                    <label class="control-label">Type</label>
+                    <div class="controls">
+                        <input type="text" name="wpType" id="modal-weapon-type">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Code</label>
+                    <div class="controls">
+                        <input type="text" name="wpCode" id="modal-weapon-code">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Level</label>
+                    <div class="controls">
+                        <input type="text" name="wpLevel" id="modal-weapon-level">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                        <input type="text" name="wpName" id="modal-weapon-name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceGold</label>
+                    <div class="controls">
+                        <input type="text" name="priceGold" id="modal-weapon-pricegold">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">PriceCash</label>
+                    <div class="controls">
+                        <input type="text" name="priceCash" id="modal-weapon-pricecash">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+            <button id="btn-modal-add-weapon" class="btn btn-primary">추가</button>
+            <button id="btn-modal-mod-weapon" class="btn btn-primary">저장</button>
+            <button id="btn-modal-del-weapn" class="btn btn-danger">삭제</button>
+        </div>
+    </div> <!-- end weapon modal -->
     <script>
     $(function() {
+        $("#side-weapon").addClass("active");
         $("#side-code").addClass("open active");
+
+        // weapon code info
+        var weaponTd;
+        $.ajax({
+            url: api.getWeaponCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            async: false,
+            error: function(xhr, textStatus, errorThrown) {
+                alert("code 조회 실패!");
+                return "";
+            },
+            success: function(response) {
+                $.each(response, function() {
+
+                    weaponTd += '<tr>' 
+                                    + '<td>' + this.wpType + '</td>' 
+                                    + '<td>' + this.wpCode + '</td>' 
+                                    + '<td>' + this.wpLevel + '</td>' 
+                                    + '<td>' 
+                                        + '<input type="hidden" name="wpType" value="' + this.wpType + '">' 
+                                        + '<input type="hidden" name="wpCode" value="' + this.wpCode + '">' 
+                                        + '<input type="hidden" name="wpLevel" value="' + this.wpLevel + '">' 
+                                        + '<input type="hidden" name="wpName" value="' + this.wpName + '">' 
+                                        + '<input type="hidden" name="priceGold" value="' + this.priceGold + '">' 
+                                        + '<input type="hidden" name="priceCash" value="' + this.priceCash + '">' 
+                                        + '<a href="javascript:;" onclick="weaponDetailModal(this)"> ' + this.wpName + '</a>'
+                                    + '</td>' 
+                                    + '<td>' + this.priceGold + '</td>' 
+                                    + '<td>' + this.priceCash + '</td>' 
+                                    + '</tr>'
+                }); // end each
+                $("#weapon-code-tbody").append(weaponTd);
+            } // end success
+        }); // end ajax
+        // end weapon code info
     });
+
+    function weaponDetailModal(obj) {
+        $("#modal-weapon-type").attr("readonly", "true");
+        $("#modal-weapon-code").attr("readonly", "true");
+        $("#modal-weapon-level").attr("readonly", "true");
+        $("#btn-modal-add-weapon").hide();
+        $("#modal-weapon-type").val($(obj).siblings("input[name='wpType']").val());
+        $("#modal-weapon-code").val($(obj).siblings("input[name='wpCode']").val());
+        $("#modal-weapon-level").val($(obj).siblings("input[name='wpLevel']").val());
+        $("#modal-weapon-name").val($(obj).siblings("input[name='wpName']").val());
+        $("#modal-weapon-pricegold").val($(obj).siblings("input[name='priceGold']").val());
+        $("#modal-weapon-pricecash").val($(obj).siblings("input[name='priceCash']").val());
+        $("#modal-weapon").modal('toggle')
+    };
     </script>
 </body>
 

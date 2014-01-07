@@ -1,5 +1,9 @@
 var domain = "";
 var api = {
+    addPilotCode: domain + "/service/Management.asmx/AddPilotCode",
+    addPartsCode: domain + "/service/Management.asmx/AddPartsCode",
+    addQuestCode: domain + "/service/Management.asmx/AddQuestCode",
+    addWeaponCode: domain + "/service/Management.asmx/AddWeaponCode",
     getId: domain + "/service/Management.asmx/GetId",
     getUserInfo: domain + "/service/Management.asmx/GetUserInfo",
     getPilotInfo: domain + "/service/Management.asmx/GetPilotInfo",
@@ -18,7 +22,9 @@ var api = {
     getAdminWork: domain + "/service/Management.asmx/GetAdminWork",
     getLogInfo: domain + "/service/Management.asmx/GETLogInfo",
     getLogCodeTable: domain + "/service/Management.asmx/GetLogCodeTable",
+    getQuestCode: domain + "/service/Management.asmx/GetQuestCode",
     getHelperSystemStandardInfo: domain + "/service/Management.asmx/GetHelperSystemStandardInfo",
+    getEnemyCode: domain + "/service/Management.asmx/GetEnemyCode",
     setParts: domain + "/service/Management.asmx/SetParts",
     setWeapon: domain + "/service/Management.asmx/SetWeapon",
     sendMessage: domain + "/service/Management.asmx/SendMessage",
@@ -31,11 +37,18 @@ var api = {
     setCreateAccount: domain + "/service/Management.asmx/SetCreateAccount",
     setEquipInfo: domain + "/service/Management.asmx/SetEquipInfo",
     setHelperSystemStandardInfo: domain + "/service/Management.asmx/SetHelperSystemStandardInfo",
+    setPilotCode: domain + "/service/Management.asmx/SetPilotCode",
+    setWeaponCode: domain + "/service/Management.asmx/SetWeaponCode",
+    setPartsCode: domain + "/service/Management.asmx/SetPartsCode",
     delWeapon: domain + "/service/Management.asmx/DelWeapon",
     delParts: domain + "/service/Management.asmx/DelParts",
     delPilot: domain + "/service/Management.asmx/DelPilot",
     delMessageInfo: domain + "/service/Management.asmx/DelMessageInfo",
     delUserInfo: domain + "/service/Management.asmx/DelUserInfo",
+    delPilotCode: domain + "/service/Management.asmx/DelPilotCode",
+    delPartsCode: domain + "/service/Management.asmx/DelPartsCode",
+    delQuestCode: domain + "/service/Management.asmx/DelQuestCode",
+    delWeaponCode: domain + "/service/Management.asmx/DelWeaponCode",
     loginGm: domain + "/service/Management.asmx/Login",
     postCodeTable: domain + "/service/Management.asmx/PostCodeTable"
 }
