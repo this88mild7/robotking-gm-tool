@@ -119,10 +119,22 @@
                                 파츠 코드
                             </a>
                         </li>
-                        <li id="sid-pilot">
+                        <li id="side-pilot">
                             <a href="code-pilot.html">
                                 <i class="icon-double-angle-right"></i>
                                 파일럿 코드
+                            </a>
+                        </li>
+                        <li id="side-item">
+                            <a href="code-item.html">
+                                <i class="icon-double-angle-right"></i>
+                                아이템 코드
+                            </a>
+                        </li>
+                        <li id="side-cash">
+                            <a href="code-cash.html">
+                                <i class="icon-double-angle-right"></i>
+                                캐쉬 코드
                             </a>
                         </li>
                         <li id="side-quest">
@@ -193,6 +205,8 @@
         </div>
         <div class="modal-body">
             <form class="form-horizontal" id="modal-weapon-form">
+                <input type="hidden"  name="gmid" value="1">
+                <input type="hidden"  name="comment" id="weapon-comment">
                 <div class="control-group">
                     <label class="control-label">Type</label>
                     <div class="controls">
@@ -242,6 +256,98 @@
     $(function() {
         $("#side-weapon").addClass("active");
         $("#side-code").addClass("open active");
+
+        // weapon add button event
+        $("#btn-weapon-add").on("click", function(){
+            $("#btn-modal-del-weapon").hide();
+            $("#btn-modal-mod-weapon").hide();
+            $("#btn-modal-add-weapon").show();
+            $("#modal-weapon-type").removeAttr("readonly");
+            $("#modal-weapon-code").removeAttr("readonly");
+            $("#modal-weapon-level").removeAttr("readonly");
+            $("#modal-weapon-type").val('');
+            $("#modal-weapon-code").val('');
+            $("#modal-weapon-level").val('');
+            $("#modal-weapon-name").val('');
+            $("#modal-weapon-pricegold").val('');
+            $("#modal-weapon-pricecash").val('');
+            $("#modal-weapon").modal('toggle')
+        });
+
+        // weapon modal add button event
+        $("#btn-modal-add-weapon").on("click", function(){
+            if(confirm("해당 무기 코드를 추가 하시겠습니까?")){
+                $("#weapon-comment").val("무기 코드 추가");
+                $.ajax({
+                    type:"POST",
+                    url: api.addWeaponCode,
+                    data: $("#modal-weapon-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("추가 완료!");
+                        }else{
+                            alert("추가 실패!");
+                        }
+                        $("#modal-weapon").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end weapon add button event
+
+        //  weapon modify button event
+        $("#btn-modal-mod-weapon").on("click", function(){
+            if(confirm("해당 무기 코드를 변경 하시겠습니까?")){
+                $("#weapon-comment").val("무기 코드 수정");
+                $.ajax({
+                    type:"POST",
+                    url: api.setWeaponCode,
+                    data: $("#modal-weapon-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("수정 완료!");
+                        }else{
+                            alert("수정 실패!");
+                        }
+                        $("#modal-weapon").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); // end weapon modify button event
+
+        // weapon modal delete button event
+        $("#btn-modal-del-weapon").on("click", function(){
+            if(confirm("해당 무기 코드를 삭제 하시겠습니까?")){
+                $("#weapon-comment").val("무기 코드 삭제");
+                $.ajax({
+                    type:"POST",
+                    url: api.delWeaponCode,
+                    data: $("#modal-weapon-form").serialize(),
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error: function(xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    },
+                    success: function(response) {
+                        if(response == "True"){
+                            alert("수정 완료!");
+                        }else{
+                            alert("수정 실패!");
+                        }
+                        $("#modal-weapon").modal('toggle');
+                        location.reload();
+                    } // end success
+                }); // end ajax   
+            }
+        }); //  end weapon delete button event
 
         // weapon code info
         var weaponTd;

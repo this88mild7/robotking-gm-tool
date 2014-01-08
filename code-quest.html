@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 GM Tool</title>
+    <title>로봇킹 GM Tool - Code</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -81,7 +81,7 @@
                 <a href="login.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 GM Tool
+                        로봇킹 GM Tool - Code
                     </small>
                 </a>
                 <!--/.brand-->
@@ -119,10 +119,22 @@
                                 파츠 코드
                             </a>
                         </li>
-                        <li id="sid-pilot">
+                        <li id="side-pilot">
                             <a href="code-pilot.html">
                                 <i class="icon-double-angle-right"></i>
                                 파일럿 코드
+                            </a>
+                        </li>
+                        <li id="side-item">
+                            <a href="code-item.html">
+                                <i class="icon-double-angle-right"></i>
+                                아이템 코드
+                            </a>
+                        </li>
+                        <li id="side-cash">
+                            <a href="code-cash.html">
+                                <i class="icon-double-angle-right"></i>
+                                캐쉬 코드
                             </a>
                         </li>
                         <li id="side-quest">
@@ -154,71 +166,22 @@
                 </div>
                 <!--/.page-header-->
                 <div class="row-fluid">
-                    <div id="weapon-code">
-                        <h5>무기 및 스킬 코드
-                            <button id="btn-weapon-add" class="btn btn-info" type="button">추가</button>
+                    <div id="quest-code">
+                        <h5>퀘스트 코드
+                            <button id="btn-quest-add" class="btn btn-info" type="button">추가</button>
                         </h5>
-                        <table id="weapon-code-table" class="table table-striped table-bordered table-hover">
+                        <table id="quest-code-table" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>Code</th>
                                     <th>Type</th>
-                                    <th>Code</th>
-                                    <th>Level</th>
-                                    <th>Name</th>
-                                    <th>PriceGold</th>
-                                    <th>PriceCash</th>
+                                    <th>Description</th>
+                                    <th>Reward</th>
+                                    <th>CondCode</th>
+                                    <th>CondCount</th>
                                 </tr>
                             </thead>
-                            <tbody id="weapon-code-tbody">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="parts-code">
-                        <h5>파츠 코드
-                            <button id="btn-parts-add" class="btn btn-info" type="button">추가</button>
-                        </h5>
-                        <table id="parts-code-table" class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>DevTime</th>
-                                    <th>PriceGold</th>
-                                    <th>PriceInstantly</th>
-                                    <th>PriceCash</th>
-                                    <th>PriceCapsule</th>
-                                    <th>IsOpen</th>
-                                    <th>IsGotcha</th>
-                                </tr>
-                            </thead>
-                            <tbody id="parts-code-tbody">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="pilot-code">
-                        <h5>파일럿 코드
-                            <button id="btn-pilot-add" class="btn btn-info" type="button">추가</button>
-                        </h5>
-                        <table id="pilot-code-table" class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>PriceCash</th>
-                                    <th>Power</th>
-                                    <th>Skill</th>
-                                    <th>Attack</th>
-                                    <th>Hunt</th>
-                                    <th>HP</th>
-                                    <th>SP</th>
-                                    <th>AbilityType</th>
-                                    <th>AbilityValue</th>
-                                    <th>PriceGold</th>
-                                    <th>Luck</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pilot-code-tbody">
+                            <tbody id="quest-code-tbody">
                             </tbody>
                         </table>
                     </div>
@@ -234,410 +197,91 @@
         </a>
     </div>
 
-    <!-- weapon code 모달 -->
-    <div id="modal-weapon" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="text-center">무기  코드</h3>
-        </div>
-        <div class="modal-body">
-            <form class="form-horizontal" id="modal-weapon-form">
-                <div class="control-group">
-                    <label class="control-label">Type</label>
-                    <div class="controls">
-                        <input type="text" name="wpType" id="modal-weapon-type">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Code</label>
-                    <div class="controls">
-                        <input type="text" name="wpCode" id="modal-weapon-code">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Level</label>
-                    <div class="controls">
-                        <input type="text" name="wpLevel" id="modal-weapon-level">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Name</label>
-                    <div class="controls">
-                        <input type="text" name="wpName" id="modal-weapon-name">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceGold</label>
-                    <div class="controls">
-                        <input type="text" name="priceGold" id="modal-weapon-pricegold">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceCash</label>
-                    <div class="controls">
-                        <input type="text" name="priceCash" id="modal-weapon-pricecash">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
-            <button id="btn-modal-add-weapon" class="btn btn-primary">추가</button>
-            <button id="btn-modal-mod-weapon" class="btn btn-primary">저장</button>
-            <button id="btn-modal-del-weapn" class="btn btn-danger">삭제</button>
-        </div>
-    </div> <!-- end weapon modal -->
-
     <!-- 파츠 code 모달 -->
-    <div id="modal-parts" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="modal-quest" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="text-center">파츠 코드</h3>
+            <h3 class="text-center">퀘스트 코드</h3>
         </div>
         <div class="modal-body">
-            <form class="form-horizontal" id="modal-parts-form">
+            <form class="form-horizontal" id="modal-quest-form">
+                <input type="hidden"  name="gmid" value="1">
+                <input type="hidden"  name="comment" id="quest-comment">
+                <div class="control-group">
+                    <label class="control-label">Code</label>
+                    <div class="controls">
+                        <input type="text" name="questCode" id="modal-quest-code">
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label">Type</label>
                     <div class="controls">
-                        <input type="text" id="modal-parts-type">
+                        <input type="text" name="questType" id="modal-quest-type">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Code</label>
+                    <label class="control-label">Description</label>
                     <div class="controls">
-                        <input type="text" id="modal-parts-code">
+                        <input type="text" name="description" id="modal-quest-description">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Reward</label>
+                    <div class="controls">
+                        <input type="text" name="reward" id="modal-quest-reward">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Name</label>
+                    <label class="control-label">CondCode</label>
                     <div class="controls">
-                        <input type="text" id="modal-parts-name">
+                        <input type="text" name="condCode" id="modal-quest-condCode">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">DevTime</label>
+                    <label class="control-label">CondCount</label>
                     <div class="controls">
-                        <input type="text" id="modal-parts-devtime">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceGold</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-pricegold">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceInstantly</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-priceinstantly">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceCash</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-pricecash">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceCapsule</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-pricecapsule">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">IsOpen</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-isopen">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">IsGotcha</label>
-                    <div class="controls">
-                        <input type="text" id="modal-parts-isgotcha">
+                        <input type="text" name="condCount" id="modal-quest-condCodunt">
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
             <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
-            <button id="btn-modal-add-parts" class="btn btn-primary">추가</button>
-            <button id="btn-modal-mod-parts" class="btn btn-primary">저장</button>
-            <button id="btn-modal-del-parts" class="btn btn-danger">삭제</button>
+            <button id="btn-modal-add-quest" class="btn btn-primary">추가</button>
+            <button id="btn-modal-mod-quest" class="btn btn-primary">저장</button>
+            <button id="btn-modal-del-quest" class="btn btn-danger">삭제</button>
         </div>
-    </div> <!-- end parts modal -->
+    </div> <!-- end quest modal -->
 
-    <!-- pilot code 모달 -->
-    <div id="modal-pilot" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="text-center">파일럿 코드 </h3>
-        </div>
-        <div class="modal-body">
-            <form class="form-horizontal" id="modal-pilot-form">
-                <input type="hidden" name="gmid" value="1">
-                <input type="hidden" id="pilot-comment" name="comment" value="파일럿 코드 변경">
-                <div class="control-group">
-                    <label class="control-label">Code</label>
-                    <div class="controls">
-                        <input type="text" name="pilotCode" id="modal-pilot-code">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Name</label>
-                    <div class="controls">
-                        <input type="text" name="pilotName" id="modal-pilot-name">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceCash</label>
-                    <div class="controls">
-                        <input type="text" name="priceCash" id="modal-pilot-pricecash">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Power</label>
-                    <div class="controls">
-                        <input type="text" name="power" id="modal-pilot-power">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Skill</label>
-                    <div class="controls">
-                        <input type="text" name="skill" id="modal-pilot-skill">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Attack</label>
-                    <div class="controls">
-                        <input type="text" name="attack" id="modal-pilot-attack">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Hunt</label>
-                    <div class="controls">
-                        <input type="text" name="hunt" id="modal-pilot-hunt">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">HP</label>
-                    <div class="controls">
-                        <input type="text" name="hp" id="modal-pilot-hp">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">SP</label>
-                    <div class="controls">
-                        <input type="text" name="sp" id="modal-pilot-sp">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">AbilityType</label>
-                    <div class="controls">
-                        <input type="text" name="abilityType" id="modal-pilot-abilitytype">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">AbilityValue</label>
-                    <div class="controls">
-                        <input type="text" name="abilityValue" id="modal-pilot-abilityvalue">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">PriceGold</label>
-                    <div class="controls">
-                        <input type="text" name="priceGold" id="modal-pilot-pricegold">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Luck</label>
-                    <div class="controls">
-                        <input type="text" name="luck" id="modal-pilot-luck">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
-            <button id="btn-modal-add-pilot" class="btn btn-primary">추가</button>
-            <button id="btn-modal-mod-pilot" class="btn btn-primary">저장</button>
-            <button id="btn-modal-del-pilot" class="btn btn-danger">삭제</button>
-        </div>
-    </div> <!-- end pilot modal -->
     <script>
     $(function() {
         $("#side-quest").addClass("active");
         $("#side-code").addClass("open active");
 
-        // weapon code info
-        var weaponTd;
-        $.ajax({
-            url: api.getWeaponCode,
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "json",
-            async: false,
-            error: function(xhr, textStatus, errorThrown) {
-                alert("code 조회 실패!");
-                return "";
-            },
-            success: function(response) {
-                $.each(response, function() {
-
-                    weaponTd += '<tr>' 
-                    + '<td>' + this.wpType + '</td>' 
-                    + '<td>' + this.wpCode + '</td>' 
-                    + '<td>' + this.wpLevel + '</td>' 
-                    + '<td>' 
-                        + '<input type="hidden" name="wpType" value="' + this.wpType + '">' 
-                        + '<input type="hidden" name="wpCode" value="' + this.wpCode + '">' 
-                        + '<input type="hidden" name="wpLevel" value="' + this.wpLevel + '">' 
-                        + '<input type="hidden" name="wpName" value="' + this.wpName + '">' 
-                        + '<input type="hidden" name="priceGold" value="' + this.priceGold + '">' 
-                        + '<input type="hidden" name="priceCash" value="' + this.priceCash + '">' 
-                        + '<a href="javascript:;" onclick="weaponDetailModal(this)"> ' + this.wpName + '</a>'
-                    + '</td>' 
-                    + '<td>' + this.priceGold + '</td>' 
-                    + '<td>' + this.priceCash + '</td>' 
-                    + '</tr>'
-
-                }); // end each
-                $("#weapon-code-tbody").append(weaponTd);
-            } // end success
-        }); // end ajax
-        // end weapon code info
-
-        // parts code info
-        var partsTd;
-        $.ajax({
-            url: api.getPartsCode,
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "json",
-            async: false,
-            error: function(xhr, textStatus, errorThrown) {
-                alert("code 조회 실패!");
-                return "";
-            },
-            success: function(response) {
-                $.each(response, function() {
-                    partsTd += '<tr>' 
-                    + '<td>' + this.partsType + '</td>' 
-                    + '<td>' + this.partsCode + '</td>' 
-                    + '<td>' 
-                        + '<input type="hidden" name="partsType" value="' + this.partsType + '">' 
-                        + '<input type="hidden" name="partsCode" value="' + this.partsCode + '">' 
-                        + '<input type="hidden" name="devTime" value="' + this.devTime + '">' 
-                        + '<input type="hidden" name="priceGold" value="' + this.priceGold + '">' 
-                        + '<input type="hidden" name="priceInstantly" value="' + this.priceInstantly + '">' 
-                        + '<input type="hidden" name="priceCash" value="' + this.priceCash + '">' 
-                        + '<input type="hidden" name="priceCapsule" value="' + this.priceCapsule + '">' 
-                        + '<input type="hidden" name="isOpen" value="' + this.isOpen + '">' 
-                        + '<input type="hidden" name="isGotcha" value="' + this.isGotcha + '">' 
-                        + '<input type="hidden" name="partsName" value="' + this.partsName + '">' 
-                        + '<a href="javascript:;" onclick="partsDetailModal(this)" > ' + this.partsName + '</a>' 
-                    + '</td>' 
-                    + '<td>' + this.devTime + '</td>' 
-                    + '<td>' + this.priceGold + '</td>' 
-                    + '<td>' + this.priceInstantly + '</td>' 
-                    + '<td>' + this.priceCash + '</td>' 
-                    + '<td>' + this.priceCapsule + '</td>' 
-                    + '<td>' + this.isOpen + '</td>' 
-                    + '<td>' + this.isGotcha + '</td>' + '</tr>'
-                }); // end each
-                $("#parts-code-tbody").append(partsTd);
-            } // end success
-        }); // end ajax
-        // end parts code info
-
-        // pilot code info
-        var pilotTd;
-        $.ajax({
-            url: api.getPilotCode,
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "json",
-            async: false,
-            error: function(xhr, textStatus, errorThrown) {
-                alert("code 조회 실패!");
-                return "";
-            },
-            success: function(response) {
-                $.each(response, function() {
-                    pilotTd += '<tr>' 
-                                + '<td>' + this.PilotCode + '</td>' 
-                                + '<td>' 
-                                    + '<input type="hidden" name="PilotCode" value="' + this.PilotCode + '">' 
-                                    + '<input type="hidden" name="PilotName" value="' + this.PilotName + '">' 
-                                    + '<input type="hidden" name="PriceCash" value="' + this.PriceCash + '">' 
-                                    + '<input type="hidden" name="Power" value="' + this.Power + '">' 
-                                    + '<input type="hidden" name="Skill" value="' + this.Skill + '">' 
-                                    + '<input type="hidden" name="Attack" value="' + this.Attack + '">' 
-                                    + '<input type="hidden" name="Hunt" value="' + this.Hunt + '">' 
-                                    + '<input type="hidden" name="HP" value="' + this.HP + '">' 
-                                    + '<input type="hidden" name="SP" value="' + this.SP + '">' 
-                                    + '<input type="hidden" name="AbilityType" value="' + this.AbilityType + '">' 
-                                    + '<input type="hidden" name="AbilityValue" value="' + this.abilityValue + '">' 
-                                    + '<input type="hidden" name="PriceGold" value="' + this.PriceGold + '">' 
-                                    + '<input type="hidden" name="Luck" value="' + this.Luck + '">' 
-                                    + '<a href="javascript:;" onclick="pilotDetailModal(this)" > ' + this.PilotName + '</a>' 
-                                + '</td>' 
-                                + '<td>' + this.PriceCash + '</td>' 
-                                + '<td>' + this.Power + '</td>' 
-                                + '<td>' + this.Skill + '</td>' 
-                                + '<td>' + this.Attack + '</td>' 
-                                + '<td>' + this.Hunt + '</td>' 
-                                + '<td>' + this.HP + '</td>' 
-                                + '<td>' + this.SP + '</td>' 
-                                + '<td>' + this.AbilityType + '</td>' 
-                                + '<td>' + this.abilityValue + '</td>' 
-                                + '<td>' + this.PriceGold + '</td>' 
-                                + '<td>' + this.Luck + '</td>' 
-                                + '</tr>'
-                    // $('#pilot-code-table').dataTable().fnAddData([
-                    //     this.PilotCode,
-                    //     '<a href="javascript:;" onclick="pilotDetailModal(this)" > '+this.PilotName+'</a>',
-                    //     this.PriceCash,
-                    //     this.Power,
-                    //     this.Skill,
-                    //     this.Attack,
-                    //     this.Hunt,
-                    //     this.HP,
-                    //     this.SP,
-                    //     this.AbilityType,
-                    //     this.abilityValue,
-                    //     this.PriceGold
-                    // ]);
-                }) // end each
-                $("#pilot-code-tbody").append(pilotTd);
-            } // end success
-        }); // end ajax        
-
-        // pilot add button event
-        $("#btn-pilot-add").on("click", function(){
-            $("#modal-pilot-code").val('');
-            $("#modal-pilot-name").val('');
-            $("#modal-pilot-pricecash").val('');
-            $("#modal-pilot-power").val('');
-            $("#modal-pilot-skill").val('');
-            $("#modal-pilot-attack").val('');
-            $("#modal-pilot-hunt").val('');
-            $("#modal-pilot-hp").val('');
-            $("#modal-pilot-sp").val('');
-            $("#modal-pilot-abilitytype").val('');
-            $("#modal-pilot-abilityvalue").val('');
-            $("#modal-pilot-pricegold").val('');
-            $("#modal-pilot-luck").val('');
-            $("#btn-modal-del-pilot").hide();
-            $("#btn-modal-mod-pilot").hide();
-            $("#modal-pilot").modal('toggle')
+        // quest add button event
+        $("#btn-quest-add").on("click", function(){
+            $("#btn-modal-del-quest").hide();
+            $("#btn-modal-mod-quest").hide();
+            $("#btn-modal-add-quest").show();
+            $("#modal-quest-type").removeAttr("readonly");
+            $("#modal-quest-code").removeAttr("readonly");
+            $("#modal-quest-type").val("");
+            $("#modal-quest-code").val("");
+            $("#modal-quest-name").val('');
+            $("#modal-quest-qty").val('');
+            $("#modal-quest-price").val('');
+            $("#modal-quest").modal('toggle')
         });
-        // end pilot add button event
 
-         // pilot modal add button event
-        $("#btn-modal-add-pilot").on("click", function(){
-            if(confirm("해당 파일럿 코드를 추가 하시겠습니까?")){
-                $("#pilot-comment").val("파일럿 코드 추가");
+        // quest modal add button event
+        $("#btn-modal-add-quest").on("click", function(){
+            if(confirm("해당 퀘스트 코드를 추가 하시겠습니까?")){
+                $("#quest-comment").val("퀘스트 코드 추가");
                 $.ajax({
                     type:"POST",
-                    url: api.addPilotCode,
-                    data: $("#modal-pilot-form").serialize(),
+                    url: api.addQuestCode,
+                    data: $("#modal-quest-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     error: function(xhr, textStatus, errorThrown) {
                         alert(errorThrown);
@@ -648,20 +292,21 @@
                         }else{
                             alert("추가 실패!");
                         }
+                        $("#modal-quest").modal('toggle');
+                        location.reload();
                     } // end success
                 }); // end ajax   
             }
-        }); //  end pilot add button event
+        }); //  end quest add button event
 
-
-        // pilot modal modify button event
-        $("#btn-modal-mod-pilot").on("click", function(){
-            if(confirm("해당 파일럿 코드를 변경 하시겠습니까?")){
-                $("#pilot-comment").val("파일럿 코드 수정");
+        // quest modal modify button event
+        $("#btn-modal-mod-quest").on("click", function(){
+            if(confirm("해당 퀘스트 코드를 수정 하시겠습니까?")){
+                $("#quest-comment").val("퀘스트 코드 수정");
                 $.ajax({
                     type:"POST",
-                    url: api.setPilotCode,
-                    data: $("#modal-pilot-form").serialize(),
+                    url: api.setQuestCode,
+                    data: $("#modal-quest-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     error: function(xhr, textStatus, errorThrown) {
                         alert(errorThrown);
@@ -672,93 +317,92 @@
                         }else{
                             alert("수정 실패!");
                         }
-                        $("#modal-pilot").modal('toggle');
+                        $("#modal-quest").modal('toggle');
                         location.reload();
                     } // end success
                 }); // end ajax   
             }
-        }); //  end pilot modify button event
+        }); //  end quest modify button event
 
-        // pilot modal delete button event
-        $("#btn-modal-del-pilot").on("click", function(){
-            if(confirm("해당 파일럿 코드를 삭제 하시겠습니까?")){
-                $("#pilot-comment").val("파일럿 코드 삭제");
+        // quest modal delete button event
+        $("#btn-modal-del-quest").on("click", function(){
+            if(confirm("해당 퀘스트 코드를 삭제 하시겠습니까?")){
+                $("#quest-comment").val("퀘스트 코드 삭제");
                 $.ajax({
                     type:"POST",
-                    url: api.delPilotCode,
-                    data: $("#modal-pilot-form").serialize(),
+                    url: api.delQuestCode,
+                    data: $("#modal-quest-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     error: function(xhr, textStatus, errorThrown) {
                         alert(errorThrown);
                     },
                     success: function(response) {
                         if(response == "True"){
-                            alert("삭제 완료");
+                            alert("수정 완료!");
                         }else{
-                            alert("삭제 실패!");
+                            alert("수정 실패!");
                         }
-                        $("#modal-pilot").modal('toggle');
+                        $("#modal-quest").modal('toggle');
                         location.reload();
                     } // end success
                 }); // end ajax   
             }
-        })
-        // pilot modal delete button event
+        }); //  end quest delete button event
 
 
+        
 
-    })
+        // quest code info
+        var questTd;
+        $.ajax({
+            url: api.getQuestCode,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            async: false,
+            error: function(xhr, textStatus, errorThrown) {
+                alert("code 조회 실패!"+errorThrown);
+                return "";
+            },
+            success: function(response) {
+                var isOpen="";
+                var isGotcha="";
+                $.each(response, function() {
+                    questTd += '<tr>' 
+                    + '<td>' + this.questCode + '</td>' 
+                    + '<td>' + this.questType + '</td>' 
+                    + '<td>' 
+                        + '<input type="hidden" name="questCode" value="' + this.questCode + '">' 
+                        + '<input type="hidden" name="questType" value="' + this.questType + '">' 
+                        + '<input type="hidden" name="description" value="' + this.description + '">' 
+                        + '<input type="hidden" name="reward" value="' + this.reward + '">' 
+                        + '<input type="hidden" name="condCode" value="' + this.condCode + '">' 
+                        + '<input type="hidden" name="condCount" value="' + this.condCount + '">' 
+                        + '<a href="javascript:;" onclick="questDetailModal(this)" > ' + this.description + '</a>' 
+                    + '</td>' 
+                    + '<td>' + this.reward + '</td>' 
+                    + '<td>' + this.condCode + '</td>' 
+                    + '<td>' + this.condCount + '</td>' 
+                }); // end each
+                $("#quest-code-tbody").append(questTd);
+            } // end success
+        }); // end ajax
+        // end quest code info
+    });
 
 
-    function weaponDetailModal(obj) {
-        $("#btn-modal-add-weapon").hide();
-        $("#modal-weapon-type").val($(obj).siblings("input[name='wpType']").val());
-        $("#modal-weapon-code").val($(obj).siblings("input[name='wpCode']").val());
-        $("#modal-weapon-level").val($(obj).siblings("input[name='wpLevel']").val());
-        $("#modal-weapon-name").val($(obj).siblings("input[name='wpName']").val());
-        $("#modal-weapon-pricegold").val($(obj).siblings("input[name='priceGold']").val());
-        $("#modal-weapon-pricecash").val($(obj).siblings("input[name='priceCash']").val());
-        $("#modal-weapon").modal('toggle')
+    function questDetailModal(obj) {
+        $("#btn-modal-add-quest").hide();
+        $("#modal-quest-code").attr("readonly", "true");
+        $("#modal-quest-type").attr("readonly", "true");
+        $("#modal-quest-code").val($(obj).siblings("input[name='questCode']").val());
+        $("#modal-quest-type").val($(obj).siblings("input[name='questType']").val());
+        $("#modal-quest-description").val($(obj).siblings("input[name='description']").val());
+        $("#modal-quest-reward").val($(obj).siblings("input[name='reward']").val());
+        $("#modal-quest-condCode").val($(obj).siblings("input[name='condCode']").val());
+        $("#modal-quest-condCount").val($(obj).siblings("input[name='condCount']").val());
+        $("#modal-quest").modal('toggle')
     };
 
-    function partsDetailModal(obj) {
-        $("#btn-modal-add-parts").hide();
-        $("#modal-parts-type").val($(obj).siblings("input[name='partsType']").val());
-        $("#modal-parts-code").val($(obj).siblings("input[name='partsCode']").val());
-        $("#modal-parts-name").val($(obj).siblings("input[name='partsName']").val());
-        $("#modal-parts-devtime").val($(obj).siblings("input[name='devTime']").val());
-        $("#modal-parts-pricegold").val($(obj).siblings("input[name='priceGold']").val());
-        $("#modal-parts-priceinstantly").val($(obj).siblings("input[name='priceInstantly']").val());
-        $("#modal-parts-pricecash").val($(obj).siblings("input[name='priceCash']").val());
-        $("#modal-parts-pricecapsule").val($(obj).siblings("input[name='priceCapsule']").val());
-        $("#modal-parts-isopen").val($(obj).siblings("input[name='isOpen']").val());
-        $("#modal-parts-isgotcha").val($(obj).siblings("input[name='isGotcha']").val());
-        $("#modal-parts").modal('toggle')
-    };
-
-    function pilotDetailModal(obj) {
-        $("#btn-modal-add-pilot").hide();
-        $("#modal-pilot-code").val($(obj).siblings("input[name='PilotCode']").val());
-        $("#modal-pilot-name").val($(obj).siblings("input[name='PilotName']").val());
-        $("#modal-pilot-pricecash").val($(obj).siblings("input[name='PriceCash']").val());
-        $("#modal-pilot-power").val($(obj).siblings("input[name='Power']").val());
-        $("#modal-pilot-skill").val($(obj).siblings("input[name='Skill']").val());
-        $("#modal-pilot-attack").val($(obj).siblings("input[name='Attack']").val());
-        $("#modal-pilot-hunt").val($(obj).siblings("input[name='Hunt']").val());
-        $("#modal-pilot-hp").val($(obj).siblings("input[name='HP']").val());
-        $("#modal-pilot-sp").val($(obj).siblings("input[name='SP']").val());
-        $("#modal-pilot-abilitytype").val($(obj).siblings("input[name='AbilityType']").val());
-        $("#modal-pilot-abilityvalue").val($(obj).siblings("input[name='AbilityValue']").val());
-        $("#modal-pilot-pricegold").val($(obj).siblings("input[name='PriceGold']").val());
-        $("#modal-pilot-luck").val($(obj).siblings("input[name='Luck']").val());
-        $("#btn-modal-add-pilot").hide();
-        $("#modal-pilot").modal('toggle')
-
-    }
-
-    function getCodeBy(url) {
-
-    }
     </script>
 </body>
 

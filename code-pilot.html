@@ -119,10 +119,22 @@
                                 파츠 코드
                             </a>
                         </li>
-                        <li id="sid-pilot">
+                        <li id="side-pilot">
                             <a href="code-pilot.html">
                                 <i class="icon-double-angle-right"></i>
                                 파일럿 코드
+                            </a>
+                        </li>
+                        <li id="side-item">
+                            <a href="code-item.html">
+                                <i class="icon-double-angle-right"></i>
+                                아이템 코드
+                            </a>
+                        </li>
+                        <li id="side-cah">
+                            <a href="code-cash.html">
+                                <i class="icon-double-angle-right"></i>
+                                캐쉬 코드
                             </a>
                         </li>
                         <li id="side-quest">
@@ -283,6 +295,7 @@
         </div>
         <div class="modal-footer">
             <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+            <button id="btn-modal-add-pilot" class="btn btn-primary">추</button>
             <button id="btn-modal-mod-pilot" class="btn btn-primary">저장</button>
             <button id="btn-modal-del-pilot" class="btn btn-danger">삭제</button>
         </div>
@@ -309,13 +322,14 @@
             $("#modal-pilot-abilityvalue").val('');
             $("#modal-pilot-pricegold").val('');
             $("#modal-pilot-luck").val('');
+            $("#btn-modal-add-pilot").show();
             $("#btn-modal-del-pilot").hide();
             $("#btn-modal-mod-pilot").hide();
             $("#modal-pilot").modal('toggle')
         });
 
         // pilot modal add button event
-        $("#btn-modal-mod-pilot").on("click", function(){
+        $("#btn-modal-add-pilot").on("click", function(){
             if(confirm("해당 파일럿 코드를 변경 하시겠습니까?")){
                 $("#pilot-comment").val("파일럿 코드 추가");
                 $.ajax({

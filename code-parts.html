@@ -119,10 +119,22 @@
                                 파츠 코드
                             </a>
                         </li>
-                        <li id="sid-pilot">
+                        <li id="side-pilot">
                             <a href="code-pilot.html">
                                 <i class="icon-double-angle-right"></i>
                                 파일럿 코드
+                            </a>
+                        </li>
+                        <li id="side-item">
+                            <a href="code-item.html">
+                                <i class="icon-double-angle-right"></i>
+                                아이템 코드
+                            </a>
+                        </li>
+                        <li id="side-cash">
+                            <a href="code-cash.html">
+                                <i class="icon-double-angle-right"></i>
+                                캐쉬 코드
                             </a>
                         </li>
                         <li id="side-quest">
@@ -248,7 +260,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">IsOpen(0:true, 1:false)</label>
+                    <label class="control-label">IsOpen</label>
                     <div class="controls">
                         <select name="isOpen">
                             <option id="modal-parts-isopen-true" value="0">true</option>
@@ -257,7 +269,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">IsGotcha(0:true, 1:false)</label>
+                    <label class="control-label">IsGotcha</label>
                     <div class="controls">
                         <select name="isGotcha">
                             <option id="modal-parts-isgotcha-true" value="0">true</option>
@@ -390,8 +402,6 @@
                 return "";
             },
             success: function(response) {
-                var isOpen="";
-                var isGotcha="";
                 $.each(response, function() {
                     partsTd += '<tr>' 
                     + '<td>' + this.partsType + '</td>' 
