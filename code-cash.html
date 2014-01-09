@@ -204,8 +204,8 @@
         </div>
         <div class="modal-body">
             <form class="form-horizontal" id="modal-cash-form">
-                <input type="hidden"  name="gmid" value="1">
-                <input type="hidden"  name="comment" id="cash-comment">
+                <input type="hidden" name="gmid" value="1">
+                <input type="hidden" name="comment" id="cash-comment">
                 <div class="control-group">
                     <label class="control-label">Type</label>
                     <div class="controls">
@@ -224,7 +224,7 @@
                         <input type="text" name="itemName" id="modal-cash-name">
                     </div>
                 </div>
-                
+
                 <div class="control-group">
                     <label class="control-label">Qty</label>
                     <div class="controls">
@@ -245,15 +245,23 @@
             <button id="btn-modal-mod-cash" class="btn btn-primary">저장</button>
             <button id="btn-modal-del-cash" class="btn btn-danger">삭제</button>
         </div>
-    </div> <!-- end cash modal -->
+    </div>
+    <!-- end cash modal -->
 
     <script>
     $(function() {
+
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
+
         $("#side-cash").addClass("active");
         $("#side-code").addClass("open active");
 
         // cash add button event
-        $("#btn-cash-add").on("click", function(){
+        $("#btn-cash-add").on("click", function() {
             $("#btn-modal-del-cash").hide();
             $("#btn-modal-mod-cash").hide();
             $("#btn-modal-add-cash").show();
@@ -268,11 +276,11 @@
         });
 
         // cash modal add button event
-        $("#btn-modal-add-cash").on("click", function(){
-            if(confirm("해당 캐쉬 코드를 추가 하시겠습니까?")){
+        $("#btn-modal-add-cash").on("click", function() {
+            if (confirm("해당 캐쉬 코드를 추가 하시겠습니까?")) {
                 $("#cash-comment").val("캐쉬 코드 추가");
                 $.ajax({
-                    type:"POST",
+                    type: "POST",
                     url: api.addCashCode,
                     data: $("#modal-cash-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -280,9 +288,9 @@
                         alert(errorThrown);
                     },
                     success: function(response) {
-                        if(response == "True"){
+                        if (response == "True") {
                             alert("추가 완료!");
-                        }else{
+                        } else {
                             alert("추가 실패!");
                         }
                         $("#modal-cash").modal('toggle');
@@ -293,11 +301,11 @@
         }); //  end cash add button event
 
         // cash modal modify button event
-        $("#btn-modal-mod-cash").on("click", function(){
-            if(confirm("해당 캐쉬 코드를 수정 하시겠습니까?")){
+        $("#btn-modal-mod-cash").on("click", function() {
+            if (confirm("해당 캐쉬 코드를 수정 하시겠습니까?")) {
                 $("#cash-comment").val("캐쉬 코드 수정");
                 $.ajax({
-                    type:"POST",
+                    type: "POST",
                     url: api.setCashCode,
                     data: $("#modal-cash-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -305,9 +313,9 @@
                         alert(errorThrown);
                     },
                     success: function(response) {
-                        if(response == "True"){
+                        if (response == "True") {
                             alert("수정 완료!");
-                        }else{
+                        } else {
                             alert("수정 실패!");
                         }
                         $("#modal-cash").modal('toggle');
@@ -318,11 +326,11 @@
         }); //  end cash modify button event
 
         // cash modal delete button event
-        $("#btn-modal-del-cash").on("click", function(){
-            if(confirm("해당 캐쉬 코드를 삭제 하시겠습니까?")){
+        $("#btn-modal-del-cash").on("click", function() {
+            if (confirm("해당 캐쉬 코드를 삭제 하시겠습니까?")) {
                 $("#cash-comment").val("캐쉬 코드 삭제");
                 $.ajax({
-                    type:"POST",
+                    type: "POST",
                     url: api.delCashCode,
                     data: $("#modal-cash-form").serialize(),
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -330,9 +338,9 @@
                         alert(errorThrown);
                     },
                     success: function(response) {
-                        if(response == "True"){
+                        if (response == "True") {
                             alert("수정 완료!");
-                        }else{
+                        } else {
                             alert("수정 실패!");
                         }
                         $("#modal-cash").modal('toggle');
@@ -343,7 +351,7 @@
         }); //  end cash delete button event
 
 
-        
+
 
         // cash code info
         var cashTd;
@@ -353,26 +361,14 @@
             dataType: "json",
             async: false,
             error: function(xhr, textStatus, errorThrown) {
-                alert("code 조회 실패!"+errorThrown);
+                alert("code 조회 실패!" + errorThrown);
                 return "";
             },
             success: function(response) {
-                var isOpen="";
-                var isGotcha="";
+                var isOpen = "";
+                var isGotcha = "";
                 $.each(response, function() {
-                    cashTd += '<tr>' 
-                    + '<td>' + this.itemType + '</td>' 
-                    + '<td>' + this.itemCode + '</td>' 
-                    + '<td>' 
-                        + '<input type="hidden" name="cashType" value="' + this.itemType + '">' 
-                        + '<input type="hidden" name="cashCode" value="' + this.itemCode + '">' 
-                        + '<input type="hidden" name="cashName" value="' + this.itemName + '">' 
-                        + '<input type="hidden" name="qty" value="' + this.Qty + '">' 
-                        + '<input type="hidden" name="price" value="' + this.Price + '">' 
-                        + '<a href="javascript:;" onclick="cashDetailModal(this)" > ' + this.itemName + '</a>' 
-                    + '</td>' 
-                    + '<td>' + this.Qty + '</td>' 
-                    + '<td>' + this.Price + '</td>' 
+                    cashTd += '<tr>' + '<td>' + this.itemType + '</td>' + '<td>' + this.itemCode + '</td>' + '<td>' + '<input type="hidden" name="cashType" value="' + this.itemType + '">' + '<input type="hidden" name="cashCode" value="' + this.itemCode + '">' + '<input type="hidden" name="cashName" value="' + this.itemName + '">' + '<input type="hidden" name="qty" value="' + this.Qty + '">' + '<input type="hidden" name="price" value="' + this.Price + '">' + '<a href="javascript:;" onclick="cashDetailModal(this)" > ' + this.itemName + '</a>' + '</td>' + '<td>' + this.Qty + '</td>' + '<td>' + this.Price + '</td>'
                 }); // end each
                 $("#cash-code-tbody").append(cashTd);
             } // end success
@@ -383,6 +379,8 @@
 
     function cashDetailModal(obj) {
         $("#btn-modal-add-cash").hide();
+        $("#btn-modal-del-cash").show();
+        $("#btn-modal-mod-cash").show();
         $("#modal-cash-type").attr("readonly", "true");
         $("#modal-cash-code").attr("readonly", "true");
         $("#modal-cash-type").val($(obj).siblings("input[name='cashType']").val());
@@ -392,7 +390,6 @@
         $("#modal-cash-price").val($(obj).siblings("input[name='price']").val());
         $("#modal-cash").modal('toggle')
     };
-
     </script>
 </body>
 

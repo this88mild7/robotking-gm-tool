@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 GM Tool</title>
+    <title>로봇킹 GM Tool - Code</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -81,7 +81,7 @@
                 <a href="login.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 GM Tool
+                        로봇킹 GM Tool - Code
                     </small>
                 </a>
                 <!--/.brand-->
@@ -249,11 +249,16 @@
             <button id="btn-modal-robot" class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
             <button id="btn-modal-add-weapon" class="btn btn-primary">추가</button>
             <button id="btn-modal-mod-weapon" class="btn btn-primary">저장</button>
-            <button id="btn-modal-del-weapn" class="btn btn-danger">삭제</button>
+            <button id="btn-modal-del-weapon" class="btn btn-danger">삭제</button>
         </div>
     </div> <!-- end weapon modal -->
     <script>
     $(function() {
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
         $("#side-weapon").addClass("active");
         $("#side-code").addClass("open active");
 
@@ -387,10 +392,12 @@
     });
 
     function weaponDetailModal(obj) {
+        $("#btn-modal-add-weapon").hide();
+        $("#btn-modal-del-weapon").show();
+        $("#btn-modal-mod-weapon").show();
         $("#modal-weapon-type").attr("readonly", "true");
         $("#modal-weapon-code").attr("readonly", "true");
         $("#modal-weapon-level").attr("readonly", "true");
-        $("#btn-modal-add-weapon").hide();
         $("#modal-weapon-type").val($(obj).siblings("input[name='wpType']").val());
         $("#modal-weapon-code").val($(obj).siblings("input[name='wpCode']").val());
         $("#modal-weapon-level").val($(obj).siblings("input[name='wpLevel']").val());

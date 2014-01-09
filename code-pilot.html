@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 GM Tool</title>
+    <title>로봇킹 GM Tool - Code</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -81,7 +81,7 @@
                 <a href="login.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 GM Tool
+                        로봇킹 GM Tool - Code
                     </small>
                 </a>
                 <!--/.brand-->
@@ -302,7 +302,11 @@
     </div> <!-- end pilot modal -->
     <script>
     $(function() {
-
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
         $("#side-pilot").addClass("active");
         $("#side-code").addClass("open active");
 
@@ -456,6 +460,8 @@
 
     function pilotDetailModal(obj) {
         $("#btn-modal-add-pilot").hide();
+        $("#btn-modal-del-pilot").show();
+        $("#btn-modal-mod-pilot").show();
         $("#modal-pilot-code").val($(obj).siblings("input[name='PilotCode']").val());
         $("#modal-pilot-name").val($(obj).siblings("input[name='PilotName']").val());
         $("#modal-pilot-pricecash").val($(obj).siblings("input[name='PriceCash']").val());

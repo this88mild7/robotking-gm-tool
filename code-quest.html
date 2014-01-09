@@ -256,6 +256,11 @@
 
     <script>
     $(function() {
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
         $("#side-quest").addClass("active");
         $("#side-code").addClass("open active");
 
@@ -392,6 +397,8 @@
 
     function questDetailModal(obj) {
         $("#btn-modal-add-quest").hide();
+        $("#btn-modal-del-quest").show();
+        $("#btn-modal-mod-quest").show();
         $("#modal-quest-code").attr("readonly", "true");
         $("#modal-quest-type").attr("readonly", "true");
         $("#modal-quest-code").val($(obj).siblings("input[name='questCode']").val());

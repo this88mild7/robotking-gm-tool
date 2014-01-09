@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 Log and Helper</title>
+    <title>로봇킹 GM Tool Helper</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -96,7 +96,7 @@
                 <a href="log-auth.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 Log and Helper
+                        로봇킹 GM Tool Helper
                     </small>
                 </a>
 
@@ -114,29 +114,7 @@
 
         <div class="sidebar" id="sidebar">
 
-            <ul class="nav nav-list">
-                <li id="side-charge">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <i class="icon-desktop"></i>
-                        <span class="menu-text">로그검색
-                            <span class="badge badge-primary "></span>
-                        </span>
-                    </a>
-                    <ul class="submenu">
-                        <li id="side-log-charge">
-                            <a href="log-charge.html">
-                                <i class="icon-double-angle-right"></i>
-                                결제 로그
-                            </a>
-                        </li>
-                        <li id="side-log-etc">
-                            <a href="log-etc.html">
-                                <i class="icon-double-angle-right"></i>
-                                기타 로그
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            <ul class="nav nav-list">                
                 <li id="side-helper">
                     <a href="javascript:;" class="dropdown-toggle">
                         <i class="icon-edit"></i>
@@ -207,7 +185,7 @@
             $("#side-helper").addClass("active");
             if (isEmpty($.cookie("helper-auth"))) {
                 alert("미인증 상태입니다.");
-                location.href = "log-auth.html";
+                location.href = "helper-auth.html";
                 return false;
             }
 

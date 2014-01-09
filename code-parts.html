@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>로봇킹 GM Tool</title>
+    <title>로봇킹 GM Tool - Code</title>
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <meta charset="utf-8" />
@@ -81,7 +81,7 @@
                 <a href="login.html" class="brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        로봇킹 GM Tool
+                        로봇킹 GM Tool - Code
                     </small>
                 </a>
                 <!--/.brand-->
@@ -263,8 +263,8 @@
                     <label class="control-label">IsOpen</label>
                     <div class="controls">
                         <select name="isOpen">
-                            <option id="modal-parts-isopen-true" value="0">true</option>
-                            <option id="modal-parts-isopen-false" value="1">false</option>
+                            <option id="modal-parts-isopen-true" value="1">true</option>
+                            <option id="modal-parts-isopen-false" value="0">false</option>
                         </select>
                     </div>
                 </div>
@@ -272,8 +272,8 @@
                     <label class="control-label">IsGotcha</label>
                     <div class="controls">
                         <select name="isGotcha">
-                            <option id="modal-parts-isgotcha-true" value="0">true</option>
-                            <option id="modal-parts-isgotcha-false" value="1">false</option>
+                            <option id="modal-parts-isgotcha-true" value="1">true</option>
+                            <option id="modal-parts-isgotcha-false" value="0">false</option>
                         </select>
                     </div>
                 </div>
@@ -289,6 +289,11 @@
 
     <script>
     $(function() {
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
         $("#side-parts").addClass("active");
         $("#side-code").addClass("open active");
 
@@ -436,6 +441,8 @@
 
     function partsDetailModal(obj) {
         $("#btn-modal-add-parts").hide();
+        $("#btn-modal-del-parts").show();
+        $("#btn-modal-mod-parts").show();
         $("#modal-parts-type").attr("readonly", "true");
         $("#modal-parts-code").attr("readonly", "true");
         $("#modal-parts-type").val($(obj).siblings("input[name='partsType']").val());

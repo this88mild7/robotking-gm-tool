@@ -48,7 +48,7 @@
                                 <h1>
                                     <i class="icon-leaf green"></i>
                                     <span class="red">로봇킹 GM Tool</span>
-                                    <span class="white">Log</span>
+                                    <span class="white"> Helper</span>
                                 </h1>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                                 <fieldset>
                                                     <label>
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" id="log-auth" class="span12" placeholder="Auth Key" />
+                                                            <input type="password" id="helper-auth" class="span12" placeholder="Auth Key" />
                                                             <i class="icon-user"></i>
                                                         </span>
                                                     </label>
@@ -147,10 +147,10 @@
 
     <script type="text/javascript">
     $(function() {
-        $.cookie('log-auth', '');
+        $.cookie('helper-auth', '');
 
 
-        $("#log-auth").on("keydown", function(e) {
+        $("#helper-auth").on("keydown", function(e) {
             if (e.keyCode == 13) { // enter key
                 auth();
                 return false;
@@ -188,20 +188,20 @@
         var m = minutes;
         var role = ""
         date.setTime(date.getTime() + (m * 60 * 1000));
-        $.cookie("log-auth", authKey, {
+        $.cookie("helper-auth", authKey, {
             expires: date
         });
     }
 
     function auth() {
-        if (isEmpty($("#log-auth").val())) {
+        if (isEmpty($("#helper-auth").val())) {
             alert("인증키 값을 입력해 주세요!");
             return false;
         }
-        $.get('log_authkey.txt', function(data) {
-            if ($("#log-auth").val() == data) {
-                setAuthCookie(60, $("#log-auth").val());
-                location.href = "log.html";
+        $.get('helper_authkey.txt', function(data) {
+            if ($("#helper-auth").val() == data) {
+                setAuthCookie(60, $("#helper-auth").val());
+                location.href = "helper.html";
             } else {
                 alert("인증키 값이 틀립니다.!");
                 return false;

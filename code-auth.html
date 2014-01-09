@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Login Page - 로봇킹</title>
+    <title>로봇킹 GM Tool - Code</title>
 
     <meta name="description" content="User login page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,7 +48,7 @@
                                 <h1>
                                     <i class="icon-leaf green"></i>
                                     <span class="red">로봇킹 GM Tool</span>
-                                    <span class="white">Log</span>
+                                    <span class="white">Code</span>
                                 </h1>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                                 <fieldset>
                                                     <label>
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" id="log-auth" class="span12" placeholder="Auth Key" />
+                                                            <input type="password" id="code-auth" class="span12" placeholder="Auth Key" />
                                                             <i class="icon-user"></i>
                                                         </span>
                                                     </label>
@@ -147,10 +147,10 @@
 
     <script type="text/javascript">
     $(function() {
-        $.cookie('log-auth', '');
+        $.cookie('code-auth', '');
 
 
-        $("#log-auth").on("keydown", function(e) {
+        $("#code-auth").on("keydown", function(e) {
             if (e.keyCode == 13) { // enter key
                 auth();
                 return false;
@@ -160,25 +160,6 @@
 
         $("#btn-auth").on("click", function() {
             auth();
-            // // auth ajax
-            // $.ajax({
-            //     type: "POST",
-            //     url: api.loginGm,
-            //     data: $("#form-login").serialize(),
-            //     contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            //     error: function(xhr, textStatus, errorThrown) {
-            //         alert("로그인 실패! : " + errorThrown);
-            //     },
-            //     success: function(response) {
-            //         if (response == "True") {
-            //             setAuthCookie(60, $("#log-auth").val());
-            //             location.href = "userSearch.html";
-            //         } else {
-            //             alert("로그인 실패");
-            //             //  test
-            //         }
-            //     } // end success
-            // }); // end auth ajax
         });
 
     });
@@ -188,20 +169,20 @@
         var m = minutes;
         var role = ""
         date.setTime(date.getTime() + (m * 60 * 1000));
-        $.cookie("log-auth", authKey, {
+        $.cookie("code-auth", authKey, {
             expires: date
         });
     }
 
     function auth() {
-        if (isEmpty($("#log-auth").val())) {
+        if (isEmpty($("#code-auth").val())) {
             alert("인증키 값을 입력해 주세요!");
             return false;
         }
-        $.get('log_authkey.txt', function(data) {
-            if ($("#log-auth").val() == data) {
-                setAuthCookie(60, $("#log-auth").val());
-                location.href = "log.html";
+        $.get('code_authkey.txt', function(data) {
+            if ($("#code-auth").val() == data) {
+                setAuthCookie(60, $("#code-auth").val());
+                location.href = "code.html";
             } else {
                 alert("인증키 값이 틀립니다.!");
                 return false;

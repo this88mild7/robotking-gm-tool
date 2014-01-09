@@ -241,8 +241,8 @@
                     <label class="control-label">IsOpen</label>
                     <div class="controls">
                         <select name="isUse">
-                            <option id="modal-item-isuse-true" value="0">true</option>
-                            <option id="modal-item-isuse-false" value="1">false</option>
+                            <option id="modal-item-isuse-true" value="1">true</option>
+                            <option id="modal-item-isuse-false" value="0">false</option>
                         </select>
                     </div>
                 </div>
@@ -259,6 +259,11 @@
 
     <script>
     $(function() {
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
         $("#side-item").addClass("active");
         $("#side-code").addClass("open active");
 
@@ -392,6 +397,8 @@
 
     function itemDetailModal(obj) {
         $("#btn-modal-add-item").hide();
+        $("#btn-modal-del-item").show();
+        $("#btn-modal-mod-item").show();
         $("#modal-item-code").attr("readonly", "true");
         $("#modal-item-code").val($(obj).siblings("input[name='itemCode']").val());
         $("#modal-item-name").val($(obj).siblings("input[name='itemName']").val());

@@ -49,6 +49,7 @@ var api = {
     setCashCode: domain + "/service/Management.asmx/SetCashCode",
     setItemCode: domain + "/service/Management.asmx/SetItemCode",
     setEnemyCode: domain + "/service/Management.asmx/SetEnemyCode",
+    setQuestCode: domain + "/service/Management.asmx/SetQuestCode",
     delWeapon: domain + "/service/Management.asmx/DelWeapon",
     delParts: domain + "/service/Management.asmx/DelParts",
     delPilot: domain + "/service/Management.asmx/DelPilot",

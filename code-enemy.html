@@ -225,6 +225,11 @@
     </div> <!-- end enemy modal -->
     <script>
     $(function() {
+        if (isEmpty($.cookie("code-auth"))) {
+            alert("미인증 상태입니다.");
+            location.href = "code-auth.html";
+            return false;
+        }
 
         $("#side-enemy").addClass("active");
         $("#side-code").addClass("open active");
@@ -349,6 +354,8 @@
 
     function enemyDetailModal(obj) {
         $("#btn-modal-add-enemy").hide();
+        $("#btn-modal-del-enemy").show();
+        $("#btn-modal-mod-enemy").show();
         $("#modal-enemy-code").val($(obj).siblings("input[name='enemyCode']").val());
         $("#modal-enemy-name").val($(obj).siblings("input[name='enemyName']").val());
         $("#modal-enemy-pricecash").val($(obj).siblings("input[name='PriceCash']").val());
